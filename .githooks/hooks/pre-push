@@ -1,0 +1,15 @@
+#!/bin/bash
+# run `chmod +x .git/hooks/pre-push` (We make the hook executable by using the chmod utility.)
+# To bypass this hook and force the push, use 'git push --no-verify'
+ 
+master_branches=('origin/develop' 'master' 'develop')
+current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+ 
+for branch in "${master_branches[@]}"
+do
+    if [ $branch = $current_branch ]; then
+        echo "You're about to push $branch and you don't want that"
+        exit 1
+    fi
+done
+exit 0
