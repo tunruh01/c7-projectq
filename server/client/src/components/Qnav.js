@@ -7,13 +7,13 @@ import Nav from "react-bootstrap/Nav";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
 
-// Nav.Link under formcontrol was a button, can't tell if that Nav.link works yet
+
 class Qnav extends Component {
 
     render() {
         return (
             <Router>
-                <Navbar bg="light" variant="light">
+                <Navbar bg="dark" variant="dark">
                     <Link exact to="/"><Navbar.Brand href="/">ProjectQ</Navbar.Brand></Link>
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
