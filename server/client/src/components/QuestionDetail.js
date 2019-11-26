@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 class QuestionDetail extends Component {
 
 
-
-
     render() {
         // temporary form until we implement redux so we can use redux-form 
         return (

@@ -1,0 +1,25 @@
+{
+  "googleId": "asdf",
+  "name": "username",
+  "email": "user@email.com",
+  "avatar": "imagepath",
+  "dateCreated": "datetime",
+  "dateModified": "datetime",
+  "credentials": [
+    {
+      "credential": "this is a credential1",
+      "answers": ["answerId1", "answerId2"]
+    },
+    {
+      "credential": "this is a credential2",
+      "answers": ["answerId3", "answerId4"]
+    }
+  ],
+  "answers": ["answerId1", "answerId2", "answerId3", "answerId4"],
+  "questions": ["questionId1", "questionId2"],
+  "comments": ["commentId1", "commentId2"],
+  "upvotedAnswers": ["answerId1", "answerId2"],
+  "upvotedComments": ["commentId1", "commentId2"],
+  "downvotedAnswers": ["answerId1", "answerId2"],
+  "downvotedComments": ["commentId1", "commentId2"]
+}

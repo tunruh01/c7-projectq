@@ -109,7 +109,7 @@ paths:
           required: false
           type: string
       tags:
-        - Questions and Answers
+        - Answers
       responses:
         200:
           description: Response of questions and info about the query result
@@ -155,12 +155,128 @@ paths:
           schema:
             $ref: "#/definitions/NewComment"
       tags:
-        - Questions and Answers
+        - Comments
       responses:
         200:
           description: Returns the added comment.
           schema:
             $ref: "#/definitions/CommentDetail"
+  "/answer/{answerId}/upvote":
+    post:
+      summary: Upvotes specified answer.
+      description: |
+        Sets upvote state on specified answer.
+      parameters:
+        - name: answerId
+          in: path
+          description: The ID of the answer to modify score.
+          required: true
+          type: string
+        - name: loginId
+          in: header
+          description: This will be fleshed out later.
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          description: The state to set upvote status to.
+          schema:
+            $ref: "#/definitions/UpvoteState"
+      tags:
+        - Answers
+      responses:
+        200:
+          description: Returns state about the modified answer.
+          schema:
+            $ref: "#/definitions/AnswerVoteState"
+  "/answer/{answerId}/downvote":
+    post:
+      summary: Downvotes specified answer.
+      description: |
+        Sets downvote state on specified answer.
+      parameters:
+        - name: answerId
+          in: path
+          description: The ID of the answer to modify score.
+          required: true
+          type: string
+        - name: loginId
+          in: header
+          description: This will be fleshed out later.
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          description: The state to set downvote status to.
+          schema:
+            $ref: "#/definitions/DownvoteState"
+      tags:
+        - Answers
+      responses:
+        200:
+          description: Returns state about the modified answer.
+          schema:
+            $ref: "#/definitions/AnswerVoteState"
+  "/comment/{commentId}/upvote":
+    post:
+      summary: Upvotes specified comment.
+      description: |
+        Sets upvote state on specified comment.
+      parameters:
+        - name: commentId
+          in: path
+          description: The ID of the comment to modify score.
+          required: true
+          type: string
+        - name: loginId
+          in: header
+          description: This will be fleshed out later.
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          description: The state to set upvote status to.
+          schema:
+            $ref: "#/definitions/UpvoteState"
+      tags:
+        - Comments
+      responses:
+        200:
+          description: Returns state about the modified comment.
+          schema:
+            $ref: "#/definitions/CommentVoteState"
+  "/comment/{commentId}/downvote":
+    post:
+      summary: Downvotes specified comment.
+      description: |
+        Sets downvote state on specified comment.
+      parameters:
+        - name: commentId
+          in: path
+          description: The ID of the comment to modify score.
+          required: true
+          type: string
+        - name: loginId
+          in: header
+          description: This will be fleshed out later.
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          description: The state to set downvote status to.
+          schema:
+            $ref: "#/definitions/DownvoteState"
+      tags:
+        - Comments
+      responses:
+        200:
+          description: Returns state about the modified comment.
+          schema:
+            $ref: "#/definitions/CommentVoteState"
   /user:
     get:
       summary: Details on the current user
@@ -268,6 +384,50 @@ definitions:
       question:
         type: string
         description: The question string.
+  UpvoteState:
+    type: object
+    properties:
+      upvoted:
+        type: boolean
+        description: Whether or not the answer should be upvoted.
+  DownvoteState:
+    type: object
+    properties:
+      upvoted:
+        type: boolean
+        description: Whether or not the answer should be downvoted.
+  AnswerVoteState:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique identifier representing an answer
+      upvoted:
+        type: boolean
+        description: Whether or not the answer is upvoted.
+      downvoted:
+        type: boolean
+        description: Whether or not the answer is upvoted.
+      answerScore:
+        type: integer
+        format: int32
+        description: Score for the answer (can be negative).
+  CommentVoteState:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique identifier representing an comment
+      upvoted:
+        type: boolean
+        description: Whether or not the comment is upvoted.
+      downvoted:
+        type: boolean
+        description: Whether or not the comment is upvoted.
+      answerScore:
+        type: integer
+        format: int32
+        description: Score for the comment (can be negative).
   QuestionDetail:
     type: object
     properties:
@@ -317,7 +477,28 @@ definitions:
     properties:
       id:
         type: string
-        description: Unique identifier representing a specific question
+        description: Unique identifier representing an answer
+      questionId:
+        type: string
+        description: Unique identifier representing the question this answer is related to.
+      user:
+        $ref: "#/definitions/UserSmall"
+      answer:
+        type: string
+        description: The answer.
+      answerDate:
+        type: string
+        description: Date answer was created.
+      answerScore:
+        type: integer
+        format: int32
+        description: Score for the answer (can be negative).
+      userUpvoted:
+        type: boolean
+        description: Whether or not the provided user has upvoted this answer.
+      userDownvoted:
+        type: boolean
+        description: Whether or not the provided user has downvoted this answer.
   UserSmall:
     type: object
     properties:
@@ -394,6 +575,12 @@ definitions:
         type: integer
         format: int32
         description: Score for the answer (can be negative).
+      userUpvoted:
+        type: boolean
+        description: Whether or not the provided user has upvoted this answer.
+      userDownvoted:
+        type: boolean
+        description: Whether or not the provided user has downvoted this answer.
       comments:
         type: array
         items:
@@ -419,6 +606,12 @@ definitions:
         type: integer
         format: int32
         description: Score for the comment (can be negative).
+      userUpvoted:
+        type: boolean
+        description: Whether or not the provided user has upvoted this comment.
+      userDownvoted:
+        type: boolean
+        description: Whether or not the provided user has downvoted this comment.
   UserAnswerDetail:
     type: object
     properties:
