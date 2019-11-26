@@ -5,17 +5,19 @@ export const FETCH_QUESTIONS = 'fetch_questions';
 export const FETCH_ANSWERS = 'fetch_answers';
 export const CHANGE_CATEGORY = 'change_category';
 
-// export function fetchCategories() {
-//     const request = axios
-//         .get(`${ROOT_URL}?category=`)
-//         .catch(function(error){
-//             console.log('error: ', error);
-//         });
-//     return {
-//         type: FETCH_CATEGORIES,
-//         payload: request
-//     };
-// };
+const ROOT_URL = 'localhost:8000/'
+
+export function fetchCategories() {
+    const request = axios
+        .get(`${ROOT_URL}?category=`)
+        .catch(function(error){
+            console.log('error: ', error);
+        });
+    return {
+        type: FETCH_CATEGORIES,
+        payload: request
+    };
+};
 
 export function fetchQuestions(category) {
     const request = axios
@@ -23,10 +25,10 @@ export function fetchQuestions(category) {
     .catch(function(error){
         console.log('error: ', error);
     });
-return {
-    type: FETCH_QUESTIONS,
-    payload: request
-};
+    return {
+        type: FETCH_QUESTIONS,
+        payload: request
+    };
 };
 
 export function fetchAnswers(question) {
@@ -35,16 +37,8 @@ export function fetchAnswers(question) {
     .catch(function(error){
         console.log('error: ', error);
     });
-return {
-    type: FETCH_ANSWERS,
-    payload: request
-};
-};
-
-export function changeCategory(category) {
-    console.log(category)
     return {
-        type: CHANGE_CATEGORY,
-        payload: category
+        type: FETCH_ANSWERS,
+        payload: request
     };
 };
