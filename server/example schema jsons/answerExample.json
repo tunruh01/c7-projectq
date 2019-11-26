@@ -1,0 +1,10 @@
+{
+  "id": "this might come from mongo",
+  "answer": "this is the answer text",
+  "userId": "posterId",
+  "comments": ["commentId1", "commentId2"],
+  "score": 5,
+  "dateAdded": "dateTime",
+  "dateModified": "dateTime",
+  "questionId": "questionId"
+}
