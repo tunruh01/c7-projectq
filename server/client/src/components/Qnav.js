@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import QuestionList from './QuestionList'
 import Navbar from 'react-bootstrap/Navbar'
+import { Form, FormControl, Button, Nav } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
@@ -12,6 +14,7 @@ class Qnav extends Component {
 
     render() {
         return (
+          
             <Router>
                 <Navbar bg="dark" variant="dark">
                     <Link exact to="/"><Navbar.Brand href="/">ProjectQ</Navbar.Brand></Link>
@@ -27,7 +30,6 @@ class Qnav extends Component {
             </Router>
         )
     }
-
 }
 
 export default Qnav;
