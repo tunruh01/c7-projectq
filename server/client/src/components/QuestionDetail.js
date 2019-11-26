@@ -19,11 +19,11 @@ class QuestionDetail extends Component {
                     <h3>Category: Pizza</h3>
                     <h1>
                         Why in the world do people eat Papa John's ?
-            </h1>
+                     </h1>
                 </div>
 
                 <div className='padding'>
-                    <h4 className="text-center" style={{ color: "grey" }} >Answer question</h4>
+                    <h4 className="text-center" style={{ color: "grey" }}>Answer question</h4>
                     <div className="col-md-6 offset-md-3 shadow-sm">
                         <div className="row">
                             <form
