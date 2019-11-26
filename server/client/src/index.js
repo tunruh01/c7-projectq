@@ -1,20 +1,22 @@
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router }  from "react-router-dom";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import rootReducer from "./reducers/reducers";
+import rootReducer from "./reducers";
+import Qnav from './components/Qnav'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const store = createStore(rootReducer, {})
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-    < App >
-    </App >
-    </BrowserRouter>
-    
+    <Router>
+      <Qnav fixed="top" />
+      < App >
+      </App >
+    </Router>
   </Provider>,
     document.getElementById('root')
 );

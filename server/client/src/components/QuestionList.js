@@ -1,10 +1,8 @@
 
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-// import styled from "styled-components";
-import Qnav from "./Qnav";
 import { Link } from 'react-router-dom';
-// import { connect } from "react-redux";
+import CategoryList from './CategoryList'
 // import * as actions from '../actions';
 import _ from "lodash";
 // import InfiniteScroll from 'react-infinite-scroller';
@@ -39,19 +37,16 @@ class QuestionList extends Component {
   //use Switch to ensure only one route renders at a time
   render() {
     return (
-      <BrowserRouter>
+      <div>
+      <CategoryList/>
         <div className="QuestionList">
           <div className="container">
             <h1>Questions</h1>
-            {/* each contact on the main route should be clickable; when clicked, leads to a new route */}
-            <Switch>
-              <Route exact path={["/questions", "/"]} render={() => <QuestionList questions={this.state.questions} />} />
-              {/* <Route path="/contacts/new" render={props => <AddContact addContact={this.addContact} />} />
-              <Route path="/contacts/:contactId" render={routerProps => <ContactDetail routerProps={routerProps} contacts={this.state.contacts} />} /> */}
-            </Switch>
+            
           </div>
         </div>
-      </BrowserRouter>
+        </div>
+
     );
   }
 }

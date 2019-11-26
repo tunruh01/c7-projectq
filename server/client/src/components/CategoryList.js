@@ -1,9 +1,17 @@
-// import React, { Component } from "react";
+import React, { Component } from "react";
 // import { connect } from "react-redux";
 // import { bindActionCreators } from "redux";
 // import Col from "react-bootstrap/Col";
 
-// class CategoryList extends Component {
+class CategoryList extends Component {
+
+  render() {
+    return (
+      <div>CategoryList</div>
+    )
+   }
+}
+
 //     componentdidmount() {
 //         let categories = this.props.fetchCategories();
 //         return categories;
@@ -38,4 +46,4 @@
 //     { fetchQuestions, fetchCategories, changeCategory }, dispatch);
 // }
 
-// export default connect(mapStateToProps,mapDispatchToProps)(CategoryList);
+export default CategoryList
