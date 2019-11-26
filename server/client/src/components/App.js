@@ -1,12 +1,12 @@
 import React from 'react';
-import SubmitQuestion from "./SubmitQuestion.js";
+import Qnav from './Qnav'
+
 
 function App() {
   return (
     <div className="App">
-     
-    
-    <SubmitQuestion />
+      <Qnav />
+      I'm the app component!
     </div>
   );
 }

@@ -1,0 +1,9 @@
+{
+  "id": "this might come from mongo",
+  "topics": ["1", "2", "3"],
+  "question": "this is the question text",
+  "userId": "posterId",
+  "answers": ["answerId1", "answerId2"],
+  "dateAdded": "dateTime",
+  "dateModified": "dateTime"
+}
