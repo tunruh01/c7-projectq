@@ -8,11 +8,11 @@ const User = require('../models/user')
 
 router.get('/generate-fake-data', (req, res, next) => {
     // debugger;
-    for (let i = 0; i < 5; i++) {
-      let answer = new Answer()
-      let comment = new Comment()
-      let question = new Question()
-      let topic = new Topic()
+    for (let i = 0; i < 10; i++) {
+      // let answer = new Answer()
+      // let comment = new Comment()
+      
+      // let topic = new Topic()
       let user = new User()
 
     //   answer.answer = faker.lorem.sentence()
@@ -71,24 +71,52 @@ router.get('/generate-fake-data', (req, res, next) => {
         user.dateCreated = faker.date.recent()
         user.dateModified = faker.date.recent()
         //check to make sure the following 2 credentials fakers are right based on the example schema
-        user.credentials.creditial = faker.lorem.text()
-        user.credentials.answers = faker.lorem.text()
-        user.answers = faker.lorem.sentence()
-        user.questions = faker.lorem.sentence()
-        user.comments = faker.lorem.text()
-        user.upvotedAnswers = faker.lorem.text()
-        user.upvotedComments = faker.lorem.text()
-        user.downvotedAnswers = faker.lorem.text()
-        user.downvotedComments = faker.lorem.text()
+        // user.credentials.credential = faker.lorem.text()
+        // user.credentials.answers = faker.lorem.text()
+        
+        
+        // user.questions = faker.lorem.sentence()
+        // user.comments = faker.lorem.text()
+        // user.upvotedAnswers = faker.lorem.text()
+        // user.upvotedComments = faker.lorem.text()
+        // user.downvotedAnswers = faker.lorem.text()
+        // user.downvotedComments = faker.lorem.text()
 
 
-        user.save((err) => {
-            if (err) throw err
-        })
-        res.end()
+        
+
+        // create lots of questions
+        let questionsArr = [];
+        for (let i = 0; i < 1; ++i) {
+          debugger;
+          let question = new Question();
+          question.question = faker.lorem.text();
+
+          console.log('Question:\n', question);
+
+          // create lots of answers
+          for (let i = 0; i < 1; ++i) {
+            let answer = new Answer();
+            answer.answer = faker.lorem.text();
+            console.log('Answer:\n', answer);
+
+            question.answers.push(answer._id);
+            questionsArr.push(question);
+            answer.save();
+            question.save();
+            
+          }
+          
+        }
+        questionsArr.forEach((question, idx) => user.questions.push(question));
+        user.save();
+      
+
+
+        
 
     }
-
+    res.end()
     // answer.save((err) => {
     //     if (err) throw err
     })

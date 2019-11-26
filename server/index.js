@@ -1,23 +1,29 @@
 const express = require('express');
-const http = require('http');
-const bodyParser = require('body-parser');
-const app = express();
-// const router = require('./router');
 const mongoose = require('mongoose');
-const cors = require('cors');
-// const keys = require('./config/keys');
+const bodyParser = require('body-parser');
 const mainRoutes = require('./routes/main')
 
-// DB Setup
-mongoose.connect('mogodb://localhost/projectq');
+mongoose.connect('mongodb://localhost/projectq', {useNewUrlParser: true})
 
-app.use(cors());
-app.use(mainRoutes);
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-// router(app);
+const app = express();
+
+// CORS
+app.use(function( req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  
+  next();
+});
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
+
+app.use(mainRoutes)
 
 app.listen(5000, () => {
-    console.log('Node js is listening on port ' + 5000)
+  console.log('Node.js listening on port ' + 5000)
 })
 
