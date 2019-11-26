@@ -8,7 +8,7 @@ const cors = require('cors');
 const keys = require('./config/keys');
 
 // DB Setup
-mongoose.connect(keys.MONGODB_URI);
+mongoose.connect('mogoddb://localhost/projectq');
 
 app.use(cors());
 
