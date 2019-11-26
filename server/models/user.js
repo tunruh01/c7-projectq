@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const CredSchema = new Schema({
   credential: String,
-  answers: [{ type: Schema.Types.ObjectId, ref: "Answer" }]
+  answers: [{ type: Schema.Types.ObjectId, ref: "answer" }]
 });
 
 const UserSchema = new Schema({
@@ -14,13 +14,13 @@ const UserSchema = new Schema({
   dateCreated: Date,
   dateModified: Date,
   credentials: [CredSchema],
-  answers: [{ type: Schema.Types.ObjectId, ref: "Answer" }],
-  questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
-  comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
-  upvotedAnswers: [{ type: Schema.Types.ObjectId, ref: "Answer" }],
-  upvotedComments: [{ type: Schema.Types.ObjectId, ref: "Answer" }],
-  downvotedAnswers: [{ type: Schema.Types.ObjectId, ref: "Answer" }],
-  downvotedComments: [{ type: Schema.Types.ObjectId, ref: "Answer" }]
+  answers: [{ type: Schema.Types.ObjectId, ref: "answer" }],
+  questions: [{ type: Schema.Types.ObjectId, ref: "question" }],
+  comments: [{ type: Schema.Types.ObjectId, ref: "comment" }],
+  upvotedAnswers: [{ type: Schema.Types.ObjectId, ref: "answer" }],
+  upvotedComments: [{ type: Schema.Types.ObjectId, ref: "answer" }],
+  downvotedAnswers: [{ type: Schema.Types.ObjectId, ref: "answer" }],
+  downvotedComments: [{ type: Schema.Types.ObjectId, ref: "answer" }]
 });
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("user", UserSchema);
