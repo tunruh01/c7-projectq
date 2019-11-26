@@ -12,11 +12,9 @@ class App extends Component {
         {/* <Navbar /> */}
         {/* <QuestionList /> */}
         <CategoryList />
+        <Qnav fixed="top" />
         <QuestionList />
         {/* <CategoryList /> */}
-        <Qnav fixed="top" />
-        {/* <QuestionList />
-        <CategoryList /> */}
 
       </div>
     )
