@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import QuestionList from './components/QuestionList'
 import CategoryList from './components/CategoryList'
+import QuestionDetail from './components/QuestionDetail'
 import Qnav from "./components/Qnav";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,6 +14,7 @@ class App extends Component {
         <Qnav fixed="top" />
         {/* <QuestionList />
         <CategoryList /> */}
+        <QuestionDetail />
       </div>
     )
   }
