@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "form": "^0.2.4",
     "form-control": "^1.0.0",
+=======
+    "lodash": "^4.17.15",
+>>>>>>> master
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
