@@ -8,9 +8,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar />
-        <QuestionList />
-        <CategoryList />
+        Provider
+        {/* <QuestionList />
+        <CategoryList /> */}
       </div>
     )
   }

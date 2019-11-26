@@ -6,13 +6,15 @@ class QuestionList extends Component {
   componentDidMount() {
     this.props.fetchQuestions()
   }
+  renderQuestions() {
+    return _.map(this.props.questions, questions => {
+      return
+    })
+  
+  }
+
 }
 
-renderQuestions() {
-  return _.map(this.props.questions, questions => {
-    return
-  })
 
-}
 
 export default QuestionList
