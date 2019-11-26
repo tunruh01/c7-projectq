@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
 import QuestionList from './components/QuestionList'
 import QuestionDetail from './components/QuestionDetail'
 // import CategoryList from './components/CategoryList'
 import SubmitQuestion from './components/SubmitQuestion'
 import Login from './components/Login'
-
 
 class App extends Component {
   render() {
