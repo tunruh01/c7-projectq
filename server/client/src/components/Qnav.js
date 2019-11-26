@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import QuestionList from './QuestionList'
 import Navbar from 'react-bootstrap/Navbar'
+import { Form, FormControl, Button, Nav } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
@@ -12,6 +14,7 @@ class Qnav extends Component {
 
     render() {
         return (
+          
             <Router>
                 <Navbar bg="dark" variant="dark">
                     <Link exact to="/"><Navbar.Brand href="/">ProjectQ</Navbar.Brand></Link>
@@ -19,7 +22,7 @@ class Qnav extends Component {
                         <Nav.Link href="/">Home</Nav.Link>
                     </Nav>
                     <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                        <FormControl type="text" placeholder="Search Q" className="mr-sm-2" />
                         <Button variant="outline-primary">Search</Button>
                         <Link exact to="/questions"><Button variant="outline-primary">Ask Q</Button></Link>
                     </Form>
@@ -27,7 +30,6 @@ class Qnav extends Component {
             </Router>
         )
     }
-
 }
 
 export default Qnav;

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 //import Navbar from './components/Navbar'
 import QuestionList from './components/QuestionList'
 import CategoryList from './components/CategoryList'
-
+import Qnav from "./components/Qnav";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   render() {
@@ -11,6 +12,12 @@ class App extends Component {
         {/* <Navbar /> */}
         {/* <QuestionList /> */}
         <CategoryList />
+        <QuestionList />
+        {/* <CategoryList /> */}
+        <Qnav fixed="top" />
+        {/* <QuestionList />
+        <CategoryList /> */}
+
       </div>
     )
   }

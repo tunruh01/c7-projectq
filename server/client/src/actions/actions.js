@@ -1,9 +1,10 @@
-import axios from "axios";
+// import axios from "axios";
 
-export const FETCH_CATEGORIES = 'fetch_categories';
-export const FETCH_QUESTIONS = 'fetch_questions';
-export const FETCH_ANSWERS = 'fetch_answers';
-export const CHANGE_CATEGORY = 'change_category';
+// export const FETCH_CATEGORIES = 'fetch_categories';
+// export const FETCH_QUESTIONS = 'fetch_questions';
+// export const FETCH_ANSWERS = 'fetch_answers';
+// export const SUBMIT_QUESTION = 'submit_question';
+// export const SUBMIT_ANSWER = 'submit_answer';
 
 const ROOT_URL = 'localhost:8000/'
 
