@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         {/* <Navbar /> */}
-        <QuestionList />
+        {/* <QuestionList /> */}
         <CategoryList />
       </div>
     )

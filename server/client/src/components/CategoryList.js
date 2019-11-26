@@ -1,30 +1,47 @@
 import React, { Component } from "react";
+
 // import { connect } from "react-redux";
 // import { bindActionCreators } from "redux";
 // import {fetchCategories, fetchQuestions} from "../actions/actions"
 
 class CategoryList extends Component {
-    componentDidMount() {
-        let categories = ['Sports', 'Technology', 'Music', 'Anime', ]
-        //this.props.fetchCategories();
-        return categories;
-    };
-
-    // selectFilterCategory(categoryId) {
-    //     this.props.fetchQuestions(categoryId);
-    // };
     
-    render(categories) {
+    constructor() {
+        super() 
+        
+        this.state = {
+            categories: [
+                {name: 'Health', id: 1},
+                {name: 'Technology', id: 2},
+                {name: 'Finance', id: 3}
+            ]
+        }
+        
+        this.renderCategories = this.renderCategories.bind(this);
+    }
+    
+
+    renderCategories() {
+        let categories = this.state.categories
+        
         return (
-                categories.map(c => (
-                    <p key={c._Id}>
-    <a href='/' onClick= {e=> {e.preventDefault(this.selectFilterCategory(c._Id));}}>{c.name}</a>                                                    
-                    </p>
-                ))
+        categories.map(c => (
+            <p key={c.id}>
+                <a href='/'onClick= {e=> {e.preventDefault(this.fetchQuestions(c.id));}}>{c.name}</a>                                                    
+            </p>
+        )))
+    }
+    
+    render() {
+        return (
+            <div>
+                {this.renderCategories()}
+            </div>   
         )
     }
 };
 
+//onClick= {e=> {e.preventDefault(this.selectFilterCategory(c.id));}}
 // function mapStateToProps({ questions, category}) {
 //     return { questions, category };
 // }
