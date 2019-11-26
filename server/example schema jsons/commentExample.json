@@ -4,5 +4,6 @@
   "userId": "posterId",
   "score": 5,
   "dateAdded": "dateTime",
-  "dateModified": "dateTime"
+  "dateModified": "dateTime",
+  "answerId": "answerId"
 }
