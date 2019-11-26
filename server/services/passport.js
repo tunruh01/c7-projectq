@@ -2,6 +2,20 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../models/user");
 
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .then(user => {
+      done(null, user);
+    })
+    .catch(e => {
+      done(new Error("Failed to deserialize an user"));
+    });
+});
+
 const googleLogin = new GoogleStrategy(
   {
     clientID: process.env.CLIENT_ID,
@@ -13,8 +27,7 @@ const googleLogin = new GoogleStrategy(
       googleId: profile.id
     }).then(existingUser => {
       if (existingUser) {
-        existingUser.avatar = profile.picture;
-        existingUser.save().then(user => done(null, user));
+        done(null, existingUser);
       } else {
         // we don't have a user record with this ID, make a new record!
         new User({
@@ -32,12 +45,3 @@ const googleLogin = new GoogleStrategy(
 
 // Tell passport to use this strategy
 passport.use(googleLogin);
-
-passport.serializeUser((user, done) => {
-  done(null, user._id);
-});
-
-passport.deserializeUser((id, done) => {
-  console.log(id);
-  done(null, id);
-});

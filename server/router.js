@@ -2,28 +2,31 @@ const passport = require("passport");
 //below loads passport don't remove
 const passportService = require("./services/passport");
 
-const requireGoogle = passport.authenticate("google", {
-  scope: ["profile", "email"]
-});
+const authRoutes = require("./routes/auth-routes");
 
-function isUserAuthenticated(req, res, next) {
-  if (req.user) {
-    next();
+const authCheck = (req, res, next) => {
+  if (!req.user) {
+    res.status(401).json({
+      authenticated: false,
+      message: "user has not been authenticated"
+    });
   } else {
-    res.status(401);
-    res.send("User Not Logged In");
+    next();
   }
-}
+};
 
 module.exports = function(app) {
-  app.get("/auth/google", requireGoogle);
-  app.get("/auth/google/callback", requireGoogle, (req, res) => {
-    res.send("You're logged in via Google!");
-  });
-  app.get("/api/current_user", isUserAuthenticated, (req, res) => {
-    res.send(req.user);
-  });
-  app.get("/api/current_user2", (req, res) => {
-    res.send("You can get here without being logged into google");
+  app.use("/auth", authRoutes);
+
+  // if it's already login, send the profile response,
+  // otherwise, send a 401 response that the user is not authenticated
+  // authCheck before navigating to home page
+  app.get("/", authCheck, (req, res) => {
+    res.status(200).json({
+      authenticated: true,
+      message: "user successfully authenticated",
+      user: req.user,
+      cookies: req.cookies
+    });
   });
 };

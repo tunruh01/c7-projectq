@@ -9,24 +9,38 @@ const cors = require("cors");
 const passport = require("passport");
 const keys = require("./config/keys");
 const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
 
 // DB Setup
-mongoose.connect(keys.MONGODB_URI);
+mongoose.connect(keys.MONGODB_URI, () => {
+  console.log("connected to mongo db");
+});
 
-app.use(cors());
+app.use(
+  cookieSession({
+    name: "session",
+    keys: [keys.COOKIE_KEY],
+    maxAge: 24 * 60 * 60 * 100
+  })
+);
+
+// parse cookies
+app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(
-  cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: ["helloworld"]
-  })
-);
-
 app.use(passport.initialize());
 app.use(passport.session());
+
+// set up cors to allow us to accept requests from our client
+app.use(
+  cors({
+    origin: "http://localhost:3000", // allow to server to accept request from different origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true // allow session cookie from browser to pass through
+  })
+);
 
 router(app);
 
