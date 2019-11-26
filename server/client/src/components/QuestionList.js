@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-// import styled from "styled-components";
-// import { Link } from 'react-router-dom';
-// import { connect } from "react-redux";
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import CategoryList from './CategoryList'
 // import * as actions from '../actions';
 // import _ from "lodash";
 // import InfiniteScroll from 'react-infinite-scroller';
@@ -57,9 +56,16 @@ class QuestionList extends Component {
   render() {
     return (
       <div>
-        {this.renderQuestions()}
+      <CategoryList/>
+        <div className="QuestionList">
+          <div className="container">
+            <h1>Questions</h1>
+            
+          </div>
+        </div>
       </div>
-    )
+
+    );
   }
 }
 
