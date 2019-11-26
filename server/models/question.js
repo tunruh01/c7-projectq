@@ -8,7 +8,7 @@ const QuestionsSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: "user" },
   answers: [{ type: Schema.Types.ObjectId, ref: "answer" }],
   dateAdded: Date,
-  DateModified: Date
+  dateModified: Date
 });
 
 module.exports = mongoose.model("question", QuestionsSchema);
