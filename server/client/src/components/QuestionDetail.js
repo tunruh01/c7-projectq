@@ -1,33 +1,66 @@
 import React, { Component } from "react";
-import Navbar from 'react-bootstrap/Navbar'
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import FormControl from "react-bootstrap/FormControl";
-import Nav from "react-bootstrap/Nav";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Pageheader } from 'react-bootstrap/';
+// import { Field, reduxForm } from "redux-form";
+import { Link } from "react-router-dom";
 
 
 
-class Qnav extends Component {
+
+class QuestionDetail extends Component {
+
 
     render() {
+        // temporary form until we implement redux so we can use redux-form 
         return (
-            <Router>
-                <Navbar bg="dark" variant="dark">
-                    <Link exact to="/"><Navbar.Brand href="/">ProjectQ</Navbar.Brand></Link>
-                    <Nav className="mr-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
-                    </Nav>
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button variant="outline-primary">Search</Button>
-                        <Link exact to="/questions"><Button variant="outline-primary">Ask Q</Button></Link>
-                    </Form>
-                </Navbar>
-            </Router>
+            <div>
+                <div>
+                    <h3>Category: Pizza</h3>
+                    <h1>
+                        Why in the world do people eat Papa John's ?
+                     </h1>
+                </div>
+
+                <div className='padding'>
+                    <h4 className="text-center" style={{ color: "grey" }}>Answer question</h4>
+                    <div className="col-md-6 offset-md-3 shadow-sm">
+                        <div className="row">
+                            <form
+                                name="addContact"
+                                className="offset-md-4"
+                            >
+                                <input
+                                    className="form-control"
+                                    placeholder="Name"
+                                />
+                                <input
+                                    className="form-control"
+                                    placeholder="Credentials"
+                                />
+                                <input
+                                    className="form-control"
+                                    placeholder="answer..."
+                                />
+
+                                <Link to="/">
+                                    <button className="btn-dark btn btn-sm">
+                                        Back
+                                    </button>
+                                </Link>
+                                <input
+                                    type="submit"
+                                    className="btn-dark btn btn-sm float-right"
+                                />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         )
     }
-
 }
 
-export default Qnav;
+
+
+
+export default QuestionDetail;
