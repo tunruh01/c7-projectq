@@ -10,9 +10,9 @@ class Qnav extends Component {
     render() {
         return (
             <Navbar bg="light" variant="light">
-                <Navbar.Brand href="#home">ProjectQ</Navbar.Brand>
+                <Navbar.Brand href="/">Project Q</Navbar.Brand>
                 <Nav className="mr-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
+                    <Nav.Link href="/">Home</Nav.Link>
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />

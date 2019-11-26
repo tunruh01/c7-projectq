@@ -1,57 +1,58 @@
 import React, { Component } from "react";
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // import styled from "styled-components";
 import Qnav from "./Qnav";
-import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
+// import { connect } from "react-redux";
 // import * as actions from '../actions';
 import _ from "lodash";
-import InfiniteScroll from 'react-infinite-scroller';
+// import InfiniteScroll from 'react-infinite-scroller';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class QuestionList extends Component {
-  constructor() {
-    super()
-
-    this.loadItems = this.loadItems.bind(this)
-
-    this.state = {
-      category: "software",
-      name: "fred",
-      question: "will we be ok?",
-      hasMoreItems: true
-    }
+  state = {
+    questions: [
+      {
+        category: "development",
+        name: "fred",
+        text: "will we be ok?"
+      },
+      {
+        category: "development",
+        name: "fred",
+        text: "will we be ok?"
+      },
+      {
+        category: "development",
+        name: "fred",
+        text: "will we be ok?"
+      }
+    ]
   }
 
-  componentDidMount() {
-    this.props.fetchQuestions()
+  handleClick = () => {
+    let path = '/question/:questionid';
+    this.props.history.push(path);
   }
 
-  loadItems(page) {
-    if (page < this.props.totalPages || this.props.totalPages === 0) {
-      this.props.fetchQuestions(page)
-    } else {
-      this.setState({ hasMoreItems: false })
-    }
-  }
-
+  //use Switch to ensure only one route renders at a time
   render() {
-    const questions = _.map(this.props.questions, (q) => {
-      return questions;
-    });
-
     return (
-      <InfiniteScroll
-        loadMore={this.loadItems}
-        pageStart={0}
-        hasMore={this.state.hasMoreItems}>
-      </InfiniteScroll>
+      <BrowserRouter>
+        <div className="QuestionList">
+          <div className="container">
+            <h1>Questions</h1>
+            {/* each contact on the main route should be clickable; when clicked, leads to a new route */}
+            <Switch>
+              <Route exact path={["/questions", "/"]} render={() => <QuestionList questions={this.state.questions} />} />
+              {/* <Route path="/contacts/new" render={props => <AddContact addContact={this.addContact} />} />
+              <Route path="/contacts/:contactId" render={routerProps => <ContactDetail routerProps={routerProps} contacts={this.state.contacts} />} /> */}
+            </Switch>
+          </div>
+        </div>
+      </BrowserRouter>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return { questions: state.questions, totalPages: state.total_pages }
-};
-
-export default connect(
-  mapStateToProps,
-  // actions
-)(QuestionList);
+export default QuestionList;
