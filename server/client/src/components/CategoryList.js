@@ -16,7 +16,7 @@
 //         let selectedCategory = this.props.questions.category;
 //         this.props.fetchQuestions(selectedCategory);
 //     };
-    
+
 //     // onClick= {e=> {e.preventDefault(this.selectFilterCategory(category));}}
 //     render() {
 //         return (
