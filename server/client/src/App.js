@@ -5,11 +5,12 @@ import Qnav from "./components/Qnav";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Qnav />
+        <Qnav fixed="top" />
         {/* <QuestionList />
         <CategoryList /> */}
       </div>
