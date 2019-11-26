@@ -49,7 +49,6 @@ class QuestionList extends Component {
           <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(q.id)); }}>{q.name}</a>
         </p>
       ))
-
     )
   }
 

@@ -12,7 +12,6 @@ class SubmitQuestion extends Component {
     this.handleClick = this.handleClick.bind(this);
 }
 
-
     handleClick() {
         const question = {
             questionText: this.state.questionText
@@ -47,7 +46,6 @@ render() {
         
         <br></br>
         </form>
-
         );
     };
 }
