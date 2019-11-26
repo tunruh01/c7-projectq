@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
-import Navbar from './components/Navbar'
+import Qnav from './components/Qnav'
 import QuestionList from './components/QuestionList'
-import CategoryList from './components/CategoryList'
+// import CategoryList from './components/CategoryList'
 
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar />
+        <Qnav />
         <QuestionList />
-        <CategoryList />
+        {/* <CategoryList /> */}
       </div>
     )
   }

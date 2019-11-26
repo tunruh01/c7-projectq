@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import QuestionList from './QuestionList'
 import Navbar from 'react-bootstrap/Navbar'
-import { Form, FormControl } from "react-bootstrap";
+import { Form, FormControl, Button, Nav } from "react-bootstrap";
 
 
 // Nav.Link under formcontrol was a button, can't tell if that Nav.link works yet
@@ -20,7 +21,6 @@ class Qnav extends Component {
             </Navbar>
         )
     }
-
 }
 
 export default Qnav;
