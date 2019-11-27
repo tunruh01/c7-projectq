@@ -19,7 +19,7 @@ mongoose.connect(keys.MONGODB_URI, () => {
 app.use(
   cookieSession({
     name: "session",
-    keys: [keys.COOKIE_KEY],
+    keys: [keys.COOKIE_KEY]
     maxAge: 24 * 60 * 60 * 100
   })
 );

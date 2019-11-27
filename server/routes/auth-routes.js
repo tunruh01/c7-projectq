@@ -1,9 +1,14 @@
 const router = require("express").Router();
 const passport = require("passport");
 const CLIENT_HOME_PAGE_URL = "http://localhost:3000";
+const { UserAuthCheck } = require("./user-check");
+
+router.get("/current_user", UserAuthCheck, (req, res) => {
+  res.send(req.user);
+});
 
 // when login is successful, retrieve user info
-router.get("/login/success", (req, res) => {
+router.get("/login/success", UserAuthCheck, (req, res) => {
   console.log("login/success accessed");
   console.log(req.user);
   if (req.user) {

@@ -3,7 +3,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../models/user");
 
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+  done(null, user);
 });
 
 passport.deserializeUser((id, done) => {
@@ -26,6 +26,8 @@ const googleLogin = new GoogleStrategy(
     User.findOne({
       googleId: profile.id
     }).then(existingUser => {
+      console.log("access token: ", accessToken);
+      console.log("refresh token: ", refreshToken);
       if (existingUser) {
         done(null, existingUser);
       } else {
