@@ -3,6 +3,7 @@ const passport = require("passport");
 const passportService = require("./services/passport");
 
 const authRoutes = require("./routes/auth-routes");
+const mainRoutes = require("./routes/main");
 
 const authCheck = (req, res, next) => {
   if (!req.user) {
@@ -29,4 +30,5 @@ module.exports = function(app) {
       cookies: req.cookies
     });
   });
+  app.use("/", mainRoutes);
 };
