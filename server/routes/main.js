@@ -138,6 +138,11 @@ router.get('/v1/questions', (req, res, next) => {
   if (!Object.keys(queryObj).length) {
     Question
     .find()
+    .populate("topics")
+    .populate({
+        path: "answers",
+        options: { limit: 1, sort: { answerScore: -1 } }
+    })
     .sort({ dateAdded: 'desc' })
     // .skip(perPage * (page - 1))
     // .limit(perPage)
