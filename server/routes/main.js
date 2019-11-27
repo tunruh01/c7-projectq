@@ -1,17 +1,17 @@
-const router = require('express').Router()
-const faker = require('faker')
-const Answer = require('../models/answer')
-const Comment = require('../models/comment')
-const Question = require('../models/question')
-const Topic = require('../models/topic')
-const User = require('../models/user')
+const router = require("express").Router();
+const faker = require("faker");
+const Answer = require("../models/answer");
+const Comment = require("../models/comment");
+const Question = require("../models/question");
+const Topic = require("../models/topic");
+const User = require("../models/user");
 
 // router.get('/generate-fake-data', (req, res, next) => {
 //     // debugger;
 //     for (let i = 0; i < 10; i++) {
 //       // let answer = new Answer()
 //       // let comment = new Comment()
-      
+
 //       // let topic = new Topic()
 //       let user = new User()
 
@@ -22,8 +22,7 @@ const User = require('../models/user')
 //     //   answer.dateAdded = faker.date.recent()
 //     //   answer.dateModified = faker.date.recent()
 //     //   answer.comments = faker.lorem.text()
-      
-      
+
 //     //   answer.save((err) => {
 //     //     if (err) throw err
 //     //   })
@@ -36,12 +35,11 @@ const User = require('../models/user')
 //     //     comment.dateAdded = faker.date.recent()
 //     //     comment.dateModified = faker.date.recent()
 //     //     comment.answerId = faker.random.number()
-    
 
 //     //     comment.save((err) => {
 //     //     if (err) throw err
 //     // })
-     
+
 //     //     question.id = faker.random.number()
 //     //     question.topic = faker.lorem.text()
 //     //     question.question = faker.lorem.sentence()
@@ -54,15 +52,12 @@ const User = require('../models/user')
 //     //         if (err) throw err
 //     //     })
 
-
 //     //     topic.id = faker.lorem.text()
 //     //     topic.comment = faker.lorem.text()
-        
 
 //     //     topic.save((err) => {
 //     //         if (err) throw err
 //     //     })
-
 
 //         user.googleId = faker.random.number()
 //         user.name = faker.name.firstName()
@@ -73,17 +68,13 @@ const User = require('../models/user')
 //         //check to make sure the following 2 credentials fakers are right based on the example schema
 //         // user.credentials.credential = faker.lorem.text()
 //         // user.credentials.answers = faker.lorem.text()
-        
-        
+
 //         // user.questions = faker.lorem.sentence()
 //         // user.comments = faker.lorem.text()
 //         // user.upvotedAnswers = faker.lorem.text()
 //         // user.upvotedComments = faker.lorem.text()
 //         // user.downvotedAnswers = faker.lorem.text()
 //         // user.downvotedComments = faker.lorem.text()
-
-
-        
 
 //         // create lots of questions
 //         let questionsArr = [];
@@ -104,16 +95,12 @@ const User = require('../models/user')
 //             questionsArr.push(question);
 //             answer.save();
 //             question.save();
-            
+
 //           }
-          
+
 //         }
 //         questionsArr.forEach((question, idx) => user.questions.push(question));
 //         user.save();
-      
-
-
-        
 
 //     }
 //     res.end()
@@ -122,90 +109,88 @@ const User = require('../models/user')
 //     })
 
 // Returns the questions, ???? per page
-router.get('/v1/questions', (req, res, next) => {
+router.get("/questions", (req, res, next) => {
+  console.log("Query request:\n", req.query);
 
-  // const perPage = 2;
+  let filterOptions = {};
+  const page = req.query.page || 1;
+  let perPage = 7;
 
-  // // return the first page by default
-  // const page = req.query.page || 1
+  const keyword = req.query.query;
+  const { topicId } = req.query;
 
-  /**************REVIEW UNLIMITED SCROLL FOR IMPLEMENTATION**************/
+  if (keyword) {
+    const searchVal = keyword + ".*";
+    filterOptions.question = new RegExp(searchVal, "gi");
+  }
 
-  const queryObj = req.query;
-  console.log('Query request:\n', req.query);
+  if (topicId) {
+    filterOptions.topics = topicId;
+  }
 
-  // Default with no query is by descending order of dateAdded
-  if (!Object.keys(queryObj).length) {
-    Question
-    .find()
+  Question.find(filterOptions)
+    .skip(perPage * page - perPage)
+    .limit(perPage)
     .populate("topics")
     .populate({
-        path: "answers",
-        options: { limit: 1, sort: { answerScore: -1 } }
+      path: "answers",
+      populate: { path: "userId" },
+      options: { sort: { score: -1 } }
     })
-    .sort({ dateAdded: 'desc' })
-    // .skip(perPage * (page - 1))
-    // .limit(perPage)
+    .sort({ dateAdded: "desc" })
     .exec((err, questions) => {
-      if (err) console.log(err);
-      else {
-        res.send( {
-          // questionsPerPage: ,
-          // pageNum: 
-          totalNumQuestions: questions.length,
-          questions
-        });
-      }
-      
-    });
-  }
-  
-  // keyword search query
-  const keyword = req.query.query;
-  
-  if (keyword) {
-    const searchVal = keyword + '.*';
+      Question.count(filterOptions).exec((err, count) => {
+        let getTopAnswer = question => {
+          let firstAnswer = question.answers.length
+            ? question.answers[0]
+            : null;
 
-    const questionsObj = Question.find({question: new RegExp(searchVal, 'gi')}, (err, res) => {
-      if (err) console.log(err);
-    });
-    
-    questionsObj.exec((err, questions) => {
-      if (err) console.log(err);
-      else {
-        res.send({
-          totalNumQuestions: questions.length,
-          questions
-        });
-      }
-      
-    });
-  } 
+          let topAnswer = {};
 
-  // topic search query
-  const topicId = req.query.topicId;
-  
-  if (topicId) {
-    const searchVal = topicId;
+          if (firstAnswer) {
+            topAnswer._id = firstAnswer._id;
+            topAnswer.user = {};
+            topAnswer.user._id = firstAnswer.userId._id;
+            topAnswer.user.userName = firstAnswer.userId.name;
 
-    const questionsObj = Question.find({topics: topicId }, (err, res) => {
-      if (err) console.log(err);
-    });
-    
-    questionsObj.exec((err, questions) => {
-      if (err) console.log(err);
-      else {
-        res.send({
-          totalNumQuestions: questions.length,
-          questions
-        });
-      }
-      
-    });
-  }  
-   
-  
+            let cred = firstAnswer.userId.credentials.find(credential =>
+              credential.answers.includes(question._id)
+            );
 
+            topAnswer.user.userCred = "todo";
+            topAnswer.user.userAvatar = firstAnswer.userId.avatar;
+
+            topAnswer.answer = firstAnswer.answer;
+            topAnswer.answerDate = firstAnswer.dateAdded;
+            topAnswer.answerScore = firstAnswer.score;
+
+            return topAnswer;
+          }
+
+          return null;
+        };
+
+        if (err) console.log(err);
+        else {
+          res.send({
+            // questionsPerPage: ,
+            // pageNum:
+            pageNum: parseInt(page, 10),
+            questionsPerPage: perPage,
+            totalNumQuestions: count,
+            questions: questions.map(question => {
+              return {
+                _id: question._id,
+                topics: question.topics,
+                question: question.question,
+                answerCount: question.answers.length,
+                topAnswer: getTopAnswer(question)
+              };
+            })
+          });
+        }
+      });
+    });
 });
 
-module.exports = router
+module.exports = router;
