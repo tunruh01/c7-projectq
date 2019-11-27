@@ -13,7 +13,7 @@ class App extends Component {
           <Route exact path="/" component={QuestionList} />
           <Route exact path="/question" component={SubmitQuestion} />
           <Route exact path="/question/:questionid" component={QuestionDetail} />
-          {/* <Route exact path="/login" component={Login} /> */}       
+          {/* <Route exact path="/login" component={Login} /> */}
         </ Switch>
       </div>
     )
