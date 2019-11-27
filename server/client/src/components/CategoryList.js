@@ -5,28 +5,16 @@ import { bindActionCreators } from "redux";
 import { fetchCategories, fetchQuestions } from "../actions/actions"
 
 class CategoryList extends Component {
-
-    // constructor() {
-    //     super() 
-
-    //     this.state = {
-    //         categories: [
-    //             {name: 'Health', id: 1},
-    //             {name: 'Technology', id: 2},
-    //             {name: 'Finance', id: 3}
-    //         ]
-    //     }
-
-    //     this.renderCategories = this.renderCategories.bind(this);
-    // }
-    componentDidMount() {
+    
+    componentDidMount () {
         this.props.fetchCategories()
-        console.log(this.props.category.topics);
-    }
+        console.log(this.props);
+      }
+    
 
 
     renderCategories() {
-        console.log(this.props.category);
+        console.log(this.props);
         let categories = this.props.category.topics
 
         return (
