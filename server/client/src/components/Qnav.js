@@ -11,7 +11,6 @@ class Qnav extends Component {
     render() {
         return (
 
-            <Router>
                 <Navbar bg="light" variant="light">
                     <Link exact to="/"><Navbar.Brand href="/">Project Q</Navbar.Brand></Link>
                     <Nav className="mr-auto">
@@ -22,11 +21,10 @@ class Qnav extends Component {
                         <Button variant="outline-secondary mr-3" size="sm">Search</Button>
                     </Form>
                     <Form inline>
-                        <Link exact to="/questions"><Button variant="outline-danger mr-3" size="sm">Ask Question</Button></Link>
+                        <Link exact to="/question"><Button variant="outline-danger mr-3" size="sm">Ask Question</Button></Link>
                         <Image src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png" roundedCircle />
                     </Form>
                 </Navbar>
-            </Router>
         )
     }
 }

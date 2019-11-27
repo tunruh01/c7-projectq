@@ -193,4 +193,32 @@ router.get("/questions", (req, res, next) => {
     });
 });
 
+router.post('/question', (req, res, next) => {
+  let newQuestion = new Question();
+
+  newQuestion.topics = req.body.topics;
+  newQuestion.question = req.body.question;
+
+  newQuestion.save((err, question) => {
+    if (err) console.log(err);
+    res.send(question);
+  })
+  
+});
+
+router.get('/topics', (req, res) => {
+  const getTopic = Topic.find();
+  console.log('this is correct' + getTopic)
+  
+  getTopic.exec((err, topics) => {
+    if (err) console.log(err);
+    res.send(topics);
+
+  })
+  
+})
+
+
+
+
 module.exports = router;

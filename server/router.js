@@ -30,5 +30,5 @@ module.exports = function(app) {
   //     cookies: req.cookies
   //   });
   // });
-  app.use("/", mainRoutes);
+  app.use("/api", mainRoutes);
 };
