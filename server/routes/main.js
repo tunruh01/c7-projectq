@@ -175,18 +175,18 @@ router.get("/questions", (req, res, next) => {
           res.send({
             // questionsPerPage: ,
             // pageNum:
-            pageNum: parseInt(page, 10),
-            questionsPerPage: perPage,
-            totalNumQuestions: count,
-            questions: questions.map(question => {
-              return {
+            // pageNum: parseInt(page, 10),
+            // questionsPerPage: perPage,
+            // totalNumQuestions: count,
+            // questions: questions.map(question => {
+              // return {
                 _id: question._id,
                 topics: question.topics,
                 question: question.question,
                 answerCount: question.answers.length,
                 topAnswer: getTopAnswer(question)
-              };
-            })
+              // };
+            // })
           });
         }
       });
@@ -218,6 +218,37 @@ router.get('/topics', (req, res) => {
   
 })
 
+
+// router.get('/question/:questionId', (req, res, next) => {
+//   let questionId = req.query.id;
+//   const questionObj = Question.find().distinct('id', function (err, quesId) {
+//     if (err) console.log(err);
+//     return questionId;
+//   });
+
+ 
+//  questionObj.exec((err, quesId) => {
+//     if (err) console.log(err);
+//     else {
+//       res.send(quesId);
+//             }
+          
+//     });
+
+// });
+
+router.get('/question/:questionId', (req, res) => {
+  const questionId = req.params.question;
+
+  // find product in db
+  Question
+    .findById(questionId, (err, quesId) => {
+      if (err) console.log(err);
+      else {
+        res.send(quesId);
+      }
+    })
+});
 
 
 
