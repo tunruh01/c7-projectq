@@ -192,10 +192,11 @@ router.get("/questions", (req, res, next) => {
       });
     });
 });
+
 router.post('/question', (req, res, next) => {
   let newQuestion = new Question();
 
-  newQuestion.category = req.body.category;
+  newQuestion.topics = req.body.topics;
   newQuestion.question = req.body.question;
 
   newQuestion.save((err, question) => {
@@ -203,5 +204,9 @@ router.post('/question', (req, res, next) => {
     res.send(question);
   })
 });
+
+
+
+
 
 module.exports = router;
