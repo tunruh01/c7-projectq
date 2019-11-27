@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import CategoryList from './CategoryList'
-// import * as actions from '../actions';
+import * as actions from '../actions/actions';
+import { bindActionCreators } from 'redux'
 // import _ from "lodash";
+import { connect } from "react-redux";
 // import InfiniteScroll from 'react-infinite-scroller';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -34,6 +34,11 @@ class QuestionList extends Component {
       ]
     }
   }
+  // Fetch questions once page assets are ready
+  componentDidMount () {
+    this.props.fetchQuestions()
+  }
+
   // handleClick = () => {
   //   let path = '/question/:questionid';
   //   this.props.history.push(path);
@@ -52,6 +57,8 @@ class QuestionList extends Component {
     )
   }
 
+  
+
   render() {
     return (
       <div>
@@ -68,5 +75,12 @@ class QuestionList extends Component {
   }
 }
 
-export default QuestionList;
+const mapStateToProps = (state) => {
+  return {questions: state.questions}
+}
 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actions, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionList)
