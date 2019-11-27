@@ -20,3 +20,17 @@
 .App-link {
   color: #09d3ac;
 }
+
+.FormControl {
+  justify-content: center;
+  margin-right: 100px;
+  align-content: center
+}
+
+.Navbar {
+  color: #258078
+}
+
+.container {
+    list-style-type: none;
+}
