@@ -3,12 +3,12 @@ info:
   title: ProjectQ API
   version: "1.0.0"
 # the domain of the service
-host: "localhost:3001"
+host: "localhost:5000"
 # array of all schemes that your API supports
 schemes:
   - https
 # will be prefixed to all paths
-basePath: /v1
+basePath: /
 produces:
   - application/json
 paths:
@@ -48,6 +48,11 @@ paths:
         - name: query
           in: query
           description: Filter questions results by keyword.
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: Specifies page of data to return
           required: false
           type: string
       tags:
@@ -441,10 +446,6 @@ definitions:
       question:
         type: string
         description: The question string.
-      questionScore:
-        type: integer
-        format: int32
-        description: Score for the question (can be negative).
       answerCount:
         type: integer
         format: int32
