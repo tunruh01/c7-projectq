@@ -218,7 +218,7 @@ router.get('/topics', (req, res) => {
   
 });
 
-// Returns the answers related to the requested questionId
+// Returns the answers related to the requested questionId sorted by most popular
 router.get("/question/:questionId/answers", (req, res, next) => {
   const questionId = req.params.questionId;
   const answersObj = Answer.find({questionId});
