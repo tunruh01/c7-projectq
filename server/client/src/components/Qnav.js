@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../App.css";
 import Navbar from 'react-bootstrap/Navbar'
 import { Form, FormControl, Button, Nav, Image } from "react-bootstrap";
 import { BrowserRouter as Router, Link } from "react-router-dom";
