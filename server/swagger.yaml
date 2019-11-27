@@ -108,9 +108,9 @@ paths:
           description: The ID of the desired question detail.
           required: true
           type: string
-        - name: sortBy
+        - name: page
           in: query
-          description: Options to sort answers result by. [Popular, Date]
+          description: Specifies page of data to return
           required: false
           type: string
       tags:

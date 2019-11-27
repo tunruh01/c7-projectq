@@ -108,7 +108,7 @@ const User = require("../models/user");
 //     //     if (err) throw err
 //     })
 
-// Returns the questions, ???? per page
+// Returns the questions
 router.get("/questions", (req, res, next) => {
   console.log("Query request:\n", req.query);
 
@@ -216,9 +216,24 @@ router.get('/topics', (req, res) => {
 
   })
   
-})
+});
 
+// Returns the answers related to the requested questionId
+router.get("/question/:questionId/answers", (req, res, next) => {
+  const questionId = req.params.questionId;
+  const answersObj = Answer.find({questionId});
+  const page = req.query.page || 1;
+  const perPage = 7;
 
+  answersObj
+    .sort({score: 'desc'})
+    .skip(perPage * (page - 1))
+    .limit(perPage)
+    .exec((err, answers) => {
+    if (err) console.log(err);
+    res.send(answers);
+  });
 
+});
 
 module.exports = router;
