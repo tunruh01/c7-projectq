@@ -1,28 +1,33 @@
 import React, { Component } from "react";
 
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-// import {fetchCategories, fetchQuestions} from "../actions/actions"
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {fetchCategories, fetchQuestions} from "../actions/actions"
 
 class CategoryList extends Component {
     
-    constructor() {
-        super() 
+    // constructor() {
+    //     super() 
         
-        this.state = {
-            categories: [
-                {name: 'Health', id: 1},
-                {name: 'Technology', id: 2},
-                {name: 'Finance', id: 3}
-            ]
-        }
+    //     this.state = {
+    //         categories: [
+    //             {name: 'Health', id: 1},
+    //             {name: 'Technology', id: 2},
+    //             {name: 'Finance', id: 3}
+    //         ]
+    //     }
         
-        this.renderCategories = this.renderCategories.bind(this);
-    }
+    //     this.renderCategories = this.renderCategories.bind(this);
+    // }
+    componentDidMount () {
+        this.props.fetchCategories()
+        console.log(this.props.category.topics);
+      }
     
 
     renderCategories() {
-        let categories = this.state.categories
+        console.log(this.props.category);
+        let categories = this.props.category.topics
         
         return (
         categories.map(c => (
@@ -42,13 +47,13 @@ class CategoryList extends Component {
 };
 
 //onClick= {e=> {e.preventDefault(this.selectFilterCategory(c.id));}}
-// function mapStateToProps({ questions, category}) {
-//     return { questions, category };
-// }
+function mapStateToProps({ questions, category}) {
+    return { questions, category };
+}
 
-// function mapDispatchToProps(dispatch) {
-//     return bindActionCreators(
-//     { fetchQuestions, fetchCategories }, dispatch);
-// }
-export default CategoryList;
-//export default connect(mapStateToProps,mapDispatchToProps)(CategoryList);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(
+    { fetchQuestions, fetchCategories }, dispatch);
+}
+// export default CategoryList;
+export default connect(mapStateToProps,mapDispatchToProps)(CategoryList);

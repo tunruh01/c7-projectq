@@ -1,13 +1,13 @@
 // import axios from "axios";
 
-// export const FETCH_CATEGORIES = 'fetch_categories';
+export const FETCH_CATEGORIES = 'fetch_categories';
 export const FETCH_QUESTIONS = 'fetch_questions';
 // export const FETCH_ANSWERS = 'fetch_answers';
 // export const SUBMIT_QUESTION = 'submit_question';
 // export const SUBMIT_ANSWER = 'submit_answer';
 
 export const fetchQuestions = () => {
-
+ 
   // This is normally an axios call - returning questions from database. Hardcoding example of what normally should be returned
   const fakeGetQuestionsRequest = {
     "pageNum": 0,
@@ -48,17 +48,25 @@ export const fetchQuestions = () => {
     payload: fakeGetQuestionsRequest
   };
 }
-// // export function fetchCategories() {
-// //     const request = axios
-// //         .get(`${ROOT_URL}?category=`)
-// //         .catch(function(error){
-// //             console.log('error: ', error);
-// //         });
-// //     return {
-// //         type: FETCH_CATEGORIES,
-// //         payload: request
-// //     };
-// // };
+export function fetchCategories() {
+    // const request = axios
+    //     .get(`${ROOT_URL}?category=`)
+    //     .catch(function(error){
+    //         console.log('error: ', error);
+    //     });
+
+  const fakeGetCategoryRequest = {
+    'topics': [
+    {'id': '1', 'name': 'Health'},
+    {'id': '2', 'name': 'Technology'},
+    {'id': '3', 'name': 'Finance'}
+  ]}
+
+  return {
+      type: FETCH_CATEGORIES,
+      payload: fakeGetCategoryRequest
+  };
+};
 
 // export function fetchQuestions(category) {
 //     const request = axios

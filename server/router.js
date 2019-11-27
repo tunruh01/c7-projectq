@@ -1,11 +1,34 @@
-const Authentication = require('./controllers/authentication')
-const passportService = require('./services/passport')
-const passport = require('passport')
+const passport = require("passport");
+//below loads passport don't remove
+const passportService = require("./services/passport");
 
-const requireAuth = passport.authenticate('jwt', { session: false })
-const requireSignin = passport.authenticate('local', { session: false })
+const authRoutes = require("./routes/auth-routes");
+const mainRoutes = require("./routes/main");
 
-module.exports = function (app) {
-  app.post('/auth/signin', requireSignin, Authentication.signin)
-  app.post('/auth/signup', Authentication.signup)
-}
+const authCheck = (req, res, next) => {
+  if (!req.user) {
+    res.status(401).json({
+      authenticated: false,
+      message: "user has not been authenticated"
+    });
+  } else {
+    next();
+  }
+};
+
+module.exports = function(app) {
+  app.use("/auth", authRoutes);
+
+  // if it's already login, send the profile response,
+  // otherwise, send a 401 response that the user is not authenticated
+  // authCheck before navigating to home page
+  app.get("/", authCheck, (req, res) => {
+    res.status(200).json({
+      authenticated: true,
+      message: "user successfully authenticated",
+      user: req.user,
+      cookies: req.cookies
+    });
+  });
+  app.use("/", mainRoutes);
+};
