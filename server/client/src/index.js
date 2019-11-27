@@ -3,15 +3,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import promise from 'redux-promise'
+import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers";
 import Qnav from './components/Qnav'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-const store = createStore(rootReducer, {})
+const storeWithMiddleware = applyMiddleware(promise)(createStore);
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={storeWithMiddleware(rootReducer)}>
     <Router>
       <Qnav fixed="top" />
       < App >
