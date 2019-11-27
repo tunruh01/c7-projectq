@@ -29,5 +29,8 @@
 
 .Navbar {
   color: #258078
+}
 
+.container {
+    list-style-type: none;
 }
