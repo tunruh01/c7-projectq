@@ -80,16 +80,21 @@ class QuestionList extends Component {
     return (
       <div>
         <CategoryList />
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Questions</h5>
-            <div class="card-text">{this.renderQuestions()}
-              <i class="fal fa-arrow-alt-circle-up"></i>
-              <i class="far fa-comment"></i>
+        <div class="container-fluid">
+          <div class="row flex-nowrap">
+            <div class="col-offset-2 col-md-12 col-12">
+              <div class="card card-body p-2">
+                <h4>Questions</h4>
+                <ul class="nav nav-pills flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">{this.renderQuestions()}</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div >
+      </div>
     )
   }
 }

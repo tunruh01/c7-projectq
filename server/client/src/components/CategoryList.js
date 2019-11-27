@@ -42,7 +42,7 @@ class CategoryList extends Component {
 
             <div class="container-fluid">
                 <div class="row flex-nowrap">
-                    <div class="col-md-4 col-12 sidebar">
+                    <div class="col-md-2 col-12 sidebar">
                         <div class="card card-body p-2">
                             <h4>Category</h4>
                             <ul class="nav nav-pills flex-column">
