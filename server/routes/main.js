@@ -177,7 +177,27 @@ router.get('/v1/questions', (req, res, next) => {
     });
   } 
 
-  // 
+  // topic search query
+  const topicId = req.query.topicId;
+  
+  if (topicId) {
+    const searchVal = topicId;
+
+    const questionsObj = Question.find({topics: topicId }, (err, res) => {
+      if (err) console.log(err);
+    });
+    
+    questionsObj.exec((err, questions) => {
+      if (err) console.log(err);
+      else {
+        res.send({
+          totalNumQuestions: questions.length,
+          questions
+        });
+      }
+      
+    });
+  }  
    
   
 
