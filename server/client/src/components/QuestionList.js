@@ -34,6 +34,7 @@ class QuestionList extends Component {
     //   ]
     // }
   // }
+
   // Fetch questions once page assets are ready
   componentDidMount () {
     this.props.fetchQuestions()
@@ -57,7 +58,7 @@ class QuestionList extends Component {
   // }
 
   renderQuestions() {
-    // If questions in state, loop and return each one
+    // If questions in state; loop and return each one
     if(this.props.questions.questionsList) {
       return (
         this.props.questions.questionsList.map(q => (

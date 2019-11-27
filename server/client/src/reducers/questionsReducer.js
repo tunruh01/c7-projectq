@@ -9,9 +9,10 @@ export default function(state = DEFAULT_STATE, action) {
     case FETCH_QUESTIONS:
       if (action.payload) {
         let newState = Object.assign({}, state)
+        // Add each question object to arr and push to state/store
         action.payload.questions.forEach(question => {
           newState.questionsList.push(question)
-          })
+        })
         return newState;
       }
       return state;
