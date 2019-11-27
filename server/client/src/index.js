@@ -1,4 +1,4 @@
-import { BrowserRouter as Router }  from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -15,11 +15,10 @@ ReactDOM.render(
   <Provider store={storeWithMiddleware(rootReducer)}>
     <Router>
       <Qnav fixed="top" />
-      < App >
-      </App >
+      < App />
     </Router>
   </Provider>,
-    document.getElementById('root')
+  document.getElementById('root')
 );
 
     // If you want your app to work offline and load faster, you can change
