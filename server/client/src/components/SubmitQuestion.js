@@ -1,53 +1,80 @@
 
 import React, { Component } from 'react';
+import { Field, reduxForm } from "redux-form";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { createQuestion } from '../actions/actions';
 
 class SubmitQuestion extends Component {
-    constructor() {
-        super()
+    renderField(field) {
+        const { meta: { touched, error } } = field;
+        const className = `form-group ${touched && error ? "has-danger" : ""}`;
     
-    this.state = {
-        questionText: 'What does hello world mean?',
-        
-    }
-    this.handleClick = this.handleClick.bind(this);
-}
+        return (
+          <div className={className}>
+            <label>{field.label}</label>
+            <input className="form-control" type="text" {...field.input} />
+            <div className="text-help">
+              {touched ? error : ""}
+            </div>
+          </div>
+        );
+      }
+    // this.handleClick = this.handleClick.bind(this);
 
-    handleClick() {
-        const question = {
-            questionText: this.state.questionText
-        }
-        this.props.addQuestion(question);
-    }
+
+
+
+    //change the address after deployment
+    // fetch('localhost:3000/question/', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+          
+    //     })
+    //   })
+   
+    onSubmit(values) {
+        this.props.createQuestion(values, () => {
+          this.props.history.push("/question/{questionId}");
+        });
+      }
 
 render() {
+    const { handleSubmit } = this.props;
     return (
-        <form>
-        <h1>Add Question</h1>
-
-        <label>Username asked</label>
-       <div className="form-group"> 
-        <input 
-        className="questionText" 
-        placeholder="Start your question with What, How, Why, etc " 
-        value={this.state.questionText}
-        onChange={event => this.setState({questionText: event.target.value})}
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+        <Field
+          label="User asked"
+          name="title"
+          component={this.renderField}
+          
+        //   placeholder="Start your question with What, How, Why, etc"
+        //   onChange={event => this.handleClick({questionText: event.target.value})}
         />
-      
-        <hr></hr>
-
-        <br></br>
-
-        </div>
-        {/* on click route to the new question's detail page */}
-        <button type="button" className="btn btn-primary" id="bPost">Add Question</button>
-
-        {/* cancel button needs to re route user back to the last route they were on. */}
-        <button type="button" className="btn btn-danger" id="bPost">Cancel</button>
         
-        <br></br>
-        </form>
+        <button type="submit" className="btn btn-primary">Add Question</button>
+        <Link to="/" className="btn btn-danger">Cancel</Link>
+      </form>
+
         );
     };
 }
 
-export default SubmitQuestion;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ createQuestion }, dispatch);
+  }
+
+const postNewQuestion = reduxForm({
+    form: 'questionNew'
+    
+})(SubmitQuestion);
+
+export default connect(null, mapDispatchToProps)(postNewQuestion);
+
+
+//<form onSubmit={handleSubmit(this.onSubmit.bind(this))}></form>

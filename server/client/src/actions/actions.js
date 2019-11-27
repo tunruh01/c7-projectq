@@ -1,10 +1,11 @@
-// import axios from "axios";
-
+import axios from "axios";
 // export const FETCH_CATEGORIES = 'fetch_categories';
 export const FETCH_QUESTIONS = 'fetch_questions';
 // export const FETCH_ANSWERS = 'fetch_answers';
-// export const SUBMIT_QUESTION = 'submit_question';
+export const SUBMIT_QUESTION = 'submit_question';
 // export const SUBMIT_ANSWER = 'submit_answer';
+export const CREATE_QUESTION = 'create_question';
+export const ROOT_URL = '/api';
 
 export const fetchQuestions = () => {
 
@@ -83,3 +84,15 @@ export const fetchQuestions = () => {
 //     payload: request
 // };
 // };
+
+
+
+export function createQuestion (values) {
+  const request = axios.post(`${ROOT_URL}/question`, values)
+  // request.then(() => callback());
+
+  return {
+      type: CREATE_QUESTION,
+      payload: request
+  };
+};
