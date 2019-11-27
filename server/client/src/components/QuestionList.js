@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../App.css";
 import CategoryList from './CategoryList'
-//import { ListGroup } from 'react-bootstrap'
+import { ListGroup, Button } from 'react-bootstrap'
 import * as actions from '../actions/actions';
 //import { bindActionCreators } from 'redux'
 // import _ from "lodash";
@@ -33,23 +33,21 @@ class QuestionList extends Component {
     }
 
   }
-
-
   render() {
     console.log('questionList render props: ', this.props)
     return (
       <div>
-        <CategoryList/>
-
-        <div class="container">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <li class="list-group-item">Questions</li>
-              <li class="list-group-item">{this.renderQuestions()}</li>
-            </li>
-          </ul>
+        <CategoryList />
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">Questions</h5>
+            <div className="card-text">{this.renderQuestions()}
+              <i className="fal fa-arrow-alt-circle-up"></i>
+              <i className="far fa-comment"></i>
+            </div>
+          </div>
         </div>
-      </div>
+      </div >
     )
   }
 }
