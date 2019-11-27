@@ -17,12 +17,12 @@ class Qnav extends Component {
                         <Nav.Link href="/">Home</Nav.Link>
                     </Nav>
                     <Form inline>
-                        <FormControl size="sm" type="text" placeholder="Search Questions" className="mr-md-2" />
-                        <Button variant="outline-secondary mr-1" size="sm">Search</Button>
-                        <Col xs={6} md={4}>
-                            <Image src="holder.js/171x180" roundedCircle />
-                        </Col>
-                        <Link exact to="/questions"><Button variant="outline-danger mr-1" size="sm">Ask Question</Button></Link>
+                        <FormControl size="sm" type="text" placeholder="Search Questions" className="col-xs-6 mr-1" />
+                        <Button variant="outline-secondary mr-3" size="sm">Search</Button>
+                    </Form>
+                    <Form inline>
+                        <Link exact to="/questions"><Button variant="outline-danger mr-3" size="sm">Ask Question</Button></Link>
+                        <Image src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png" roundedCircle />
                     </Form>
                 </Navbar>
             </Router>
