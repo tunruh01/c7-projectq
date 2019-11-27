@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../App.css";
 import CategoryList from './CategoryList'
-import { ListGroup } from 'react-bootstrap'
+//import { ListGroup } from 'react-bootstrap'
 import * as actions from '../actions/actions';
 import { bindActionCreators } from 'redux'
 // import _ from "lodash";
@@ -79,7 +79,7 @@ class QuestionList extends Component {
     console.log('questionList render props: ', this.props)
     return (
       <div>
-        <CategoryList />
+        <CategoryList/>
 
         <div class="container">
           <ul class="list-group list-group-flush">
@@ -98,8 +98,5 @@ const mapStateToProps = (state) => {
   return state
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actions, dispatch)
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuestionList)
+export default connect(mapStateToProps, actions)(QuestionList)
