@@ -1,29 +1,64 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const mainRoutes = require('./routes/main')
-
-mongoose.connect('mongodb://localhost/projectq', {useNewUrlParser: true})
-
+require("dotenv").config();
+const express = require("express");
+const http = require("http");
+const bodyParser = require("body-parser");
 const app = express();
+const router = require("./router");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const passport = require("passport");
+const keys = require("./config/keys");
+const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
 
-// CORS
-app.use(function( req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  
-  next();
+// DB Setup
+mongoose.connect(keys.MONGODB_URI, () => {
+  console.log("connected to mongo db");
 });
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
+app.use(
+  cookieSession({
+    name: "session",
+    keys: [keys.COOKIE_KEY],
+    maxAge: 24 * 60 * 60 * 100
+  })
+);
 
-app.use(mainRoutes)
+// parse cookies
+app.use(cookieParser());
 
-app.listen(5000, () => {
-  console.log('Node.js listening on port ' + 5000)
-})
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+// set up cors to allow us to accept requests from our client
+app.use(
+  cors({
+    origin: "http://localhost:3000", // allow to server to accept request from different origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true // allow session cookie from browser to pass through
+  })
+);
+
+router(app);
+
+if (process.env.NODE_ENV === "production") {
+  // Express will serve up production assets
+  // like our main.js file, or main.css file!
+  app.use(express.static("client/build"));
+
+  // Express will serve up the index.html file
+  // if it doesn't recognize the route
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
+// Server Setup
+const port = process.env.PORT || 5000;
+const server = http.createServer(app);
+server.listen(port);
+console.log("Server listening on:", port);
