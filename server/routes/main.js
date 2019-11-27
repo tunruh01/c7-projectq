@@ -192,5 +192,16 @@ router.get("/questions", (req, res, next) => {
       });
     });
 });
+router.post('/question', (req, res, next) => {
+  let newQuestion = new Question();
+
+  newQuestion.category = req.body.category;
+  newQuestion.question = req.body.question;
+
+  newQuestion.save((err, question) => {
+    if (err) console.log(err);
+    res.send(question);
+  })
+});
 
 module.exports = router;
