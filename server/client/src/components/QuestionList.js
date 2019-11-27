@@ -22,10 +22,11 @@ class QuestionList extends Component {
   renderQuestions() {
     // If questions in state; loop and return each one
     if (this.props.questions.questionsList) {
+      console.log(this.props.questions.questionsList);
       return (
         this.props.questions.questionsList.map(q => (
-          <p key={parseInt(q.id)}>
-            <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(q.id)); }}>{q.question}</a>
+          <p key={q._id}>
+            <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(q._id)); }}>{q.question}</a>
             <p>{q.topAnswer.answer}</p>
           </p>
         ))
