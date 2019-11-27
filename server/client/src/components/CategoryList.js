@@ -1,41 +1,54 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import Col from "react-bootstrap/Col";
+
+// import { connect } from "react-redux";
+// import { bindActionCreators } from "redux";
+// import {fetchCategories, fetchQuestions} from "../actions/actions"
 
 class CategoryList extends Component {
-    componentdidmount() {
-        let categories = this.props.fetchCategories();
-        return categories;
-    };
-
-    selectFilterCategory(category) {
-        console.log('clicked category')
-        console.log(category);
-        this.props.changeCategory(category);
-        let selectedCategory = this.props.questions.category;
-        this.props.fetchQuestions(selectedCategory);
-    };
     
-    // onClick= {e=> {e.preventDefault(this.selectFilterCategory(category));}}
+    constructor() {
+        super() 
+        
+        this.state = {
+            categories: [
+                {name: 'Health', id: 1},
+                {name: 'Technology', id: 2},
+                {name: 'Finance', id: 3}
+            ]
+        }
+        
+        this.renderCategories = this.renderCategories.bind(this);
+    }
+    
+
+    renderCategories() {
+        let categories = this.state.categories
+        
+        return (
+        categories.map(c => (
+            <p key={c.id}>
+                <a href='/'onClick= {e=> {e.preventDefault(this.fetchQuestions(c.id));}}>{c.name}</a>                                                    
+            </p>
+        )))
+    }
+    
     render() {
         return (
-                categories.map(c => (
-                    <p key={c._Id}>
-                        <a onClick= {e=> {e.preventDefault(this.selectFilterCategory(category));}}></a>                                                    
-                    </p>
-                ))
+            <div>
+                {this.renderCategories()}
+            </div>   
         )
     }
 };
 
-function mapStateToProps({ questions, category}) {
-    return { questions, category };
-}
+//onClick= {e=> {e.preventDefault(this.selectFilterCategory(c.id));}}
+// function mapStateToProps({ questions, category}) {
+//     return { questions, category };
+// }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(
-    { fetchQuestions, fetchCategories, changeCategory }, dispatch);
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(CategoryList);
+// function mapDispatchToProps(dispatch) {
+//     return bindActionCreators(
+//     { fetchQuestions, fetchCategories }, dispatch);
+// }
+export default CategoryList;
+//export default connect(mapStateToProps,mapDispatchToProps)(CategoryList);

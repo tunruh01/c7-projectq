@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
-import Navbar from './components/Navbar'
+import { Route, Switch } from "react-router-dom";
 import QuestionList from './components/QuestionList'
-import CategoryList from './components/CategoryList'
-
+import QuestionDetail from './components/QuestionDetail'
+import SubmitQuestion from './components/SubmitQuestion'
+// import Login from './components/Login'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar />
-        <QuestionList />
-        <CategoryList />
+        <Switch>
+          <Route exact path="/" component={QuestionList} />
+          <Route exact path="/question" component={SubmitQuestion} />
+          <Route exact path="/question/:questionid" component={QuestionDetail} />
+          {/* <Route exact path="/login" component={Login} /> */}       
+        </ Switch>
       </div>
     )
   }
