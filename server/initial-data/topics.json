@@ -1,0 +1,2 @@
+{"_id":{"$oid":"5dde5262a973fc1fc9fa9144"},"name":"Latin","dateCreated":{"$date":{"$numberLong":"1574739724317"}}}
+{"_id":{"$oid":"5dde5a4fa973fc1fc9fa914f"},"name":"languages","dateCreated":{"$date":{"$numberLong":"1574739724317"}}}
