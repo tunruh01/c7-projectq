@@ -156,7 +156,7 @@ router.get("/questions", UserAuthCheck, (req, res) => {
             topAnswer.user.userName = firstAnswer.userId.name;
 
             let cred = firstAnswer.userId.credentials.find(credential =>
-              (credential.answers).toString().includes(topAnswer._id.toString())
+              credential.answers.toString().includes(topAnswer._id.toString())
             );
 
             topAnswer.user.userCred = cred;
@@ -237,7 +237,7 @@ router.post("/question", UserAuthCheck, (req, res, next) => {
   });
 });
 
-router.get("/topics", (req, res) => {
+router.get("/topics", UserAuthCheck, (req, res) => {
   const getTopic = Topic.find();
   console.log("this is correct" + getTopic);
 
