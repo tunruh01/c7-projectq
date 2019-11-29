@@ -133,7 +133,7 @@ router.get("/questions", UserAuthCheck, (req, res) => {
     .skip(perPage * page - perPage)
     .limit(perPage)
     .lean()
-    .populate("topics")
+    .populate("topics", "_id name")
     .populate({
       path: "answers",
       populate: { path: "userId" },
@@ -156,7 +156,7 @@ router.get("/questions", UserAuthCheck, (req, res) => {
             topAnswer.user.userName = firstAnswer.userId.name;
 
             let cred = firstAnswer.userId.credentials.find(credential =>
-              (credential.answers).toString().includes(topAnswer._id.toString())
+              credential.answers.toString().includes(topAnswer._id.toString())
             );
 
             topAnswer.user.userCred = cred;
@@ -237,7 +237,7 @@ router.post("/question", UserAuthCheck, (req, res, next) => {
   });
 });
 
-router.get("/topics", (req, res) => {
+router.get("/topics", UserAuthCheck, (req, res) => {
   const getTopic = Topic.find();
   console.log("this is correct" + getTopic);
 
@@ -271,6 +271,26 @@ router.get("/question/:questionId/answers", (req, res, next) => {
         answersPerPage: perPage,
         totalNumAnswers,
         answers
+      });
+    });
+});
+
+// Returns the answers related to the requested questionId sorted by descending popularity/score
+router.get("/question/:questionId", (req, res, next) => {
+  const questionId = req.params.questionId;
+  Question.findById(questionId)
+    .populate("topics", "_id name")
+    .lean()
+    .exec((err, question) => {
+      if (err) console.log("ERROR: ", err);
+      Answer.countDocuments({ questionId }, (err, count) => {
+        if (err) console.log("ERROR: ", err);
+        res.send({
+          _id: question._id,
+          topics: question.topics,
+          question: question.question,
+          answerCount: count
+        });
       });
     });
 });
