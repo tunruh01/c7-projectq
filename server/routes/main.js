@@ -128,69 +128,81 @@ router.get("/questions", UserAuthCheck, (req, res) => {
   if (topicId) {
     filterOptions.topics = topicId;
   }
+  User.findOne(
+    { googleId: req.user.googleId },
+    { upvotedAnswers: 1, downvotedAnswers: 1, lean: true }
+  ).exec((err, user) => {
+    let userUpvotedAnswers = user ? user.upvotedAnswers : [];
+    let userDownvotedAnswers = user ? user.downvotedAnswers : [];
+    Question.find(filterOptions)
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .lean()
+      .populate("topics", "_id name")
+      .populate({
+        path: "answers",
+        populate: { path: "userId" },
+        options: { sort: { score: -1 } }
+      })
+      .sort({ dateAdded: "desc" })
+      .exec((err, questions) => {
+        Question.count(filterOptions).exec((err, count) => {
+          let getTopAnswer = question => {
+            let firstAnswer = question.answers.length
+              ? question.answers[0]
+              : null;
 
-  Question.find(filterOptions)
-    .skip(perPage * page - perPage)
-    .limit(perPage)
-    .lean()
-    .populate("topics", "_id name")
-    .populate({
-      path: "answers",
-      populate: { path: "userId" },
-      options: { sort: { score: -1 } }
-    })
-    .sort({ dateAdded: "desc" })
-    .exec((err, questions) => {
-      Question.count(filterOptions).exec((err, count) => {
-        let getTopAnswer = question => {
-          let firstAnswer = question.answers.length
-            ? question.answers[0]
-            : null;
+            let topAnswer = {};
 
-          let topAnswer = {};
+            if (firstAnswer) {
+              topAnswer._id = firstAnswer._id;
+              topAnswer.user = {};
+              topAnswer.user._id = firstAnswer.userId._id;
+              topAnswer.user.userName = firstAnswer.userId.name;
 
-          if (firstAnswer) {
-            topAnswer._id = firstAnswer._id;
-            topAnswer.user = {};
-            topAnswer.user._id = firstAnswer.userId._id;
-            topAnswer.user.userName = firstAnswer.userId.name;
+              let cred = firstAnswer.userId.credentials.find(credential =>
+                credential.answers.toString().includes(topAnswer._id.toString())
+              );
 
-            let cred = firstAnswer.userId.credentials.find(credential =>
-              credential.answers.toString().includes(topAnswer._id.toString())
-            );
+              topAnswer.user.userCred = cred;
+              topAnswer.user.userAvatar = firstAnswer.userId.avatar;
 
-            topAnswer.user.userCred = cred;
-            topAnswer.user.userAvatar = firstAnswer.userId.avatar;
+              topAnswer.answer = firstAnswer.answer;
+              topAnswer.answerDate = firstAnswer.dateAdded;
+              topAnswer.answerScore = firstAnswer.score;
+              topAnswer.userUpvoted = userUpvotedAnswers
+                .toString()
+                .includes(topAnswer._id.toString());
+              topAnswer.userDownvoted = userDownvotedAnswers
+                .toString()
+                .includes(topAnswer._id.toString());
 
-            topAnswer.answer = firstAnswer.answer;
-            topAnswer.answerDate = firstAnswer.dateAdded;
-            topAnswer.answerScore = firstAnswer.score;
+              return topAnswer;
+            }
 
-            return topAnswer;
+            return null;
+          };
+
+          if (err) console.log(err);
+          else {
+            res.send({
+              pageNum: parseInt(page, 10),
+              questionsPerPage: perPage,
+              totalNumQuestions: count,
+              questions: questions.map(question => {
+                return {
+                  _id: question._id,
+                  topics: question.topics,
+                  question: question.question,
+                  answerCount: question.answers.length,
+                  topAnswer: getTopAnswer(question)
+                };
+              })
+            });
           }
-
-          return null;
-        };
-
-        if (err) console.log(err);
-        else {
-          res.send({
-            pageNum: parseInt(page, 10),
-            questionsPerPage: perPage,
-            totalNumQuestions: count,
-            questions: questions.map(question => {
-              return {
-                _id: question._id,
-                topics: question.topics,
-                question: question.question,
-                answerCount: question.answers.length,
-                topAnswer: getTopAnswer(question)
-              };
-            })
-          });
-        }
+        });
       });
-    });
+  });
 });
 
 router.post("/question", UserAuthCheck, (req, res, next) => {
@@ -248,7 +260,7 @@ router.get("/topics", UserAuthCheck, (req, res) => {
 });
 
 // Returns the answers related to the requested questionId sorted by descending popularity/score
-router.get("/question/:questionId/answers", (req, res, next) => {
+router.get("/question/:questionId/answers", UserAuthCheck, (req, res, next) => {
   const questionId = req.params.questionId;
   const answersObj = Answer.find({ questionId });
   const page = req.query.page || 1;
@@ -260,32 +272,69 @@ router.get("/question/:questionId/answers", (req, res, next) => {
     totalNumAnswers = count;
   });
 
-  answersObj
-    .sort({ score: "desc" })
-    .skip(perPage * (page - 1))
-    .limit(perPage)
-    .exec((err, answers) => {
-      if (err) console.log(err);
-      res.send({
-        pageNum: parseInt(page, 10),
-        answersPerPage: perPage,
-        totalNumAnswers,
-        answers
+  User.findOne(
+    { googleId: req.user.googleId },
+    { upvotedAnswers: 1, downvotedAnswers: 1, lean: true }
+  ).exec((err, user) => {
+    let userUpvotedAnswers = user ? user.upvotedAnswers : [];
+    let userDownvotedAnswers = user ? user.downvotedAnswers : [];
+    answersObj
+      .populate("userId", "name credentials avatar")
+      .sort({ score: "desc" })
+      .skip(perPage * (page - 1))
+      .limit(perPage)
+      .exec((err, answers) => {
+        if (err) console.log(err);
+        res.send({
+          pageNum: parseInt(page, 10),
+          answersPerPage: perPage,
+          totalNumAnswers,
+          answers: answers.map(answer => {
+            return {
+              _id: answer._id,
+              questionId: answer.questionId,
+              answer: answer.answer,
+              answerDate: answer.dateAdded,
+              answerScore: answer.score,
+              user: {
+                _id: answer.userId._id,
+                userName: answer.userId.name,
+                userCred: answer.userId.credentials.find(credential =>
+                  credential.answers.toString().includes(answer._id.toString())
+                ),
+                userAvatar: answer.userId.avatar
+              },
+              userUpvoted: userUpvotedAnswers
+                .toString()
+                .includes(answer._id.toString()),
+              userDownvoted: userDownvotedAnswers
+                .toString()
+                .includes(answer._id.toString()),
+              comments: []
+            };
+          })
+        });
       });
-    });
+  });
 });
 
 // Returns the answers related to the requested questionId sorted by descending popularity/score
-router.get("/question/:questionId", (req, res, next) => {
+router.get("/question/:questionId", UserAuthCheck, (req, res, next) => {
   const questionId = req.params.questionId;
   Question.findById(questionId)
     .populate("topics", "_id name")
+    .populate("userId", "name avatar")
     .lean()
     .exec((err, question) => {
       if (err) console.log("ERROR: ", err);
       Answer.countDocuments({ questionId }, (err, count) => {
         if (err) console.log("ERROR: ", err);
         res.send({
+          user: {
+            _id: question.userId._id,
+            userName: question.userId.name,
+            userAvatar: question.userId.avatar
+          },
           _id: question._id,
           topics: question.topics,
           question: question.question,
