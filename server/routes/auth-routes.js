@@ -7,6 +7,10 @@ router.get("/current_user", UserAuthCheck, (req, res) => {
   res.send(req.user);
 });
 
+router.get("/current_user", (req, res) => {
+  res.send(req.user);
+});
+
 // when login is successful, retrieve user info
 router.get("/login/success", UserAuthCheck, (req, res) => {
   console.log("login/success accessed");

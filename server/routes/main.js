@@ -219,4 +219,14 @@ router.post("/question", (req, res, next) => {
   });
 });
 
+router.get("/topics", (req, res) => {
+  const getTopic = Topic.find();
+  console.log("this is correct" + getTopic);
+
+  getTopic.exec((err, topics) => {
+    if (err) console.log(err);
+    res.send(topics);
+  });
+});
+
 module.exports = router;

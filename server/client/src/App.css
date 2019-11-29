@@ -20,3 +20,24 @@
 .App-link {
   color: #09d3ac;
 }
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.FormControl {
+  justify-content: center;
+  margin-right: 100px;
+  align-content: center
+}
+
+.container {
+    list-style-type: none;
+
+}
+
+@media (min-width: 576px) {
+     .sidebar {
+          max-width: 280px;
+     }
+ }
