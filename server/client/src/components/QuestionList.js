@@ -20,6 +20,7 @@ class QuestionList extends Component {
     // If questions in state; loop and return each one
     if (this.props.questions.questionsList) {
       console.log(this.props.questions.questionsList);
+      console.log(this.props.questions.questionsList.topics);
       return (
         <div>
           <div class="card-columns">
@@ -27,12 +28,12 @@ class QuestionList extends Component {
               {this.props.questions.questionsList.map(q => (
                 <div class="card">
                   <div class="card text-center">
-                    Categories
+                    Categories:
                 </div>
                   <div class="card-body">
                     <h6 class="card-title">
                       <React.Fragment key={q._id}>
-                        <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(q._id)); }}>{q.question}</a>
+                        <a href={`/question/${q._id}`} onClick={e => { e.preventDefault(this.fetchQuestions(q._id)); }}>{q.question}</a>
                         <p class="card-text">{q.topAnswer.answer}</p>
                       </React.Fragment>
                     </h6>
@@ -57,7 +58,7 @@ class QuestionList extends Component {
   render() {
     const { authenticated } = this.props.auth;
     const { user } = this.props.auth;
-    console.log('questionList render props: ', this.props)
+    console.log('questionList render props: ', this.props.questions.questionsList.topics)
     return (
       <React.Fragment>
         <CategoryList />
