@@ -195,7 +195,8 @@ router.get("/questions", UserAuthCheck, (req, res, next) => {
     });
 });
 
-router.post("/question", (req, res, next) => {
+router.post("/question", UserAuthCheck, (req, res, next) => {
+  console.log(req.user);
   let newQuestion = new Question();
 
   let topics = req.body.topics;
@@ -210,10 +211,18 @@ router.post("/question", (req, res, next) => {
 
   newQuestion.question = req.body.question;
 
-  newQuestion.save((err, question) => {
-    if (err) console.log(err);
-    res.send(question);
-  });
+  User.findOne({ googleId: req.user.googleId })
+    .lean()
+    .exec((err, user) => {
+      if (user) {
+        newQuestion.userId = user._id;
+      }
+
+      newQuestion.save((err, question) => {
+        if (err) console.log(err);
+        res.send(question);
+      });
+    });
 });
 
 router.get("/topics", (req, res) => {
