@@ -4,7 +4,7 @@ const User = require("../models/user");
 const keys = require("../config/keys");
 
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+  done(null, user);
 });
 
 passport.deserializeUser((id, done) => {
@@ -27,6 +27,8 @@ const googleLogin = new GoogleStrategy(
     User.findOne({
       googleId: profile.id
     }).then(existingUser => {
+      console.log("access token: ", accessToken);
+      console.log("refresh token: ", refreshToken);
       if (existingUser) {
         done(null, existingUser);
       } else {

@@ -1,3 +1,4 @@
+const { UserAuthCheck } = require("./user-check");
 const router = require("express").Router();
 const faker = require("faker");
 const Answer = require("../models/answer");
@@ -109,7 +110,7 @@ const User = require("../models/user");
 //     })
 
 // Returns the questions, ???? per page
-router.get("/questions", (req, res, next) => {
+router.get("/questions", UserAuthCheck, (req, res, next) => {
   console.log("Query request:\n", req.query);
 
   let filterOptions = {};
@@ -131,6 +132,7 @@ router.get("/questions", (req, res, next) => {
   Question.find(filterOptions)
     .skip(perPage * page - perPage)
     .limit(perPage)
+    .lean()
     .populate("topics")
     .populate({
       path: "answers",
@@ -193,32 +195,35 @@ router.get("/questions", (req, res, next) => {
     });
 });
 
-router.post('/question', (req, res, next) => {
+router.post("/question", (req, res, next) => {
   let newQuestion = new Question();
 
-  newQuestion.topics = req.body.topics;
+  let topics = req.body.topics;
+
+  for (let i = 0; i < topics.length; i++) {
+    Topic.findById(topics[i], function(err, topic) {
+      if (!err) {
+        newQuestion.topics.push(topic._id);
+      }
+    });
+  }
+
   newQuestion.question = req.body.question;
 
   newQuestion.save((err, question) => {
     if (err) console.log(err);
     res.send(question);
-  })
-  
+  });
 });
 
-router.get('/topics', (req, res) => {
+router.get("/topics", (req, res) => {
   const getTopic = Topic.find();
-  console.log('this is correct' + getTopic)
-  
+  console.log("this is correct" + getTopic);
+
   getTopic.exec((err, topics) => {
     if (err) console.log(err);
     res.send(topics);
-
-  })
-  
-})
-
-
-
+  });
+});
 
 module.exports = router;
