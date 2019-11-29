@@ -34,6 +34,8 @@
 @media (min-width: 576px) {
      .sidebar {
           max-width: 280px;
+          position: fixed;
+          height: 100%;
      }
  }
 
@@ -53,5 +55,17 @@
    column-gap: 20px;
    margin: 20px;
    padding: 80px;
+  
+}
+
+.material-icons {
+  padding-top: 10px;
+  color: #78EFFF;
+  font-size: 2em;
+  height: 3rem;
 
 }
+.clearfix {
+  overflow: auto;
+}
+
