@@ -12,7 +12,7 @@ const UserSchema = new Schema({
   email: String,
   avatar: String,
   dateCreated: Date,
-  dateModified: Date,
+  dateModified: Date, 
   credentials: [CredSchema],
   answers: [{ type: Schema.Types.ObjectId, ref: "answer" }],
   questions: [{ type: Schema.Types.ObjectId, ref: "question" }],
