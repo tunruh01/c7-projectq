@@ -5,12 +5,12 @@ import { bindActionCreators } from "redux";
 import { fetchCategories, fetchQuestions } from "../actions/actions"
 
 class CategoryList extends Component {
-    
-    componentDidMount () {
+
+    componentDidMount() {
         this.props.fetchCategories()
         console.log(this.props);
-      }
-    
+    }
+
 
 
     renderCategories() {
