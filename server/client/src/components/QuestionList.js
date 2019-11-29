@@ -10,9 +10,11 @@ import { connect } from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class QuestionList extends Component {
+
   // Fetch questions once page assets are ready
   componentDidMount() {
     this.props.fetchQuestions()
+    this.props.fetchLoginStatus()
   }
 
 
@@ -52,9 +54,26 @@ class QuestionList extends Component {
   }
 
   render() {
+    const { authenticated } = this.props.auth;
+    const { user } = this.props.auth;
     console.log('questionList render props: ', this.props)
     return (
       <React.Fragment>
+        <div>
+          {!authenticated ? (
+            <>
+            <h1>Welcome! Currently not logged in</h1>
+            <button onClick={this._handleSignInClick} className='btn-primary'>Login</button>
+            </>
+
+          ) : (
+            <div>
+              <h1>You have logged in succcessfully!</h1>
+              <h2>Welcome {user.name}!</h2>
+              <button onClick={this._handleLogoutClick} className='btn-primary'>Logout</button>
+            </div>
+          )}
+        </div>
         <CategoryList />
         <div>
           {this.renderQuestions()}
@@ -63,6 +82,18 @@ class QuestionList extends Component {
 
     )
   }
+  _handleSignInClick = () => {
+    // Authenticate using via passport api in the backend
+    // Open Twitter login page
+    // Upon successful login, a cookie session will be stored in the client
+    window.open("http://localhost:5000/auth/google", "_self");
+  };
+
+  _handleLogoutClick = () => {
+    // Logout using Twitter passport api
+    // Set authenticated state to false in the HomePage
+    window.open("http://localhost:5000/auth/logout", "_self");
+  };
 }
 
 const mapStateToProps = (state) => {

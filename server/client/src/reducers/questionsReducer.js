@@ -8,7 +8,6 @@ export default function(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case FETCH_QUESTIONS:
       if (action.payload) {
-        console.log(action.payload);
         let newState = Object.assign({}, state)
         // Add each question object to arr and push to state/store
         action.payload.data.questions.forEach(question => {
