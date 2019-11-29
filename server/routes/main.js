@@ -196,14 +196,11 @@ router.get("/questions", UserAuthCheck, (req, res, next) => {
 });
 
 router.post("/question", (req, res, next) => {
-  let test = req.isAuthenticated();
-  console.log(test);
   let newQuestion = new Question();
 
   let topics = req.body.topics;
 
   for (let i = 0; i < topics.length; i++) {
-    console.log("HERE");
     Topic.findById(topics[i], function(err, topic) {
       if (!err) {
         newQuestion.topics.push(topic._id);
