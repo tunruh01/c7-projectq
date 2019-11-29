@@ -156,7 +156,7 @@ router.get("/questions", UserAuthCheck, (req, res, next) => {
             topAnswer.user.userName = firstAnswer.userId.name;
 
             let cred = firstAnswer.userId.credentials.find(credential =>
-              credential.answers.includes(topAnswer._id)
+              credential.answers.includes(topAnswer._id.toString())
             );
 
             topAnswer.user.userCred = cred;
