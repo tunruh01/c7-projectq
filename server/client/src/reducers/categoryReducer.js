@@ -9,8 +9,9 @@ const DEFAULT_STATE = {
       case FETCH_CATEGORIES:
         if (action.payload) {
           let newState = Object.assign({}, state)
+          console.log(action.payload.data)
           // Add each question object to arr and push to state/store
-          action.payload.topics.forEach(topic => {
+          action.payload.data.forEach(topic => {
             newState.topics.push(topic)
           })
           return newState;

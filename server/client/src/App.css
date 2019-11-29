@@ -31,14 +31,27 @@
   align-content: center
 }
 
-.container {
-    list-style-type: none;
-
-}
-
 @media (min-width: 576px) {
      .sidebar {
           max-width: 280px;
      }
  }
+
+ .card-columns {
+  @include media-breakpoint-only(md) {
+    column-count: 3;
+  }
+  @include media-breakpoint-only(lg) {
+    column-count: 4;
+  }
  
+} 
+
+.card-columns {
+   display: inline block;
+   columns: auto;
+   column-gap: 20px;
+   margin: 20px;
+   padding: 80px;
+
+}
