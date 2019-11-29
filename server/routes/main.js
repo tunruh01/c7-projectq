@@ -110,7 +110,6 @@ const User = require("../models/user");
 
 // Returns the questions
 router.get("/questions", (req, res, next) => {
-  console.log("Query request:\n", req.query);
 
   let filterOptions = {};
   const page = req.query.page || 1;
@@ -173,8 +172,6 @@ router.get("/questions", (req, res, next) => {
         if (err) console.log(err);
         else {
           res.send({
-            // questionsPerPage: ,
-            // pageNum:
             pageNum: parseInt(page, 10),
             questionsPerPage: perPage,
             totalNumQuestions: count,
@@ -203,37 +200,123 @@ router.post('/question', (req, res, next) => {
     if (err) console.log(err);
     res.send(question);
   })
-  
+
 });
 
 router.get('/topics', (req, res) => {
   const getTopic = Topic.find();
   console.log('this is correct' + getTopic)
-  
+
   getTopic.exec((err, topics) => {
     if (err) console.log(err);
     res.send(topics);
 
   })
-  
+
 });
 
-// Returns the answers related to the requested questionId sorted by most popular
+// Returns the answers related to the requested questionId sorted by descending popularity/score 
 router.get("/question/:questionId/answers", (req, res, next) => {
   const questionId = req.params.questionId;
-  const answersObj = Answer.find({questionId});
+  const answersObj = Answer.find({ questionId });
   const page = req.query.page || 1;
   const perPage = 7;
+  let totalNumAnswers = 0;
+
+  Answer.countDocuments({ questionId }, (err, count) => {
+    if (err) console.log('ERROR: ', err);
+    totalNumAnswers = count;
+  });
 
   answersObj
-    .sort({score: 'desc'})
+    .sort({ score: 'desc' })
     .skip(perPage * (page - 1))
     .limit(perPage)
     .exec((err, answers) => {
-    if (err) console.log(err);
-    res.send(answers);
-  });
 
+      if (err) console.log(err);
+      res.send({
+        pageNum: parseInt(page, 10),
+        answersPerPage: perPage,
+        totalNumAnswers,
+        answers
+      });
+    });
+
+});
+
+// post an upvote change to an answer
+router.post('/answer/:answerId/upvote', (req, res, next) => {
+  const answerId = req.params.answerId;
+  const upvoteState = req.body.upvoteState;
+  console.log(`answerId: ${answerId}`, `upvoteState: ${upvoteState}`)
+
+  if (upvoteState == 'true') { // increment score
+    Answer.findOneAndUpdate({ _id: answerId }, { $inc: { score: 1 } }).exec((err, answer) => {
+      if (err) console.log('ERROR: ', err);
+      console.log('Answer before upvote change: ', answer) // REMOVE for production
+      Answer.find({_id: answerId}).exec((err, revisedAnswer) => {
+        if (err) console.log('ERROR: ', err);
+        console.log('Answer after upvote change: ', revisedAnswer) // REMOVE for production
+        res.send({
+          _id: revisedAnswer[0]._id,
+          upvoted: true,
+          answerScore: revisedAnswer[0].score
+        });
+      });
+    });
+  } else { // upvoted is false -> decrement score
+    Answer.findOneAndUpdate({ _id: answerId }, { $inc: { score: -1 } }).exec((err, answer) => {
+      if (err) console.log('ERROR: ', err);
+      console.log('Answer before upvote change: ', answer) // REMOVE for production
+      Answer.find({_id: answerId}).exec((err, revisedAnswer) => {
+        if (err) console.log('ERROR: ', err);
+        console.log('Answer after upvote change: ', revisedAnswer) // REMOVE for production
+        res.send({
+          _id: revisedAnswer[0]._id,
+          upvoted: false,
+          answerScore: revisedAnswer[0].score
+        });
+      });
+    });
+  }
+});
+
+// post a downvote change to an answer
+router.post('/answer/:answerId/downvote', (req, res, next) => {
+  const answerId = req.params.answerId;
+  const downvoteState = req.body.downvoteState;
+  console.log(`answerId: ${answerId}`, `downvoteState: ${downvoteState}`)
+
+  if (downvoteState == 'true') { // decrement score
+    Answer.findOneAndUpdate({ _id: answerId }, { $inc: { score: -1 } }).exec((err, answer) => {
+      if (err) console.log('ERROR: ', err);
+      console.log('Answer before downvote change: ', answer) // REMOVE for production
+      Answer.find({_id: answerId}).exec((err, revisedAnswer) => {
+        if (err) console.log('ERROR: ', err);
+        console.log('Answer after downvote change: ', revisedAnswer) // REMOVE for production
+        res.send({
+          _id: revisedAnswer[0]._id,
+          downvoted: true,
+          answerScore: revisedAnswer[0].score
+        });
+      });
+    });
+  } else { // downvoted is false -> increment score
+    Answer.findOneAndUpdate({ _id: answerId }, { $inc: { score: 1 } }).exec((err, answer) => {
+      if (err) console.log('ERROR: ', err);
+      console.log('Answer before downvote change: ', answer) // REMOVE for production
+      Answer.find({_id: answerId}).exec((err, revisedAnswer) => {
+        if (err) console.log('ERROR: ', err);
+        console.log('Answer after downvote change: ', revisedAnswer) // REMOVE for production
+        res.send({
+          _id: revisedAnswer[0]._id,
+          downvoted: false,
+          answerScore: revisedAnswer[0].score
+        });
+      });
+    });
+  }
 });
 
 module.exports = router;

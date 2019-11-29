@@ -117,7 +117,7 @@ paths:
         - Answers
       responses:
         200:
-          description: Response of questions and info about the query result
+          description: Answers and info about the query result
           schema:
             type: object
             properties:
@@ -128,15 +128,16 @@ paths:
               answersPerPage:
                 type: integer
                 format: int32
-                description: Number of questions per page.
+                description: Number of answers per page.
               totalNumAnswers:
                 type: integer
                 format: int32
-                description: Total number of questions.
+                description: Total number of answers.
               answers:
                 type: array
                 items:
                   $ref: "#/definitions/AnswerDetail"
+                description: Array sorted by descending popularity/score
   "/answer/{answerId}/comment":
     post:
       summary: Create a comment on the specified answer.
@@ -183,9 +184,9 @@ paths:
           required: true
           type: string
         - in: body
-          name: body
+          name: upvoteState
           required: true
-          description: The state to set upvote status to.
+          description: The state to set upvote status to (e.g. if true, score is incremented, else decremented)
           schema:
             $ref: "#/definitions/UpvoteState"
       tags:
@@ -212,9 +213,9 @@ paths:
           required: true
           type: string
         - in: body
-          name: body
+          name: downvoteState
           required: true
-          description: The state to set downvote status to.
+          description: The state to set downvote status to (e.g. if true, score is decremented, else incremented)
           schema:
             $ref: "#/definitions/DownvoteState"
       tags:
