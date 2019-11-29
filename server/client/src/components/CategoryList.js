@@ -19,8 +19,8 @@ class CategoryList extends Component {
 
         return (
             categories.map(c => (
-                <p key={c.id}>
-                    <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(c.id)); }}>{c.name}</a>
+                <p key={c._id}>
+                    <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(c._id)); }}>{c.name}</a>
                 </p>
             )))
     }

@@ -19,6 +19,7 @@ class QuestionList extends Component {
   renderQuestions() {
     // If questions in state; loop and return each one
     if (this.props.questions.questionsList) {
+      console.log(this.props.questions.questionsList);
       return (
         <div>
           <div class="card-columns">
