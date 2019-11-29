@@ -319,7 +319,7 @@ router.get("/question/:questionId/answers", UserAuthCheck, (req, res, next) => {
 });
 
 // Returns the answers related to the requested questionId sorted by descending popularity/score
-router.get("/question/:questionId", (req, res, next) => {
+router.get("/question/:questionId", UserAuthCheck, (req, res, next) => {
   const questionId = req.params.questionId;
   Question.findById(questionId)
     .populate("topics", "_id name")
