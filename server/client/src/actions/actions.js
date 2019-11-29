@@ -10,7 +10,7 @@ export const AUTH_ERROR = 'auth_error'
 
 export const fetchQuestions = () => {
   const request = axios
-    .get(`/api/questions/`)
+    .get(`/api/questions/`, {withCredentials: true})
     .catch(function(error){
     console.log('error: ', error);
   });
@@ -23,7 +23,7 @@ export const fetchQuestions = () => {
 
 export function fetchCategories() {
     const request = axios
-        .get(`/api/topics/`)
+        .get(`/api/topics/`, {withCredentials: true})
         .catch(function(error){
         console.log('error: ', error);
         });
