@@ -358,7 +358,7 @@ definitions:
   Topic:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing a specific topic.
       name:
@@ -405,7 +405,7 @@ definitions:
   AnswerVoteState:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing an answer
       upvoted:
@@ -421,7 +421,7 @@ definitions:
   CommentVoteState:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing an comment
       upvoted:
@@ -437,7 +437,7 @@ definitions:
   QuestionDetail:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing a specific question
       topics:
@@ -454,7 +454,7 @@ definitions:
   QuestionSearch:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing a specific question
       topics:
@@ -477,7 +477,7 @@ definitions:
   AnswerShort:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing an answer
       questionId:
@@ -504,7 +504,7 @@ definitions:
   UserSmall:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing a user
       userName:
@@ -519,7 +519,7 @@ definitions:
   UserCommentSmall:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing a user
       userName:
@@ -531,7 +531,7 @@ definitions:
   UserDetail:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing a user
       userName:
@@ -559,7 +559,7 @@ definitions:
   AnswerDetail:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing an answer
       questionId:
@@ -590,7 +590,7 @@ definitions:
   CommentDetail:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing an comment
       answerId:
@@ -617,7 +617,7 @@ definitions:
   UserAnswerDetail:
     type: object
     properties:
-      id:
+      _id:
         type: string
         description: Unique identifier representing an answer
       questionId:
