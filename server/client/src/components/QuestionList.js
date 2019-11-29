@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../App.css";
 import CategoryList from './CategoryList'
-import { ListGroup, Button, CardGroup, Row, Col } from 'react-bootstrap'
 import * as actions from '../actions/actions';
 //import { bindActionCreators } from 'redux'
 // import _ from "lodash";
@@ -23,10 +22,10 @@ class QuestionList extends Component {
       return (
         <div>
           <div class="card-columns">
-            {this.props.questions.questionsList.map(q => (
-              <div class="card">
-                <div class="card text-center">
-                  <div class="card-header">
+            <div class="col-md-12">
+              {this.props.questions.questionsList.map(q => (
+                <div class="card">
+                  <div class="card text-center">
                     Categories
                 </div>
                   <div class="card-body">
@@ -36,15 +35,18 @@ class QuestionList extends Component {
                         <p class="card-text">{q.topAnswer.answer}</p>
                       </React.Fragment>
                     </h6>
-                    <div class="card-footer">
-                      <small class="text-muted">
-                        icons here..
-                          </small>
-                    </div>
+                    <small class="text">
+                      <i class="material-icons">
+                        arrow_upward</i>
+                      <i class="material-icons">
+                        chat_bubble_outline</i>
+                      <i class="material-icons">
+                        loop</i>
+                    </small>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       )
