@@ -128,69 +128,81 @@ router.get("/questions", UserAuthCheck, (req, res) => {
   if (topicId) {
     filterOptions.topics = topicId;
   }
+  User.findOne(
+    { googleId: req.user.googleId },
+    { upvotedAnswers: 1, downvotedAnswers: 1, lean: true }
+  ).exec((err, user) => {
+    let userUpvotedAnswers = user ? user.upvotedAnswers : [];
+    let userDownvotedAnswers = user ? user.downvotedAnswers : [];
+    Question.find(filterOptions)
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .lean()
+      .populate("topics", "_id name")
+      .populate({
+        path: "answers",
+        populate: { path: "userId" },
+        options: { sort: { score: -1 } }
+      })
+      .sort({ dateAdded: "desc" })
+      .exec((err, questions) => {
+        Question.count(filterOptions).exec((err, count) => {
+          let getTopAnswer = question => {
+            let firstAnswer = question.answers.length
+              ? question.answers[0]
+              : null;
 
-  Question.find(filterOptions)
-    .skip(perPage * page - perPage)
-    .limit(perPage)
-    .lean()
-    .populate("topics", "_id name")
-    .populate({
-      path: "answers",
-      populate: { path: "userId" },
-      options: { sort: { score: -1 } }
-    })
-    .sort({ dateAdded: "desc" })
-    .exec((err, questions) => {
-      Question.count(filterOptions).exec((err, count) => {
-        let getTopAnswer = question => {
-          let firstAnswer = question.answers.length
-            ? question.answers[0]
-            : null;
+            let topAnswer = {};
 
-          let topAnswer = {};
+            if (firstAnswer) {
+              topAnswer._id = firstAnswer._id;
+              topAnswer.user = {};
+              topAnswer.user._id = firstAnswer.userId._id;
+              topAnswer.user.userName = firstAnswer.userId.name;
 
-          if (firstAnswer) {
-            topAnswer._id = firstAnswer._id;
-            topAnswer.user = {};
-            topAnswer.user._id = firstAnswer.userId._id;
-            topAnswer.user.userName = firstAnswer.userId.name;
+              let cred = firstAnswer.userId.credentials.find(credential =>
+                credential.answers.toString().includes(topAnswer._id.toString())
+              );
 
-            let cred = firstAnswer.userId.credentials.find(credential =>
-              credential.answers.toString().includes(topAnswer._id.toString())
-            );
+              topAnswer.user.userCred = cred;
+              topAnswer.user.userAvatar = firstAnswer.userId.avatar;
 
-            topAnswer.user.userCred = cred;
-            topAnswer.user.userAvatar = firstAnswer.userId.avatar;
+              topAnswer.answer = firstAnswer.answer;
+              topAnswer.answerDate = firstAnswer.dateAdded;
+              topAnswer.answerScore = firstAnswer.score;
+              topAnswer.userUpvoted = userUpvotedAnswers
+                .toString()
+                .includes(topAnswer._id.toString());
+              topAnswer.userDownvoted = userDownvotedAnswers
+                .toString()
+                .includes(topAnswer._id.toString());
 
-            topAnswer.answer = firstAnswer.answer;
-            topAnswer.answerDate = firstAnswer.dateAdded;
-            topAnswer.answerScore = firstAnswer.score;
+              return topAnswer;
+            }
 
-            return topAnswer;
+            return null;
+          };
+
+          if (err) console.log(err);
+          else {
+            res.send({
+              pageNum: parseInt(page, 10),
+              questionsPerPage: perPage,
+              totalNumQuestions: count,
+              questions: questions.map(question => {
+                return {
+                  _id: question._id,
+                  topics: question.topics,
+                  question: question.question,
+                  answerCount: question.answers.length,
+                  topAnswer: getTopAnswer(question)
+                };
+              })
+            });
           }
-
-          return null;
-        };
-
-        if (err) console.log(err);
-        else {
-          res.send({
-            pageNum: parseInt(page, 10),
-            questionsPerPage: perPage,
-            totalNumQuestions: count,
-            questions: questions.map(question => {
-              return {
-                _id: question._id,
-                topics: question.topics,
-                question: question.question,
-                answerCount: question.answers.length,
-                topAnswer: getTopAnswer(question)
-              };
-            })
-          });
-        }
+        });
       });
-    });
+  });
 });
 
 router.post("/question", UserAuthCheck, (req, res, next) => {
