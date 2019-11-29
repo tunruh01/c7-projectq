@@ -153,10 +153,10 @@ router.get("/questions", (req, res, next) => {
             topAnswer.user.userName = firstAnswer.userId.name;
 
             let cred = firstAnswer.userId.credentials.find(credential =>
-              credential.answers.includes(question._id)
+              credential.answers.includes(topAnswer._id)
             );
 
-            topAnswer.user.userCred = "todo";
+            topAnswer.user.userCred = cred;
             topAnswer.user.userAvatar = firstAnswer.userId.avatar;
 
             topAnswer.answer = firstAnswer.answer;
