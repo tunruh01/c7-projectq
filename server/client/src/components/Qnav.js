@@ -12,7 +12,7 @@ class Qnav extends Component {
         return (
 
                 <Navbar bg="light" variant="light">
-                    <Link exact to="/"><Navbar.Brand href="/">Project Q</Navbar.Brand></Link>
+                    <Navbar.Brand>Project Q</Navbar.Brand>
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
                     </Nav>
