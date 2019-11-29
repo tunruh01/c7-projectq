@@ -5,11 +5,12 @@ export const FETCH_QUESTIONS = 'fetch_questions';
 // export const FETCH_ANSWERS = 'fetch_answers';
 // export const SUBMIT_QUESTION = 'submit_question';
 // export const SUBMIT_ANSWER = 'submit_answer';
+export const AUTH_USER = 'auth_user'
+export const AUTH_ERROR = 'auth_error'
 
 export const fetchQuestions = () => {
-
   const request = axios
-    .get(`/api/questions/`)
+    .get(`/api/questions/`, {withCredentials: true})
     .catch(function(error){
     console.log('error: ', error);
   });
@@ -22,7 +23,7 @@ export const fetchQuestions = () => {
 
 export function fetchCategories() {
     const request = axios
-        .get(`/api/topics/`)
+        .get(`/api/topics/`, {withCredentials: true})
         .catch(function(error){
         console.log('error: ', error);
         });
@@ -43,3 +44,18 @@ export function fetchCategories() {
 //     payload: request
 // };
 // };
+
+export function fetchLoginStatus() {
+  const request = axios
+    .get(`/auth/login/success`, {withCredentials: true})
+    .catch(err => {
+      return {
+        type: AUTH_ERROR,
+        payload: 'Failed to authenticate user'
+      }
+    })
+    return {
+      type: AUTH_USER,
+      payload: request
+  };
+}
