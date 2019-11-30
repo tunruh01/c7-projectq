@@ -37,9 +37,10 @@
           position: fixed;
           height: 100%;
      }
+  
  }
 
- .card-columns {
+ /* .card-columns {
   @include media-breakpoint-only(md) {
     column-count: 3;
   }
@@ -47,7 +48,7 @@
     column-count: 4;
   }
  
-} 
+}  */
 
 .card-columns {
    display: inline block;
@@ -68,4 +69,3 @@
 .clearfix {
   overflow: auto;
 }
-
