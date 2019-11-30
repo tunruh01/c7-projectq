@@ -8,11 +8,32 @@ import InfiniteScroll from 'react-infinite-scroller';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class QuestionList extends Component {
+  constructor() {
+    super();
+
+    this.loadItems = this.loadItems.bind(this);
+
+    this.state = {
+      hasMoreItems: true
+    };
+  }
 
   // Fetch questions once page assets are ready
   componentDidMount() {
-    this.props.fetchQuestions()
+    // loadItems from Infinite scroll seems to run on page load, fetching Questions on mount
+    // was creating duplicates
+    // this.props.fetchQuestions()
+
     this.props.fetchLoginStatus()
+  }
+
+  //  Stops infinite scroll querying when there are no more questions to load
+  loadItems(page) {
+    if (page < this.props.total_pages || this.props.total_pages === 0) {
+      this.props.fetchQuestions(page);
+    } else {
+      this.setState({ hasMoreItems: false });
+    }
   }
 
   renderQuestions() {
@@ -54,15 +75,26 @@ class QuestionList extends Component {
   }
 
   render() {
+    const { authenticated } = this.props.auth
     console.log('questionList render props: ', this.props)
     return (
-      <React.Fragment>
-        <CategoryList />
-        <div>
-          {this.renderQuestions()}
-        </div>
-      </React.Fragment>
-
+        
+        <React.Fragment>
+          {authenticated ? (
+          <>
+            <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
+            <CategoryList />
+            <div>
+              {this.renderQuestions()}
+            </div>
+            </InfiniteScroll>
+          </>
+          ) : (
+              <div>Unauthorized - maybe have a 'please login' component/message here</div>
+            )}
+            
+        </React.Fragment>
+      
     )
   }
 }
