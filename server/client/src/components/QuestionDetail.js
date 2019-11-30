@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from '../actions/actions';
+import AnswerList from './AnswerList'
 
 
 
@@ -42,6 +43,7 @@ class QuestionDetail extends Component {
                       Why in the world do people eat Papa John's ?
                   </h1>
               </div>
+              <AnswerList questionid={this.props.match.params.questionid} />
               <div className='padding'>
                   <h4 className="text-center" style={{ color: "grey" }}>Answer question</h4>
                   <div className="col-md-6 offset-md-3 shadow-sm">

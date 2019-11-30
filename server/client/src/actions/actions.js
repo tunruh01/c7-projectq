@@ -3,7 +3,7 @@ import axios from "axios";
 export const FETCH_CATEGORIES = "fetch_categories";
 export const FETCH_QUESTIONS = "fetch_questions";
 export const FETCH_QUESTION_DETAILS = 'fetch_question_details'
-// export const FETCH_ANSWERS = 'fetch_answers';
+export const FETCH_ANSWERS = 'fetch_answers';
 // export const SUBMIT_QUESTION = 'submit_question';
 // export const SUBMIT_ANSWER = 'submit_answer';
 export const AUTH_USER = "auth_user";
@@ -44,17 +44,17 @@ export const fetchQuestionDetails = (id) => {
   };
 };
 
-// export function fetchAnswers(question) {
-//     const request = axios
-//     .get(`${ROOT_URL}?question=${question}`)
-//     .catch(function(error){
-//         console.log('error: ', error);
-//     });
-// return {
-//     type: FETCH_ANSWERS,
-//     payload: request
-// };
-// };
+export const fetchAnswers = (questionid, page = 1) => {
+  const request = axios
+    .get(`/api/question/${questionid}/answers?page=${page}`, { withCredentials: true })
+    .catch(function(error) {
+      console.log("error: ", error);
+    });
+  return {
+    type: FETCH_ANSWERS,
+    payload: request
+  };
+};
 
 export function fetchLoginStatus() {
   const request = axios
