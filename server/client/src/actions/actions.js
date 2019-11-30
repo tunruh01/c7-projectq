@@ -6,11 +6,10 @@ export const FETCH_QUESTIONS = "fetch_questions";
 // export const SUBMIT_QUESTION = 'submit_question';
 // export const SUBMIT_ANSWER = 'submit_answer';
 export const AUTH_USER = "auth_user";
-export const AUTH_ERROR = "auth_error";
 
-export const fetchQuestions = () => {
+export const fetchQuestions = (page = 1) => {
   const request = axios
-    .get(`/api/questions/`, { withCredentials: true })
+    .get(`/api/questions?page=${page}`, { withCredentials: true })
     .catch(function(error) {
       console.log("error: ", error);
     });
