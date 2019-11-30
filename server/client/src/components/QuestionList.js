@@ -9,11 +9,12 @@ import { connect } from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class QuestionList extends Component {
+
   // Fetch questions once page assets are ready
   componentDidMount() {
     this.props.fetchQuestions()
+    this.props.fetchLoginStatus()
   }
-
 
   renderQuestions() {
     // If questions in state; loop and return each one
@@ -54,6 +55,8 @@ class QuestionList extends Component {
   }
 
   render() {
+    const { authenticated } = this.props.auth;
+    const { user } = this.props.auth;
     console.log('questionList render props: ', this.props)
     return (
       <React.Fragment>

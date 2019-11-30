@@ -30,14 +30,29 @@ const googleLogin = new GoogleStrategy(
       console.log("access token: ", accessToken);
       console.log("refresh token: ", refreshToken);
       if (existingUser) {
-        done(null, existingUser);
+        let avatar =
+          profile.photos.length > 0 ? profile.photos[0].value : undefined;
+
+        if (avatar !== existingUser.avatar) {
+          existingUser.avatar = avatar;
+          existingUser.save(function(err) {
+            if (err) {
+              console.error("ERROR!");
+            }
+            done(null, existingUser);
+          });
+        } else {
+          done(null, existingUser);
+        }
       } else {
         // we don't have a user record with this ID, make a new record!
         new User({
           googleId: profile.id,
           name: profile.displayName,
-          email: profile.emails[0].value,
-          avatar: profile.picture
+          email:
+            profile.emails.length > 0 ? profile.emails[0].value : undefined,
+          avatar:
+            profile.photos.length > 0 ? profile.photos[0].value : undefined
         })
           .save()
           .then(user => done(null, user));

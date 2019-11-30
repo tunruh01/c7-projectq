@@ -110,7 +110,7 @@ const User = require("../models/user");
 //     })
 
 // Returns the questions, ???? per page
-router.get("/questions", UserAuthCheck, (req, res, next) => {
+router.get("/questions", UserAuthCheck, (req, res) => {
   console.log("Query request:\n", req.query);
 
   let filterOptions = {};
@@ -128,106 +128,139 @@ router.get("/questions", UserAuthCheck, (req, res, next) => {
   if (topicId) {
     filterOptions.topics = topicId;
   }
+  User.findOne(
+    { googleId: req.user.googleId },
+    { upvotedAnswers: 1, downvotedAnswers: 1, lean: true }
+  ).exec((err, user) => {
+    let userUpvotedAnswers = user ? user.upvotedAnswers : [];
+    let userDownvotedAnswers = user ? user.downvotedAnswers : [];
+    Question.find(filterOptions)
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .lean()
+      .populate("topics", "_id name")
+      .populate({
+        path: "answers",
+        populate: { path: "userId" },
+        options: { sort: { score: -1 } }
+      })
+      .sort({ dateAdded: "desc" })
+      .exec((err, questions) => {
+        Question.count(filterOptions).exec((err, count) => {
+          let getTopAnswer = question => {
+            let firstAnswer = question.answers.length
+              ? question.answers[0]
+              : null;
 
-  Question.find(filterOptions)
-    .skip(perPage * page - perPage)
-    .limit(perPage)
-    .lean()
-    .populate("topics")
-    .populate({
-      path: "answers",
-      populate: { path: "userId" },
-      options: { sort: { score: -1 } }
-    })
-    .sort({ dateAdded: "desc" })
-    .exec((err, questions) => {
-      Question.count(filterOptions).exec((err, count) => {
-        let getTopAnswer = question => {
-          let firstAnswer = question.answers.length
-            ? question.answers[0]
-            : null;
+            let topAnswer = {};
 
-          let topAnswer = {};
+            if (firstAnswer) {
+              topAnswer._id = firstAnswer._id;
+              topAnswer.user = {};
+              topAnswer.user._id = firstAnswer.userId._id;
+              topAnswer.user.userName = firstAnswer.userId.name;
 
-          if (firstAnswer) {
-            topAnswer._id = firstAnswer._id;
-            topAnswer.user = {};
-            topAnswer.user._id = firstAnswer.userId._id;
-            topAnswer.user.userName = firstAnswer.userId.name;
+              let cred = firstAnswer.userId.credentials.find(credential =>
+                credential.answers.toString().includes(topAnswer._id.toString())
+              );
 
-            let cred = firstAnswer.userId.credentials.find(credential =>
-              credential.answers.includes(topAnswer._id)
-            );
+              topAnswer.user.userCred = cred;
+              topAnswer.user.userAvatar = firstAnswer.userId.avatar;
 
-            topAnswer.user.userCred = cred;
-            topAnswer.user.userAvatar = firstAnswer.userId.avatar;
+              topAnswer.answer = firstAnswer.answer;
+              topAnswer.answerDate = firstAnswer.dateAdded;
+              topAnswer.answerScore = firstAnswer.score;
+              topAnswer.userUpvoted = userUpvotedAnswers
+                .toString()
+                .includes(topAnswer._id.toString());
+              topAnswer.userDownvoted = userDownvotedAnswers
+                .toString()
+                .includes(topAnswer._id.toString());
 
-            topAnswer.answer = firstAnswer.answer;
-            topAnswer.answerDate = firstAnswer.dateAdded;
-            topAnswer.answerScore = firstAnswer.score;
+              return topAnswer;
+            }
 
-            return topAnswer;
+            return null;
+          };
+
+          if (err) console.log(err);
+          else {
+            res.send({
+              pageNum: parseInt(page, 10),
+              questionsPerPage: perPage,
+              totalNumQuestions: count,
+              questions: questions.map(question => {
+                return {
+                  _id: question._id,
+                  topics: question.topics,
+                  question: question.question,
+                  answerCount: question.answers.length,
+                  topAnswer: getTopAnswer(question)
+                };
+              })
+            });
           }
-
-          return null;
-        };
-
-        if (err) console.log(err);
-        else {
-          res.send({
-            pageNum: parseInt(page, 10),
-            questionsPerPage: perPage,
-            totalNumQuestions: count,
-            questions: questions.map(question => {
-              return {
-                _id: question._id,
-                topics: question.topics,
-                question: question.question,
-                answerCount: question.answers.length,
-                topAnswer: getTopAnswer(question)
-              };
-            })
-          });
-        }
+        });
       });
-    });
-});
-
-router.post("/question", (req, res, next) => {
-  let newQuestion = new Question();
-
-  let topics = req.body.topics;
-
-  for (let i = 0; i < topics.length; i++) {
-    Topic.findById(topics[i], function(err, topic) {
-      if (!err) {
-        newQuestion.topics.push(topic._id);
-      }
-    });
-  }
-
-  newQuestion.question = req.body.question;
-
-  newQuestion.save((err, question) => {
-    if (err) console.log(err);
-    res.send(question);
   });
 });
 
-router.get("/topics", (req, res) => {
+router.post("/question", UserAuthCheck, (req, res, next) => {
+  User.findOne({ googleId: req.user.googleId }).exec((err, user) => {
+    if (user) {
+      let newQuestion = new Question();
+
+      //lets build a seperate response so we don't just have to
+      //re-populate things like topics since we're already searching them
+      let response = { topics: [], user: {} };
+
+      let topics = req.body.topics;
+
+      for (let i = 0; i < topics.length; i++) {
+        Topic.findById(topics[i], function(err, topic) {
+          if (!err) {
+            newQuestion.topics.push(topic._id);
+            //go ahead and add these here so we don't have to repopulate
+            response.topics.push({
+              _id: topic._id,
+              name: topic.name
+            });
+          }
+        });
+      }
+
+      newQuestion.userId = user._id;
+      newQuestion.question = req.body.question;
+      newQuestion.save((err, question) => {
+        if (err) console.log(err);
+        response.user._id = user._id;
+        response.user.userName = user.name;
+        response.user.userAvatar = user.avatar;
+        response._id = question._id;
+        response.question = question.question;
+        response.answerCount = question.answers.length;
+        res.send(response);
+        user.questions.push(question._id);
+        user.save((err, user) => {
+          if (err) console.log(err);
+        });
+      });
+    }
+  });
+});
+
+router.get("/topics", UserAuthCheck, (req, res) => {
   const getTopic = Topic.find();
   console.log("this is correct" + getTopic);
 
   getTopic.exec((err, topics) => {
     if (err) console.log(err);
     res.send(topics);
-
-  })
-
+  });
 });
 
-// Returns the answers related to the requested questionId sorted by descending popularity/score 
-router.get("/question/:questionId/answers", (req, res, next) => {
+// Returns the answers related to the requested questionId sorted by descending popularity/score
+router.get("/question/:questionId/answers", UserAuthCheck, (req, res, next) => {
   const questionId = req.params.questionId;
   const answersObj = Answer.find({ questionId });
   const page = req.query.page || 1;
@@ -235,99 +268,209 @@ router.get("/question/:questionId/answers", (req, res, next) => {
   let totalNumAnswers = 0;
 
   Answer.countDocuments({ questionId }, (err, count) => {
-    if (err) console.log('ERROR: ', err);
+    if (err) console.log("ERROR: ", err);
     totalNumAnswers = count;
   });
 
-  answersObj
-    .sort({ score: 'desc' })
-    .skip(perPage * (page - 1))
-    .limit(perPage)
-    .exec((err, answers) => {
-
-      if (err) console.log(err);
-      res.send({
-        pageNum: parseInt(page, 10),
-        answersPerPage: perPage,
-        totalNumAnswers,
-        answers
+  User.findOne(
+    { googleId: req.user.googleId },
+    { upvotedAnswers: 1, downvotedAnswers: 1, lean: true }
+  ).exec((err, user) => {
+    let userUpvotedAnswers = user ? user.upvotedAnswers : [];
+    let userDownvotedAnswers = user ? user.downvotedAnswers : [];
+    answersObj
+      .populate("userId", "name credentials avatar")
+      .sort({ score: "desc" })
+      .skip(perPage * (page - 1))
+      .limit(perPage)
+      .exec((err, answers) => {
+        if (err) console.log(err);
+        res.send({
+          pageNum: parseInt(page, 10),
+          answersPerPage: perPage,
+          totalNumAnswers,
+          answers: answers.map(answer => {
+            return {
+              _id: answer._id,
+              questionId: answer.questionId,
+              answer: answer.answer,
+              answerDate: answer.dateAdded,
+              answerScore: answer.score,
+              user: {
+                _id: answer.userId._id,
+                userName: answer.userId.name,
+                userCred: answer.userId.credentials.find(credential =>
+                  credential.answers.toString().includes(answer._id.toString())
+                ),
+                userAvatar: answer.userId.avatar
+              },
+              userUpvoted: userUpvotedAnswers
+                .toString()
+                .includes(answer._id.toString()),
+              userDownvoted: userDownvotedAnswers
+                .toString()
+                .includes(answer._id.toString()),
+              comments: []
+            };
+          })
+        });
       });
-    });
-
+  });
 });
 
-// post an upvote change to an answer
-router.post('/answer/:answerId/upvote', (req, res, next) => {
-  const answerId = req.params.answerId;
-  const upvoteState = req.body.upvoteState;
-  console.log(`answerId: ${answerId}`, `upvoteState: ${upvoteState}`)
+// Returns the answers related to the requested questionId sorted by descending popularity/score
+router.get("/question/:questionId", UserAuthCheck, (req, res, next) => {
+  const questionId = req.params.questionId;
+  Question.findById(questionId)
+    .populate("topics", "_id name")
+    .populate("userId", "name avatar")
+    .lean()
+    .exec((err, question) => {
+      if (err) console.log("ERROR: ", err);
+      Answer.countDocuments({ questionId }, (err, count) => {
+        if (err) console.log("ERROR: ", err);
+        res.send({
+          user: {
+            _id: question.userId._id,
+            userName: question.userId.name,
+            userAvatar: question.userId.avatar
+          },
+          _id: question._id,
+          topics: question.topics,
+          question: question.question,
+          answerCount: count
+        });
+      });
+    });
+});
 
-  if (upvoteState == 'true') { // increment score
-    Answer.findOneAndUpdate({ _id: answerId }, { $inc: { score: 1 } }).exec((err, answer) => {
-      if (err) console.log('ERROR: ', err);
-      console.log('Answer before upvote change: ', answer) // REMOVE for production
-      Answer.find({_id: answerId}).exec((err, revisedAnswer) => {
-        if (err) console.log('ERROR: ', err);
-        console.log('Answer after upvote change: ', revisedAnswer) // REMOVE for production
-        res.send({
-          _id: revisedAnswer[0]._id,
-          upvoted: true,
-          answerScore: revisedAnswer[0].score
+attemptUpdateScore = (req, res, voteType) => {
+  User.findOne(
+    { googleId: req.user.googleId },
+    { upvotedAnswers: 1, downvotedAnswers: 1 }
+  ).exec((err, user) => {
+    if (user) {
+      const answerId = req.params.answerId;
+      const newUpvoteState = req.body.upvoted;
+      const newDownvoteState = req.body.downvoted;
+      console.log(
+        `answerId: ${answerId}`,
+        `upvoteState: ${newUpvoteState}`,
+        `downvoteState: ${newDownvoteState}`
+      );
+
+      let upScoreModifier = 0;
+      let downScoreModifier = 0;
+      let userPrevUpvotedAnswer = user.upvotedAnswers.includes(answerId);
+      let userPrevDownvotedAnswer = user.downvotedAnswers.includes(answerId);
+
+      switch (voteType) {
+        case "upvote":
+          //figure out if we should upvote/downvote/leave same
+          if (newUpvoteState && !userPrevUpvotedAnswer) {
+            upScoreModifier++;
+            if (userPrevDownvotedAnswer) {
+              downScoreModifier++;
+            }
+          } else if (!newUpvoteState && userPrevUpvotedAnswer) {
+            upScoreModifier--;
+          }
+          break;
+        case "downvote":
+          //figure out if we should upvote/downvote/leave same
+          if (newDownvoteState && !userPrevDownvotedAnswer) {
+            downScoreModifier--;
+            if (userPrevUpvotedAnswer) {
+              upScoreModifier--;
+            }
+          } else if (!newDownvoteState && userPrevDownvotedAnswer) {
+            downScoreModifier++;
+          }
+          break;
+      }
+
+      let newScore = upScoreModifier + downScoreModifier;
+
+      //if an actual change should occur, do it
+      if (newScore !== 0) {
+        Answer.findByIdAndUpdate(
+          answerId,
+          { $inc: { score: newScore } },
+          { new: true }
+        ).exec((err, answer) => {
+          if (err) console.log("ERROR: ", err);
+
+          //add/remove from upvoted if needed
+          if (
+            upScoreModifier > 0 &&
+            !user.upvotedAnswers.includes(answer._id)
+          ) {
+            user.upvotedAnswers.push(answer._id);
+          } else if (
+            upScoreModifier < 0 &&
+            user.upvotedAnswers.includes(answer._id)
+          ) {
+            user.upvotedAnswers.splice(
+              user.upvotedAnswers.indexOf(answer._id),
+              1
+            );
+          }
+
+          //add/remove from downvoted if needed
+          if (
+            downScoreModifier < 0 &&
+            !user.downvotedAnswers.includes(answer._id)
+          ) {
+            user.downvotedAnswers.push(answer._id);
+          } else if (
+            downScoreModifier > 0 &&
+            user.downvotedAnswers.includes(answer._id)
+          ) {
+            user.downvotedAnswers.splice(
+              user.downvotedAnswers.indexOf(answer._id),
+              1
+            );
+          }
+
+          user.save(
+            {
+              upvotedAnswers: 1,
+              downvotedAnswers: 1,
+              new: true
+            },
+            (err, updatedUser) => {
+              res.send({
+                _id: answer._id,
+                upvoted: updatedUser.upvotedAnswers.includes(answer._id),
+                downvoted: updatedUser.downvotedAnswers.includes(answer._id),
+                answerScore: answer.score
+              });
+            }
+          );
         });
-      });
-    });
-  } else { // upvoted is false -> decrement score
-    Answer.findOneAndUpdate({ _id: answerId }, { $inc: { score: -1 } }).exec((err, answer) => {
-      if (err) console.log('ERROR: ', err);
-      console.log('Answer before upvote change: ', answer) // REMOVE for production
-      Answer.find({_id: answerId}).exec((err, revisedAnswer) => {
-        if (err) console.log('ERROR: ', err);
-        console.log('Answer after upvote change: ', revisedAnswer) // REMOVE for production
-        res.send({
-          _id: revisedAnswer[0]._id,
-          upvoted: false,
-          answerScore: revisedAnswer[0].score
+      } else {
+        //client sent a no-op so just return the answer
+        Answer.findById(answerId, (err, answer) => {
+          res.send({
+            _id: answer._id,
+            upvoted: user.upvotedAnswers.includes(answer._id),
+            downvoted: user.downvotedAnswers.includes(answer._id),
+            answerScore: answer.score
+          });
         });
-      });
-    });
-  }
+      }
+    }
+  });
+};
+
+// post an upvote change to an answer
+router.post("/answer/:answerId/upvote", UserAuthCheck, (req, res) => {
+  attemptUpdateScore(req, res, "upvote");
 });
 
 // post a downvote change to an answer
-router.post('/answer/:answerId/downvote', (req, res, next) => {
-  const answerId = req.params.answerId;
-  const downvoteState = req.body.downvoteState;
-  console.log(`answerId: ${answerId}`, `downvoteState: ${downvoteState}`)
-
-  if (downvoteState == 'true') { // decrement score
-    Answer.findOneAndUpdate({ _id: answerId }, { $inc: { score: -1 } }).exec((err, answer) => {
-      if (err) console.log('ERROR: ', err);
-      console.log('Answer before downvote change: ', answer) // REMOVE for production
-      Answer.find({_id: answerId}).exec((err, revisedAnswer) => {
-        if (err) console.log('ERROR: ', err);
-        console.log('Answer after downvote change: ', revisedAnswer) // REMOVE for production
-        res.send({
-          _id: revisedAnswer[0]._id,
-          downvoted: true,
-          answerScore: revisedAnswer[0].score
-        });
-      });
-    });
-  } else { // downvoted is false -> increment score
-    Answer.findOneAndUpdate({ _id: answerId }, { $inc: { score: 1 } }).exec((err, answer) => {
-      if (err) console.log('ERROR: ', err);
-      console.log('Answer before downvote change: ', answer) // REMOVE for production
-      Answer.find({_id: answerId}).exec((err, revisedAnswer) => {
-        if (err) console.log('ERROR: ', err);
-        console.log('Answer after downvote change: ', revisedAnswer) // REMOVE for production
-        res.send({
-          _id: revisedAnswer[0]._id,
-          downvoted: false,
-          answerScore: revisedAnswer[0].score
-        });
-      });
-    });
-  }
+router.post("/answer/:answerId/downvote", UserAuthCheck, (req, res) => {
+  attemptUpdateScore(req, res, "downvote");
 });
 
 module.exports = router;
