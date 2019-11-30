@@ -1,7 +1,10 @@
 import { FETCH_QUESTION_DETAILS } from '../actions/actions';
 
+const DEFAULT_STATE = {
+  topics: []
+}
 
-export default function(state = {}, action) {
+export default function(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case FETCH_QUESTION_DETAILS:
       if (action.payload) {

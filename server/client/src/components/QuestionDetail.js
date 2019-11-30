@@ -9,59 +9,80 @@ import * as actions from '../actions/actions';
 
 class QuestionDetail extends Component {
  componentDidMount() {
+    this.props.fetchLoginStatus()
     const questionid = this.props.match.params.questionid
     console.log('The questionid is: ', questionid)
     this.props.fetchQuestionDetails(questionid)
   }
 
+  renderCategories() {
+      const { questionDetails } = this.props
+      return (
+        <div>
+          {questionDetails.topics.map(topic => (
+            <div>{topic.name}</div>
+          ))}
+        </div>
+      )
+      
+    }
+  
     render() {
-      let { questionDetails } = this.props
-        // temporary form until we implement redux so we can use redux-form 
+      const { authenticated } = this.props.auth
+      const { questionDetails } = this.props
       console.log('question details: ', questionDetails)
+      // temporary form until we implement redux so we can use redux-form 
         return (
-            <div>
-                <div>
-                    <h1>
-                        Why in the world do people eat Papa John's ?
-                     </h1>
-                </div>
+          <div>
+            {(authenticated) ? (
+              <>
+              <div>
+                Categories: {this.renderCategories()}
+                  <h1>
+                      Why in the world do people eat Papa John's ?
+                  </h1>
+              </div>
+              <div className='padding'>
+                  <h4 className="text-center" style={{ color: "grey" }}>Answer question</h4>
+                  <div className="col-md-6 offset-md-3 shadow-sm">
+                      <div className="row">
+                          <form
+                              name="addContact"
+                              className="offset-md-4"
+                          >
+                              <input
+                                  className="form-control"
+                                  placeholder="Name"
+                              />
+                              <input
+                                  className="form-control"
+                                  placeholder="Credentials"
+                              />
+                              <input
+                                  className="form-control"
+                                  placeholder="answer..."
+                              />
 
-                <div className='padding'>
-                    <h4 className="text-center" style={{ color: "grey" }}>Answer question</h4>
-                    <div className="col-md-6 offset-md-3 shadow-sm">
-                        <div className="row">
-                            <form
-                                name="addContact"
-                                className="offset-md-4"
-                            >
-                                <input
-                                    className="form-control"
-                                    placeholder="Name"
-                                />
-                                <input
-                                    className="form-control"
-                                    placeholder="Credentials"
-                                />
-                                <input
-                                    className="form-control"
-                                    placeholder="answer..."
-                                />
-
-                                <Link to="/">
-                                    <button className="btn-dark btn btn-sm">
-                                        Back
-                                    </button>
-                                </Link>
-                                <input
-                                    type="submit"
-                                    className="btn-dark btn btn-sm float-right"
-                                />
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+                              <Link to="/">
+                                  <button className="btn-dark btn btn-sm">
+                                      Back
+                                  </button>
+                              </Link>
+                              <input
+                                  type="submit"
+                                  className="btn-dark btn btn-sm float-right"
+                              />
+                          </form>
+                      </div>
+                  </div>
+              </div>
+              </>
+            ) : (
+              <div>Unauthorized - maybe have a 'please login' component/message here</div>
+            )}
+              
+          </div>
+            
         )
     }
 }
