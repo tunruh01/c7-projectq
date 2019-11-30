@@ -52,7 +52,7 @@ class QuestionList extends Component {
                   <div class="card-body">
                     <h6 class="card-title">
                       <React.Fragment key={q._id}>
-                        <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(q._id)); }}>{q.question}</a>
+                        <a href={`/question/${q._id}`} onClick={e => { e.preventDefault(this.fetchQuestions(q._id)); }}>{q.question}</a>
                         <p class="card-text">{q.topAnswer.answer}</p>
                       </React.Fragment>
                     </h6>

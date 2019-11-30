@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const FETCH_CATEGORIES = "fetch_categories";
 export const FETCH_QUESTIONS = "fetch_questions";
+export const FETCH_QUESTION_DETAILS = 'fetch_question_details'
 // export const FETCH_ANSWERS = 'fetch_answers';
 // export const SUBMIT_QUESTION = 'submit_question';
 // export const SUBMIT_ANSWER = 'submit_answer';
@@ -30,6 +31,18 @@ export function fetchCategories() {
     payload: request
   };
 }
+
+export const fetchQuestionDetails = (id) => {
+  const request = axios
+    .get(`/api/question/${id}`, { withCredentials: true })
+    .catch(function(error) {
+      console.log("error: ", error);
+    });
+  return {
+    type: FETCH_QUESTION_DETAILS,
+    payload: request
+  };
+};
 
 // export function fetchAnswers(question) {
 //     const request = axios
