@@ -36,6 +36,17 @@ class QuestionList extends Component {
     }
   }
 
+  renderQuestionCategories(q) {
+    return (
+      <div class="card text-center">
+           {q.topics.map(topic => (
+             <span>{topic.name} </span>
+           ))}
+      </div>
+    )
+    
+  }
+
   renderQuestions() {
     // If questions in state; loop and return each one
     if (this.props.questions.questionsList) {
@@ -46,9 +57,7 @@ class QuestionList extends Component {
             <div class="col-md-12">
               {this.props.questions.questionsList.map(q => (
                 <div class="card">
-                  <div class="card text-center">
-                    Categories
-                </div>
+                    {this.renderQuestionCategories(q)}
                   <div class="card-body">
                     <h6 class="card-title">
                       <React.Fragment key={q._id}>
