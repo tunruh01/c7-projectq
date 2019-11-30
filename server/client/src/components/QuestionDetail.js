@@ -1,19 +1,26 @@
 import React, { Component } from "react";
 // import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from '../actions/actions';
 
 
 
 
 class QuestionDetail extends Component {
-
+ componentDidMount() {
+    const questionid = this.props.match.params.questionid
+    console.log('The questionid is: ', questionid)
+    this.props.fetchQuestionDetails(questionid)
+  }
 
     render() {
+      let { questionDetails } = this.props
         // temporary form until we implement redux so we can use redux-form 
+      console.log('question details: ', questionDetails)
         return (
             <div>
                 <div>
-                    <h3>Category: Pizza</h3>
                     <h1>
                         Why in the world do people eat Papa John's ?
                      </h1>
@@ -59,7 +66,8 @@ class QuestionDetail extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+  return state
+}
 
-
-
-export default QuestionDetail;
+export default connect(mapStateToProps, actions)(QuestionDetail)
