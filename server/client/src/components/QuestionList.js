@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import "../App.css";
 import CategoryList from './CategoryList'
 import * as actions from '../actions/actions';
-//import { bindActionCreators } from 'redux'
 // import _ from "lodash";
 import { connect } from "react-redux";
-// import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroller';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class QuestionList extends Component {
@@ -55,8 +54,6 @@ class QuestionList extends Component {
   }
 
   render() {
-    const { authenticated } = this.props.auth;
-    const { user } = this.props.auth;
     console.log('questionList render props: ', this.props)
     return (
       <React.Fragment>
