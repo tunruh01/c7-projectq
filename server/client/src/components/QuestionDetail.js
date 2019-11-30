@@ -39,9 +39,9 @@ class QuestionDetail extends Component {
               <>
               <div>
                 Categories: {this.renderCategories()}
-                  <h1>
-                      Why in the world do people eat Papa John's ?
-                  </h1>
+                  <h3>
+                      {questionDetails.question}
+                  </h3>
               </div>
               <AnswerList questionid={this.props.match.params.questionid} />
               <div className='padding'>
