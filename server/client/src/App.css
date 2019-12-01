@@ -37,10 +37,9 @@
           position: fixed;
           height: 100%;
      }
-  
  }
 
- /* .card-columns {
+ .card-columns {
   @include media-breakpoint-only(md) {
     column-count: 3;
   }
@@ -48,14 +47,14 @@
     column-count: 4;
   }
  
-}  */
+} 
 
 .card-columns {
-   display: inline block;
+   display: block;
    columns: auto;
    column-gap: 20px;
-   margin: 20px;
-   padding: 80px;
+   margin: 100px;
+   padding: 20px;
   
 }
 

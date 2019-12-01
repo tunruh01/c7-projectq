@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as actions from '../actions/actions'
 import { connect } from 'react-redux'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "../App.css";
 import Navbar from 'react-bootstrap/Navbar'
 import { Form, FormControl, Button, Nav, Image } from "react-bootstrap";
@@ -19,7 +20,7 @@ class Qnav extends Component {
           <Nav.Link href="/"><i class="material-icons">
             home</i>Home
                   </Nav.Link>
-          {authenticated ? (<Navbar.Text>Welcome {user.name} {{ textAlign: "center" }} </Navbar.Text>) : null}
+          {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
         </Nav>
         <Form inline>
           <FormControl size="sm" type="text" placeholder="Search Questions" className="col-xs-8 mr-2" />

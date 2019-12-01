@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "../App.css";
 import CategoryList from './CategoryList'
 import * as actions from '../actions/actions';
@@ -6,7 +7,6 @@ import * as actions from '../actions/actions';
 // import _ from "lodash";
 import { connect } from "react-redux";
 // import InfiniteScroll from 'react-infinite-scroller';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 class QuestionList extends Component {
 
@@ -37,11 +37,11 @@ class QuestionList extends Component {
                       </React.Fragment>
                     </h6>
                     <small class="text">
-                      <i class="material-icons">
+                      <i class="material-icons float-left">
                         arrow_upward</i>
-                      <i class="material-icons">
+                      <i class="material-icons float-right">
                         chat_bubble_outline</i>
-                      <i class="material-icons">
+                      <i class="material-icons float-left">
                         loop</i>
                     </small>
                   </div>
