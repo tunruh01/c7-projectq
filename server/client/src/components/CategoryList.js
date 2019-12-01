@@ -8,15 +8,12 @@ class CategoryList extends Component {
 
     componentDidMount() {
         this.props.fetchCategories()
-        console.log(this.props);
     }
 
 
 
     renderCategories() {
-        console.log(this.props);
         let categories = this.props.category.topics
-
         return (
             categories.map(c => (
                 <p key={c._id}>
@@ -28,14 +25,14 @@ class CategoryList extends Component {
     render() {
         return (
 
-            <div class="container-fluid">
-                <div class="row flex-nowrap">
-                    <div class="col-md-2 col-12 sidebar">
-                        <div class="card card-body p-2">
+            <div className="container-fluid">
+                <div className="row flex-nowrap">
+                    <div className="col-md-2 col-12 sidebar">
+                        <div className="card card-body p-2">
                             <h4>Category</h4>
-                            <ul class="nav nav-pills flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">{this.renderCategories()}</a>
+                            <ul className="nav nav-pills flex-column">
+                                <li className="nav-item">
+                                    <a className="nav-link" href="#">{this.renderCategories()}</a>
                                 </li>
                             </ul>
                         </div>

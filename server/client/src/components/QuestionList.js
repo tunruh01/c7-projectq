@@ -38,7 +38,7 @@ class QuestionList extends Component {
 
   renderQuestionCategories(q) {
     return (
-      <div class="card text-center">
+      <div className="card text-center">
            {q.topics.map(topic => (
              <span>{topic.name} </span>
            ))}
@@ -50,27 +50,26 @@ class QuestionList extends Component {
   renderQuestions() {
     // If questions in state; loop and return each one
     if (this.props.questions.questionsList) {
-      console.log(this.props.questions.questionsList);
       return (
         <div>
-          <div class="card-columns">
-            <div class="col-md-12">
+          <div className="card-columns">
+            <div className="col-md-12">
               {this.props.questions.questionsList.map(q => (
-                <div class="card">
+                <div className="card">
                     {this.renderQuestionCategories(q)}
-                  <div class="card-body">
-                    <h6 class="card-title">
+                  <div className="card-body">
+                    <h6 className="card-title">
                       <React.Fragment key={q._id}>
                         <a href={`/question/${q._id}`} onClick={e => { e.preventDefault(this.fetchQuestions(q._id)); }}>{q.question}</a>
-                        <p class="card-text">{q.topAnswer.answer}</p>
+                        <p className="card-text">{q.topAnswer.answer}</p>
                       </React.Fragment>
                     </h6>
-                    <small class="text">
-                      <i class="material-icons">
+                    <small className="text">
+                      <i className="material-icons">
                         arrow_upward</i>
-                      <i class="material-icons">
+                      <i className="material-icons">
                         chat_bubble_outline</i>
-                      <i class="material-icons">
+                      <i className="material-icons">
                         loop</i>
                     </small>
                   </div>
@@ -85,9 +84,7 @@ class QuestionList extends Component {
 
   render() {
     const { authenticated } = this.props.auth
-    console.log('questionList render props: ', this.props)
     return (
-        
         <React.Fragment>
           {authenticated ? (
           <>

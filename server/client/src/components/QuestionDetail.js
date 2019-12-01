@@ -12,7 +12,6 @@ class QuestionDetail extends Component {
  componentDidMount() {
     this.props.fetchLoginStatus()
     const questionid = this.props.match.params.questionid
-    console.log('The questionid is: ', questionid)
     this.props.fetchQuestionDetails(questionid)
   }
 
@@ -21,7 +20,7 @@ class QuestionDetail extends Component {
       return (
         <div>
           {questionDetails.topics.map(topic => (
-            <div>{topic.name}</div>
+            <div key={topic._id}>{topic.name}</div>
           ))}
         </div>
       )
@@ -31,7 +30,6 @@ class QuestionDetail extends Component {
     render() {
       const { authenticated } = this.props.auth
       const { questionDetails } = this.props
-      console.log('question details: ', questionDetails)
       // temporary form until we implement redux so we can use redux-form 
         return (
           <div>

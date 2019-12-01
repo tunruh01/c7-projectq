@@ -1,4 +1,4 @@
-import { AUTH_USER, AUTH_ERROR } from "../actions/actions";
+import { AUTH_USER } from "../actions/actions";
 
 const DEFAULT_STATE = {
   user: {},
@@ -10,7 +10,6 @@ export default function(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case AUTH_USER:
       if (action.payload) {
-        console.log("AUTH REDUCER PAYLOAD: ", action.payload);
         if (
           action.payload.isAxiosError &&
           action.payload.response.status === 401
