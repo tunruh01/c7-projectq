@@ -3,37 +3,66 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "../App.css";
 import CategoryList from './CategoryList'
 import * as actions from '../actions/actions';
-//import { bindActionCreators } from 'redux'
 // import _ from "lodash";
 import { connect } from "react-redux";
-// import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroller';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class QuestionList extends Component {
+  constructor() {
+    super();
+
+    this.loadItems = this.loadItems.bind(this);
+
+    this.state = {
+      hasMoreItems: true
+    };
+  }
 
   // Fetch questions once page assets are ready
   componentDidMount() {
-    this.props.fetchQuestions()
+    // loadItems from Infinite scroll seems to run on page load, fetching Questions on mount
+    // was creating duplicates
+    // this.props.fetchQuestions()
+
     this.props.fetchLoginStatus()
+  }
+
+  //  Stops infinite scroll querying when there are no more questions to load
+  loadItems(page) {
+    if (page < this.props.total_pages || this.props.total_pages === 0) {
+      this.props.fetchQuestions(page);
+    } else {
+      this.setState({ hasMoreItems: false });
+    }
+  }
+
+  renderQuestionCategories(q) {
+    return (
+      <div className="card text-center">
+        {q.topics.map(topic => (
+          <span>{topic.name} </span>
+        ))}
+      </div>
+    )
+
   }
 
   renderQuestions() {
     // If questions in state; loop and return each one
     if (this.props.questions.questionsList) {
-      console.log(this.props.questions.questionsList);
       return (
         <div>
-          <div class="card-columns">
-            <div class="col-md-12">
+          <div className="card-columns">
+            <div className="col-md-12">
               {this.props.questions.questionsList.map(q => (
-                <div class="card">
-                  <div class="card text-center">
-                    Categories
-                </div>
-                  <div class="card-body">
-                    <h6 class="card-title">
+                <div className="card">
+                  {this.renderQuestionCategories(q)}
+                  <div className="card-body">
+                    <h6 className="card-title">
                       <React.Fragment key={q._id}>
-                        <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(q._id)); }}>{q.question}</a>
-                        <p class="card-text">{q.topAnswer.answer}</p>
+                        <a href={`/question/${q._id}`} onClick={e => { e.preventDefault(this.fetchQuestions(q._id)); }}>{q.question}</a>
+                        <p className="card-text">{q.topAnswer.answer}</p>
                       </React.Fragment>
                     </h6>
                     <small class="text">
@@ -55,15 +84,22 @@ class QuestionList extends Component {
   }
 
   render() {
-    const { authenticated } = this.props.auth;
-    const { user } = this.props.auth;
-    console.log('questionList render props: ', this.props)
+    const { authenticated } = this.props.auth
     return (
       <React.Fragment>
-        <CategoryList />
-        <div>
-          {this.renderQuestions()}
-        </div>
+        {authenticated ? (
+          <>
+            <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
+              <CategoryList />
+              <div>
+                {this.renderQuestions()}
+              </div>
+            </InfiniteScroll>
+          </>
+        ) : (
+            <div>Unauthorized - maybe have a 'please login' component/message here</div>
+          )}
+
       </React.Fragment>
 
     )

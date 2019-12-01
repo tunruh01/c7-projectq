@@ -1,18 +1,16 @@
-import { FETCH_ANSWERS } from '../actions/actions';
+import { FETCH_QUESTION_DETAILS } from '../actions/actions';
 
 const DEFAULT_STATE = {
-  answersList: []
+  topics: []
 }
 
 export default function(state = DEFAULT_STATE, action) {
   switch (action.type) {
-    case FETCH_ANSWERS:
+    case FETCH_QUESTION_DETAILS:
       if (action.payload) {
         let newState = Object.assign({}, state)
         // Add each question object to arr and push to state/store
-        action.payload.data.answers.forEach(answer => {
-          newState.answersList.push(answer)
-        })
+        newState = action.payload.data
         return newState;
       }
       return state;
