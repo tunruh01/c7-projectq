@@ -16,7 +16,7 @@ class Qnav extends Component {
           <Navbar bg="light" variant="light">
               <Navbar.Brand>Project Q</Navbar.Brand>
               <Nav className="mr-auto">
-                  <Nav.Link href="/"><i class="material-icons">
+                  <Nav.Link href="/"><i className="material-icons">
                       home</i>Home
                   </Nav.Link>
                   {authenticated ? (<Navbar.Text>Welcome { user.name }</Navbar.Text>) : null}
@@ -33,7 +33,7 @@ class Qnav extends Component {
                   <Button variant="outline-secondary mr-3" size="sm">Search</Button>
               </Form>
               <Form inline>
-                  <Link exact to="/question"><Button variant="outline-danger mr-3" size="sm">Ask Question</Button></Link>
+                  <Link to="/question"><Button variant="outline-danger mr-3" size="sm">Ask Question</Button></Link>
                   <Image src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png" roundedCircle />
               </Form>
           </Navbar>

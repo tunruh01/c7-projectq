@@ -21,26 +21,25 @@ class AnswerList extends Component {
   renderAnswers() {
     // If questions in state; loop and return each one
     if (this.props.answers.answersList) {
-      console.log(this.props.answers.answersList);
       return (
         <div>
-          <div class="card-columns">
-            <div class="col-md-12">
+          <div className="card-columns">
+            <div className="col-md-12">
               {this.props.answers.answersList.map(a => (
-                <div class="card">
-                  <div class="card-body">
-                    <h6 class="card-title">
-                      <React.Fragment key={a._id}>
+                <div className="card" key={a._id}>
+                  <div className="card-body">
+                    <h6 className="card-title">
+                      <React.Fragment>
                         <span>{a.answer}</span>
-                        <p class="card-text">asdf123</p>
+                        <p className="card-text">asdf123</p>
                       </React.Fragment>
                     </h6>
-                    <small class="text">
-                      <i class="material-icons">
+                    <small className="text">
+                      <i className="material-icons">
                         arrow_upward</i>
-                      <i class="material-icons">
+                      <i className="material-icons">
                         chat_bubble_outline</i>
-                      <i class="material-icons">
+                      <i className="material-icons">
                         loop</i>
                     </small>
                   </div>
@@ -55,7 +54,6 @@ class AnswerList extends Component {
 
 
   render() {
-    console.log('answerList render props ', this.props)
     return (
       <div>{this.renderAnswers()}</div>
     )
