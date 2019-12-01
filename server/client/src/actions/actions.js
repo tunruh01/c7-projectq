@@ -4,7 +4,7 @@ export const FETCH_CATEGORIES = "fetch_categories";
 export const FETCH_QUESTIONS = "fetch_questions";
 export const FETCH_QUESTION_DETAILS = 'fetch_question_details'
 export const FETCH_ANSWERS = 'fetch_answers';
-// export const SUBMIT_QUESTION = 'submit_question';
+export const CREATE_QUESTION = 'create_question';
 // export const SUBMIT_ANSWER = 'submit_answer';
 export const AUTH_USER = "auth_user";
 
@@ -55,6 +55,17 @@ export const fetchAnswers = (questionid, page = 1) => {
     payload: request
   };
 };
+
+export function createQuestion(values, callback) {
+  const request = axios.post(`/api/question`, values)
+
+  request.then(() => callback());
+
+  return {
+    type: CREATE_QUESTION,
+    payload: request
+  };
+}
 
 export function fetchLoginStatus() {
   const request = axios

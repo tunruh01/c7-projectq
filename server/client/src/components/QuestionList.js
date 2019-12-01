@@ -51,6 +51,7 @@ class QuestionList extends Component {
   renderQuestions() {
     // If questions in state; loop and return each one
     if (this.props.questions.questionsList) {
+      console.log('questionsList: ', this.props.questions.questionsList)
       return (
         <div>
           <div className="card-columns">
@@ -62,7 +63,11 @@ class QuestionList extends Component {
                     <h6 className="card-title">
                       <React.Fragment key={q._id}>
                         <a href={`/question/${q._id}`} onClick={e => { e.preventDefault(this.fetchQuestions(q._id)); }}>{q.question}</a>
-                        <p className="card-text">{q.topAnswer.answer}</p>
+                        {!q.topAnswer ? (
+                          <p className="card-text">This question hasn't been answered yet</p>
+                        ) : (
+                          <p className="card-text">{q.topAnswer.answer}</p>
+                        )}
                       </React.Fragment>
                     </h6>
                     <small class="text">

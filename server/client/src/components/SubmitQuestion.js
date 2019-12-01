@@ -1,6 +1,9 @@
 
 import React, { Component } from 'react';
+import * as actions from '../actions/actions';
 import { Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { create } from 'istanbul-reports';
 
 class SubmitQuestion extends Component {
     constructor() {
@@ -20,7 +23,20 @@ class SubmitQuestion extends Component {
         this.props.addQuestion(question);
     }
 
+    submitQuestion() {
+      const questionValues = {
+        topics: ['5dde5262a973fc1fc9fa9144'],
+        question: 'Am I submitting the question or is the question submitting me?'
+      }
+      console.log('im props', this.props)
+      this.props.createQuestion(questionValues, () => {
+        console.log('create question callback')
+      })
+
+    }
+
     render() {
+      console.log(this.props)
         return (
             <form>
                 <h1>Ask Question</h1>
@@ -40,7 +56,7 @@ class SubmitQuestion extends Component {
 
                 </div>
                 {/* on click route to the new question's detail page */}
-                <Button variant="outline-secondary mr-2" size="">Ask Question</Button>
+                <Button variant="outline-secondary mr-2" size=""onClick={this.submitQuestion.bind(this)}>Ask Question</Button>
 
                 {/* cancel button needs to re route user back to the last route they were on. */}
                 <Button variant="outline-danger mr-2" size="">Cancel</Button>
@@ -51,4 +67,8 @@ class SubmitQuestion extends Component {
     };
 }
 
-export default SubmitQuestion;
+const mapStateToProps = (state) => {
+  return state
+}
+
+export default connect(mapStateToProps, actions)(SubmitQuestion)
