@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "../App.css";
 import CategoryList from './CategoryList'
 import * as actions from '../actions/actions';
@@ -39,12 +40,12 @@ class QuestionList extends Component {
   renderQuestionCategories(q) {
     return (
       <div className="card text-center">
-           {q.topics.map(topic => (
-             <span>{topic.name} </span>
-           ))}
+        {q.topics.map(topic => (
+          <span>{topic.name} </span>
+        ))}
       </div>
     )
-    
+
   }
 
   renderQuestions() {
@@ -56,7 +57,7 @@ class QuestionList extends Component {
             <div className="col-md-12">
               {this.props.questions.questionsList.map(q => (
                 <div className="card">
-                    {this.renderQuestionCategories(q)}
+                  {this.renderQuestionCategories(q)}
                   <div className="card-body">
                     <h6 className="card-title">
                       <React.Fragment key={q._id}>
@@ -64,12 +65,12 @@ class QuestionList extends Component {
                         <p className="card-text">{q.topAnswer.answer}</p>
                       </React.Fragment>
                     </h6>
-                    <small className="text">
-                      <i className="material-icons">
+                    <small class="text">
+                      <i class="material-icons float-left">
                         arrow_upward</i>
-                      <i className="material-icons">
+                      <i class="material-icons float-right">
                         chat_bubble_outline</i>
-                      <i className="material-icons">
+                      <i class="material-icons float-left">
                         loop</i>
                     </small>
                   </div>
@@ -85,22 +86,22 @@ class QuestionList extends Component {
   render() {
     const { authenticated } = this.props.auth
     return (
-        <React.Fragment>
-          {authenticated ? (
+      <React.Fragment>
+        {authenticated ? (
           <>
             <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
-            <CategoryList />
-            <div>
-              {this.renderQuestions()}
-            </div>
+              <CategoryList />
+              <div>
+                {this.renderQuestions()}
+              </div>
             </InfiniteScroll>
           </>
-          ) : (
-              <div>Unauthorized - maybe have a 'please login' component/message here</div>
-            )}
-            
-        </React.Fragment>
-      
+        ) : (
+            <div>Unauthorized - maybe have a 'please login' component/message here</div>
+          )}
+
+      </React.Fragment>
+
     )
   }
 }

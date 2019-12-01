@@ -50,11 +50,11 @@
 } 
 
 .card-columns {
-   display: inline block;
+   display: block;
    columns: auto;
    column-gap: 20px;
-   margin: 20px;
-   padding: 80px;
+   margin: 100px;
+   padding: 20px;
   
 }
 
@@ -68,4 +68,3 @@
 .clearfix {
   overflow: auto;
 }
-
