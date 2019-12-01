@@ -62,7 +62,7 @@ class QuestionList extends Component {
                   <div className="card-body">
                     <h6 className="card-title">
                       <React.Fragment key={q._id}>
-                        <a href={`/question/${q._id}`} onClick={e => { e.preventDefault(this.fetchQuestions(q._id)); }}>{q.question}</a>
+                        <a href={`/question/${q._id}`}>{q.question}</a>
                         {!q.topAnswer ? (
                           <p className="card-text">This question hasn't been answered yet</p>
                         ) : (
