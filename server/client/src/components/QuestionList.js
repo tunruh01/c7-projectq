@@ -7,6 +7,7 @@ import * as actions from "../actions/actions";
 import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroller";
 import ShowMoreText from "react-show-more-text";
+import { Form, Container, FormControl, Button, Nav, Image } from "react-bootstrap";
 
 class QuestionList extends Component {
   constructor() {
@@ -46,8 +47,9 @@ class QuestionList extends Component {
       </div>
     );
   }
-
+  // { q.topAnswer.user.cred }
   renderQuestions() {
+
     // If questions in state; loop and return each one
     if (this.props.questions.questionsList) {
       console.log("questionsList: ", this.props.questions.questionsList);
@@ -72,25 +74,31 @@ class QuestionList extends Component {
                               This question hasn't been answered yet
                             </p>
                           ) : (
-                            <ShowMoreText
-                              lines={1}
-                              more="more"
-                              less="less"
-                              anchorClass=""
-                              onClick={this.executeOnClick}
-                              expanded={false}
-                            >
-                              <p className="card-text">{q.topAnswer.answer}</p>
-                            </ShowMoreText>
-                          )}
+                              <>
+                                <hr></hr>
+                                <div className="userCred" align="left">
+                                  <Image className="avatar" src={q.topAnswer.user.userAvatar} height="42" width="42" roundedCircle>
+                                  </Image>{q.topAnswer.user.userName} <b>{q.topAnswer.user.cred}</b>
+                                </div>
+                                <ShowMoreText
+                                  lines={1}
+                                  more="more"
+                                  less="less"
+                                  anchorClass=""
+                                  onClick={this.executeOnClick}
+                                  expanded={false}
+                                >
+
+                                  <p className="card-text">{q.topAnswer.answer}</p>
+                                </ShowMoreText>
+                              </>
+                            )}
                         </React.Fragment>
                       </h6>
                       <small class="text">
-                        <i class="material-icons float-left">arrow_upward</i>
-                        <i class="material-icons float-right">
-                          chat_bubble_outline
-                        </i>
-                        <i class="material-icons float-left">loop</i>
+                        <a href=""> <i class="material-icons float-left mr-2">arrow_upward</i> </a>
+                        <a href=""> <i class="material-icons float-left">
+                          add_comment</i> </a>
                       </small>
                     </div>
                   </div>
@@ -121,10 +129,13 @@ class QuestionList extends Component {
             </InfiniteScroll>
           </>
         ) : (
-          <div>
-            Unauthorized - maybe have a 'please login' component/message here
-          </div>
-        )}
+            <div>
+              <div className="error">
+                Unauthorized - maybe have a 'please login' component/message here
+              </div>
+
+            </div>
+          )}
       </React.Fragment>
     );
   }

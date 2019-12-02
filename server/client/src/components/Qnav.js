@@ -22,18 +22,11 @@ class Qnav extends Component {
     const { user } = this.props.auth;
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-        <Navbar.Brand font="monospace">Project Q</Navbar.Brand>
+        <Navbar.Brand>Project Q</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/">
-              <i class="material-icons">home</i>
-            </Nav.Link>
-            <h6 className="text-center">
-              {authenticated ? (
-                <Navbar.Text>Welcome {user.name}</Navbar.Text>
-              ) : null}
-            </h6>
+            {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
           </Nav>
           <Form inline>
             <FormControl
@@ -53,8 +46,7 @@ class Qnav extends Component {
               </Button>
             </Link>
             <Image
-              src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png"
-              roundedCircle
+              src={user.avatar} className="thumbnail" roundedCircle/>
             />
           </Form>
           <Form inline>

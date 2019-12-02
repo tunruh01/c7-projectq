@@ -63,7 +63,7 @@ class SubmitQuestion extends Component {
                     <input className="k-textbox" placeholder="Start your question with What, How, Why, etc" />
                   </label>
                   <div className="k-form-field">
-                    <span>Choose Categories: </span>
+                    <span> Choose Categories: </span>
 
                     <input type="radio" name="topics" id="latin" className="k-radio" />
                     <label component={this.renderField} className="k-radio-label mr-2" for="latin"> Latin </label>
@@ -73,8 +73,8 @@ class SubmitQuestion extends Component {
                   </div>
 
                   <div className="text-right">
-                    <Button variant="outline-danger mr-2" size="sm">Cancel</Button>
-                    <Link exact to="/"><Button variant="outline-secondary mr-2" size="sm">Submit</Button></Link>
+                    <a href="/"><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
+                    <a href="/"><Button variant="outline-secondary mr-2" size="sm">Submit</Button></a>
                   </div>
                 </fieldset>
               </form>
