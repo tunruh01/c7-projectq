@@ -24,7 +24,7 @@ class CategoryList extends Component {
 
   render() {
     return (
-      <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 sidebar">
+      <div className="sidebar col-lg-3 col-md-3">
         <div className="card card-body p-2">
           <h4>Category</h4>
           <ul className="nav nav-pills flex-column">
