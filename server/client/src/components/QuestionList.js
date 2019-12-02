@@ -30,8 +30,12 @@ class QuestionList extends Component {
 
   //  Stops infinite scroll querying when there are no more questions to load
   loadItems(page) {
+    console.log(this.props)
+    console.log(this.props.category.selectedTopic)
+    let selectedTopic= this.props.category.selectedTopic
     if (page < this.props.total_pages || this.props.total_pages === 0) {
-      this.props.fetchQuestions(page);
+      console.log(selectedTopic)
+      this.props.fetchQuestions(page, selectedTopic);
     } else {
       this.setState({ hasMoreItems: false });
     }

@@ -2,14 +2,25 @@ import React, { Component } from "react";
 import "../App.css"
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchCategories, fetchQuestions } from "../actions/actions"
+import { fetchCategories, selectCategory, fetchQuestions } from "../actions/actions"
 
 class CategoryList extends Component {
 
   componentDidMount() {
+    console.log(this.props)
     this.props.fetchCategories()
   }
 
+  changeCategory(categoryId) {
+    this.props.selectCategory(categoryId);
+    console.log(this.props.category.selectedTopic);
+    let selectedTopic= this.props.category.selectedTopic
+    if (categoryId === selectedTopic) {
+      this.props.fetchQuestions(1, selectedTopic)
+    } else {
+      console.log('fuck me')
+    }
+  }
 
 
   renderCategories() {
@@ -17,7 +28,7 @@ class CategoryList extends Component {
     return (
       categories.map(c => (
         <p key={c._id}>
-          <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(c._id)); }}>{c.name}</a>
+          <a href='#' onClick={e => { e.preventDefault(this.changeCategory(c._id)); }}>{c.name}</a>
         </p>
       )))
   }
@@ -45,7 +56,7 @@ function mapStateToProps({ questions, category }) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { fetchQuestions, fetchCategories }, dispatch);
+    { fetchCategories, selectCategory, fetchQuestions }, dispatch);
 }
 // export default CategoryList;
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);

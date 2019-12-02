@@ -1,7 +1,8 @@
-import { FETCH_CATEGORIES } from '../actions/actions';
+import { FETCH_CATEGORIES, SELECT_CATEGORY } from '../actions/actions';
 
 const DEFAULT_STATE = {
-    topics: []
+    topics: [],
+    selectedTopic: ''
   }
   
   export default function(state = DEFAULT_STATE, action) {
@@ -16,7 +17,13 @@ const DEFAULT_STATE = {
           return newState;
         }
         return state;
+        case SELECT_CATEGORY:
+        if (action.payload) {
+          console.log(action.payload)
+          Object.assign(state, {selectedTopic: action.payload})
+          return state;
+        }
+
       default:
-        return state;
-    }
-  }
+        return state;   
+  }}

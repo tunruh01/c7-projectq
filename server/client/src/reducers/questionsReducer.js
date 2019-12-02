@@ -9,7 +9,9 @@ export default function(state = DEFAULT_STATE, action) {
     case FETCH_QUESTIONS:
       if (action.payload) {
         let newState = Object.assign({}, state)
+        console.log(state);
         // Add each question object to arr and push to state/store
+        newState.questionsList=[];
         action.payload.data.questions.forEach(question => {
           newState.questionsList.push(question)
         })

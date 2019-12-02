@@ -5,14 +5,15 @@ export const FETCH_QUESTIONS = "fetch_questions";
 export const FETCH_QUESTION_DETAILS = 'fetch_question_details'
 export const FETCH_ANSWERS = 'fetch_answers';
 export const CREATE_QUESTION = 'create_question';
+export const SELECT_CATEGORY = 'select_category';
 // export const SUBMIT_ANSWER = 'submit_answer';
 export const AUTH_USER = "auth_user";
 
 const ROOT_URL = '/api';
 
-export const fetchQuestions = (page = 1) => {
+export const fetchQuestions = (page = 1, topicId) => {
   const request = axios
-    .get(`${ROOT_URL}/questions?page=${page}`, { withCredentials: true })
+    .get(`${ROOT_URL}/questions?page=${page}&topicId=${topicId}`, { withCredentials: true })
     .catch(function(error) {
       console.log("error: ", error);
     });
@@ -31,6 +32,14 @@ export function fetchCategories() {
   return {
     type: FETCH_CATEGORIES,
     payload: request
+  };
+}
+
+export function selectCategory(categoryId) {
+  console.log('category clicked')
+  return {
+    type: SELECT_CATEGORY,
+    payload: categoryId
   };
 }
 
