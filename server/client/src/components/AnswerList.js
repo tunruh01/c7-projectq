@@ -20,7 +20,6 @@ class AnswerList extends Component {
   renderAnswers() {
     // If questions in state; loop and return each one
     if (this.props.answers.answersList) {
-      debugger;
       return (
         <div>
           <div className="card-columns">
@@ -33,7 +32,7 @@ class AnswerList extends Component {
                         <span>
                           <img src={a.user.userAvatar} />
                           <h6>
-                            {a.user.userName}, {a.user.userCred.credential}
+                            {a.user.userName}, {a.user.userCred ? a.user.userCred.credential : 'my credential'}
                           </h6>
                         </span>
                         <h6>
