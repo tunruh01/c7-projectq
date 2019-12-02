@@ -6,6 +6,13 @@ const Question = require("../models/question");
 const Topic = require("../models/topic");
 const User = require("../models/user");
 
+sendGenericError = (res, text) => {
+  res.status(500).json({
+    success: false,
+    message: text
+  });
+};
+
 // Returns the questions, ???? per page
 router.get("/questions", UserAuthCheck, (req, res) => {
   console.log("Query request:\n", req.query);
@@ -25,87 +32,112 @@ router.get("/questions", UserAuthCheck, (req, res) => {
   if (topicId) {
     filterOptions.topics = topicId;
   }
+
   User.findOne(
     { googleId: req.user.googleId },
     { upvotedAnswers: 1, downvotedAnswers: 1, lean: true }
   ).exec((err, user) => {
-    let userUpvotedAnswers = user ? user.upvotedAnswers : [];
-    let userDownvotedAnswers = user ? user.downvotedAnswers : [];
-    Question.find(filterOptions)
-      .skip(perPage * page - perPage)
-      .limit(perPage)
-      .lean()
-      .populate("topics", "_id name")
-      .populate({
-        path: "answers",
-        populate: { path: "userId" },
-        options: { sort: { score: -1 } }
-      })
-      .sort({ dateAdded: "desc" })
-      .exec((err, questions) => {
-        Question.count(filterOptions).exec((err, count) => {
-          let getTopAnswer = question => {
-            let firstAnswer = question.answers.length
-              ? question.answers[0]
-              : null;
+    if (err) {
+      console.log(err);
+    }
+    if (!user) {
+      sendGenericError(res, "User Not Found");
+    } else {
+      let userUpvotedAnswers = user ? user.upvotedAnswers : [];
+      let userDownvotedAnswers = user ? user.downvotedAnswers : [];
+      Question.find(filterOptions)
+        .skip(perPage * page - perPage)
+        .limit(perPage)
+        .lean()
+        .populate("topics", "_id name")
+        .populate({
+          path: "answers",
+          populate: { path: "userId" },
+          options: { sort: { score: -1 } }
+        })
+        .sort({ dateAdded: "desc" })
+        .exec((err, questions) => {
+          Question.count(filterOptions).exec((err, count) => {
+            if (err) {
+              console.log(err);
+              sendGenericError(res, err);
+            } else {
+              let getTopAnswer = question => {
+                let firstAnswer = question.answers.length
+                  ? question.answers[0]
+                  : null;
 
-            let topAnswer = {};
+                let topAnswer = {};
 
-            if (firstAnswer) {
-              topAnswer._id = firstAnswer._id;
-              topAnswer.user = {};
-              topAnswer.user._id = firstAnswer.userId._id;
-              topAnswer.user.userName = firstAnswer.userId.name;
+                if (firstAnswer) {
+                  topAnswer._id = firstAnswer._id;
+                  topAnswer.user = {
+                    _id: "",
+                    name: "",
+                    cred: "",
+                    avatar: ""
+                  };
 
-              let cred = firstAnswer.userId.credentials.find(credential =>
-                credential.answers.toString().includes(topAnswer._id.toString())
-              );
+                  if (firstAnswer.userId) {
+                    topAnswer.user._id = firstAnswer.userId._id;
+                    topAnswer.user.userName = firstAnswer.userId.name;
 
-              topAnswer.user.userCred = cred;
-              topAnswer.user.userAvatar = firstAnswer.userId.avatar;
+                    let cred = firstAnswer.userId.credentials.find(credential =>
+                      credential.answers
+                        .toString()
+                        .includes(topAnswer._id.toString())
+                    );
 
-              topAnswer.answer = firstAnswer.answer;
-              topAnswer.answerDate = firstAnswer.dateAdded;
-              topAnswer.answerScore = firstAnswer.score;
-              topAnswer.userUpvoted = userUpvotedAnswers
-                .toString()
-                .includes(topAnswer._id.toString());
-              topAnswer.userDownvoted = userDownvotedAnswers
-                .toString()
-                .includes(topAnswer._id.toString());
+                    topAnswer.user.userCred = cred;
+                    topAnswer.user.userAvatar = firstAnswer.userId.avatar;
+                  }
 
-              return topAnswer;
+                  topAnswer.answer = firstAnswer.answer;
+                  topAnswer.answerDate = firstAnswer.dateAdded;
+                  topAnswer.answerScore = firstAnswer.score;
+                  topAnswer.userUpvoted = userUpvotedAnswers
+                    .toString()
+                    .includes(topAnswer._id.toString());
+                  topAnswer.userDownvoted = userDownvotedAnswers
+                    .toString()
+                    .includes(topAnswer._id.toString());
+
+                  return topAnswer;
+                }
+
+                return null;
+              };
+              res.send({
+                pageNum: parseInt(page, 10),
+                questionsPerPage: perPage,
+                totalNumQuestions: count,
+                questions: questions.map(question => {
+                  return {
+                    _id: question._id,
+                    topics: question.topics,
+                    question: question.question,
+                    answerCount: question.answers.length,
+                    questionDate: question.dateAdded,
+                    topAnswer: getTopAnswer(question)
+                  };
+                })
+              });
             }
-
-            return null;
-          };
-
-          if (err) console.log(err);
-          else {
-            res.send({
-              pageNum: parseInt(page, 10),
-              questionsPerPage: perPage,
-              totalNumQuestions: count,
-              questions: questions.map(question => {
-                return {
-                  _id: question._id,
-                  topics: question.topics,
-                  question: question.question,
-                  answerCount: question.answers.length,
-                  questionDate: question.dateAdded,
-                  topAnswer: getTopAnswer(question)
-                };
-              })
-            });
-          }
+          });
         });
-      });
+    }
   });
 });
 
 router.post("/question", UserAuthCheck, (req, res) => {
   User.findOne({ googleId: req.user.googleId }).exec((err, user) => {
-    if (user) {
+    if (err) {
+      console.log(err);
+    }
+
+    if (!user) {
+      sendGenericError(res, "User Not Found");
+    } else {
       let newQuestion = new Question();
 
       //lets build a seperate response so we don't just have to
