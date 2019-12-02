@@ -5,7 +5,8 @@ import * as actions from "../actions/actions";
 import { connect } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import moment from "moment";
-import InfiniteScroll from 'react-infinite-scroller';
+import ShowMoreText from "react-show-more-text";
+import InfiniteScroll from "react-infinite-scroller";
 
 class AnswerList extends Component {
   constructor() {
@@ -32,6 +33,7 @@ class AnswerList extends Component {
     const questionid = this.props.questionid;
     console.log('infinite scroll page: ', page)
 
+
     if (page < this.props.total_pages || this.props.total_pages === 0) {
       this.props.fetchAnswers(questionid, page);
     } else {
@@ -46,21 +48,43 @@ class AnswerList extends Component {
         <div>
           <div className="card-columns">
             <div className="col-md-12">
-              {this.props.answers.answersList.map(a => (
-                <div className="card" key={a._id}>
-                  <div className="card-body">
-                    <h6 className="card-title">
-                      <React.Fragment>
-                        <span>
-                          <img src={a.user.userAvatar} />
+              {this.props.answers.answersList.map(a => {
+                const executeOnClick = isExpanded => {
+                  console.log(isExpanded);
+                };
+
+                return (
+                  <div className="card" key={a._id}>
+                    <div className="card-body">
+                      <h6 className="card-title">
+                        <React.Fragment>
+                          <span>
+                            <img src={a.user.userAvatar} />
+                            <h6>
+                              {a.user.userName},{" "}
+                              {a.user.userCred
+                                ? a.user.userCred.credential
+                                : "my credential"}
+                            </h6>
+                          </span>
                           <h6>
-                            {a.user.userName}, {a.user.userCred ? a.user.userCred.credential : 'my credential'}
+                            Answered {moment(a.answerDate).format("MMM DD")}
                           </h6>
                         </span>
                         <h6>
                           Answered {moment(a.answerDate).format("MMM DD")}
                         </h6>
-                        <span>{a.answer}</span>
+
+                        <ShowMoreText
+                            lines={1}
+                            more="more"
+                            less="less"
+                            anchorClass=""
+                            onClick={this.executeOnClick}
+                            expanded={false}
+                          >
+                            <span>{a.answer}</span>
+                          </ShowMoreText>
                       </React.Fragment>
                     </h6>
                     <small className="text">
@@ -68,8 +92,8 @@ class AnswerList extends Component {
                       <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
                     </small>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -85,6 +109,7 @@ class AnswerList extends Component {
         </InfiniteScroll>
       </>
     )
+
   }
 }
 

@@ -45,13 +45,20 @@ body {
   align-content: center
 }
 
-@media (min-width: 576px) {
+@media (min-width: 768px) {
      .sidebar {
           max-width: 280px;
           position: fixed;
           height: 100%;
      }
  }
+
+ @media (max-width: 768px) {
+  .sidebar {
+       /* max-width: 280px; */
+       display: none;
+  }
+}
 
  .card-columns {
   @include media-breakpoint-only(md) {
