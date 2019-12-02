@@ -4,13 +4,15 @@ export const FETCH_CATEGORIES = "fetch_categories";
 export const FETCH_QUESTIONS = "fetch_questions";
 export const FETCH_QUESTION_DETAILS = 'fetch_question_details'
 export const FETCH_ANSWERS = 'fetch_answers';
-// export const SUBMIT_QUESTION = 'submit_question';
+export const CREATE_QUESTION = 'create_question';
 // export const SUBMIT_ANSWER = 'submit_answer';
 export const AUTH_USER = "auth_user";
 
+const ROOT_URL = '/api';
+
 export const fetchQuestions = (page = 1) => {
   const request = axios
-    .get(`/api/questions?page=${page}`, { withCredentials: true })
+    .get(`${ROOT_URL}/questions?page=${page}`, { withCredentials: true })
     .catch(function(error) {
       console.log("error: ", error);
     });
@@ -22,7 +24,7 @@ export const fetchQuestions = (page = 1) => {
 
 export function fetchCategories() {
   const request = axios
-    .get(`/api/topics/`, { withCredentials: true })
+    .get(`${ROOT_URL}/topics/`, { withCredentials: true })
     .catch(function(error) {
       console.log("error: ", error);
     });
@@ -34,7 +36,7 @@ export function fetchCategories() {
 
 export const fetchQuestionDetails = (id) => {
   const request = axios
-    .get(`/api/question/${id}`, { withCredentials: true })
+    .get(`${ROOT_URL}/question/${id}`, { withCredentials: true })
     .catch(function(error) {
       console.log("error: ", error);
     });
@@ -46,7 +48,7 @@ export const fetchQuestionDetails = (id) => {
 
 export const fetchAnswers = (questionid, page = 1) => {
   const request = axios
-    .get(`/api/question/${questionid}/answers?page=${page}`, { withCredentials: true })
+    .get(`${ROOT_URL}/question/${questionid}/answers?page=${page}`, { withCredentials: true })
     .catch(function(error) {
       console.log("error: ", error);
     });
@@ -55,6 +57,17 @@ export const fetchAnswers = (questionid, page = 1) => {
     payload: request
   };
 };
+
+export function createQuestion(values, callback) {
+  const request = axios.post(`${ROOT_URL}/question`, values)
+
+  request.then(() => callback());
+
+  return {
+    type: CREATE_QUESTION,
+    payload: request
+  };
+}
 
 export function fetchLoginStatus() {
   const request = axios
