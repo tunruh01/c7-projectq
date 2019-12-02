@@ -7,9 +7,6 @@ import * as actions from '../actions/actions';
 import AnswerList from './AnswerList'
 import { Button } from "react-bootstrap";
 
-
-
-
 class QuestionDetail extends Component {
   componentDidMount() {
     this.props.fetchLoginStatus()

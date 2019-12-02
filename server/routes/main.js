@@ -206,6 +206,7 @@ router.post("/question/:questionId/answer", UserAuthCheck, (req, res, next) => {
           response.user._id = user._id;
           response.user.userName = user.name;
           response.user.userAvatar = user.avatar;
+          response.userCred = req.body.credential;
           response._id = answer._id;
           response.answer = answer.answer;
           response.questionId = answer.questionId;
@@ -216,6 +217,19 @@ router.post("/question/:questionId/answer", UserAuthCheck, (req, res, next) => {
           response.comments = [];
           res.send(response);
           user.answers.push(answer._id);
+          let lookCred = user.credentials.find(
+            cred => cred === req.body.credential
+          );
+          if (!lookCred) {
+            lookCred = {
+              credential: req.body.credential,
+              answers: []
+            };
+            lookCred.answers.push(answer._id);
+            user.credentials.push(lookCred);
+          } else {
+            lookCred.answers.push(answer._id);
+          }
           user.save((err, user) => {
             if (err) console.log(err);
           });
