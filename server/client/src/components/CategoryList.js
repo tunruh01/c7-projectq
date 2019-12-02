@@ -24,21 +24,16 @@ class CategoryList extends Component {
 
     render() {
         return (
-
-            <div className="container-fluid">
-                <div className="row flex-nowrap">
-                    <div className="col-md-2 col-12 sidebar">
-                        <div className="card card-body p-2">
-                            <h4>Category</h4>
-                            <ul className="nav nav-pills flex-column">
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">{this.renderCategories()}</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+          <div className="col-12 sidebar">
+            <div className="card card-body p-2">
+              <h4>Category</h4>
+              <ul className="nav nav-pills flex-column">
+                <li className="nav-item">
+                  <a className="nav-link" href="#">{this.renderCategories()}</a>
+                </li>
+              </ul>
             </div>
+          </div>
         )
     }
 };
