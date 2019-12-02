@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../App.css";
 import Navbar from 'react-bootstrap/Navbar'
-import { Form, FormControl, Button, Nav, Image } from "react-bootstrap";
+import { Form, Container, FormControl, Button, Nav, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 
@@ -14,15 +14,17 @@ class Qnav extends Component {
     const { authenticated } = this.props.auth;
     const { user } = this.props.auth;
     return (
-      <Navbar collapseOnSelect expand="lg" variant="light">
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Brand font="monospace">Project Q</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/"><i class="material-icons">
-              home</i>Home
-                  </Nav.Link>
-            {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
+              home</i>
+            </Nav.Link>
+            <h6 className="text-center">
+              {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
+            </h6>
           </Nav>
           <Form inline>
             <FormControl size="sm" type="text" placeholder="Search Questions" className="col-xs-8 mr-2" />
@@ -34,13 +36,13 @@ class Qnav extends Component {
           </Form>
           <Form inline>
             {!authenticated ? (
-              <Button variant='outline-secondary mr-2' size="sm" onClick={this._handleSignInClick}>Login</Button>
+              <Button variant='outline-dark mr-2' size="sm" onClick={this._handleSignInClick}>Login</Button>
             ) : (
-                <Button variant='outline-secondary mr-2' size="sm" onClick={this._handleLogoutClick}>Logout</Button>
+                <Button variant='outline-dark mr-2' size="sm" onClick={this._handleLogoutClick}>Logout</Button>
               )}
           </Form>
         </Navbar.Collapse>
-      </Navbar >
+      </Navbar>
     )
   }
 

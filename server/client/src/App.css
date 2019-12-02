@@ -24,10 +24,12 @@
 body {
   font-family: monospace;
   font-size: 14px;
-  background-color:#A9C6D9;
-  background-image: linear-gradient(to right, white, #A9C6D9);
+  background-color:#618685;
+  background-image: linear-gradient(to right, white, #618685);
 
 }
+
+
 
 .navbar {
   margin-bottom: 20px;
@@ -87,5 +89,9 @@ body {
 }
 .clearfix {
   overflow: auto;
+}
+
+.Navbar-text {
+  text-align: center;
 }
 
