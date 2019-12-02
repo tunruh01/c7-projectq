@@ -54,7 +54,7 @@ class QuestionList extends Component {
       return (
         <div>
           <div className="card-columns">
-            <div className="col-md-12">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               {this.props.questions.questionsList.map(q => (
                 <div className="card">
                   {this.renderQuestionCategories(q)}
@@ -82,7 +82,7 @@ class QuestionList extends Component {
               ))}
             </div>
           </div>
-        </div>
+        </div >
       )
     }
   }
@@ -95,10 +95,10 @@ class QuestionList extends Component {
           <>
             <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
               <div className="row flex-nowrap">
-                <div className="col-md-3 justify-content-md-center">
+                <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 justify-content-md-center">
                   <CategoryList />
                 </div>
-                <div className="col-md-9">
+                <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                   {this.renderQuestions()}
                 </div>
               </div>
