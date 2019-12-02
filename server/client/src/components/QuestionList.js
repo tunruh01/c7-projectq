@@ -82,7 +82,7 @@ class QuestionList extends Component {
                 </div>
               ))}
             </div>
-          ))}
+          </div>
         </div>
       )
     }
