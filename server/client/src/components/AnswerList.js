@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import "../App.css";
-import * as actions from '../actions/actions';
+import * as actions from "../actions/actions";
 // import _ from "lodash";
 import { connect } from "react-redux";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import moment from "moment";
 
 class AnswerList extends Component {
-
-
   // Fetch questions once page assets are ready
   componentDidMount() {
     // loadItems from Infinite scroll seems to run on page load, fetching Questions on mount
     // was creating duplicates
     // this.props.fetchQuestions()
-    this.props.fetchLoginStatus()
-    const questionid = this.props.questionid
-    this.props.fetchAnswers(questionid)
+    this.props.fetchLoginStatus();
+    const questionid = this.props.questionid;
+    this.props.fetchAnswers(questionid);
   }
 
   renderAnswers() {
@@ -30,17 +29,22 @@ class AnswerList extends Component {
                   <div className="card-body">
                     <h6 className="card-title">
                       <React.Fragment>
+                        <span>
+                          <img src={a.user.userAvatar} />
+                          <h6>
+                            {a.user.userName}, {a.user.userCred ? a.user.userCred.credential : 'my credential'}
+                          </h6>
+                        </span>
+                        <h6>
+                          Answered {moment(a.answerDate).format("MMM DD")}
+                        </h6>
                         <span>{a.answer}</span>
-                        <p className="card-text">asdf123</p>
                       </React.Fragment>
                     </h6>
                     <small className="text">
-                      <i className="material-icons">
-                        arrow_upward</i>
-                      <i className="material-icons">
-                        chat_bubble_outline</i>
-                      <i className="material-icons">
-                        loop</i>
+                      <i className="material-icons">arrow_upward</i>
+                      <i className="material-icons">chat_bubble_outline</i>
+                      <i className="material-icons">loop</i>
                     </small>
                   </div>
                 </div>
@@ -48,20 +52,17 @@ class AnswerList extends Component {
             </div>
           </div>
         </div>
-      )
+      );
     }
   }
 
-
   render() {
-    return (
-      <div>{this.renderAnswers()}</div>
-    )
+    return <div>{this.renderAnswers()}</div>;
   }
 }
 
-const mapStateToProps = (state) => {
-  return state
-}
+const mapStateToProps = state => {
+  return state;
+};
 
-export default connect(mapStateToProps, actions)(AnswerList)
+export default connect(mapStateToProps, actions)(AnswerList);
