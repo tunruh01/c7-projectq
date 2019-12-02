@@ -40,16 +40,19 @@ class SubmitQuestion extends Component {
             <div className="card-block">
               <form className="k-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                   <legend>Ask Question Below</legend>
-                  <Field
-                    name="question"
-                    label="Question:"
-                    placeholder="Start your question with What, How, Why, etc"
-                    component={this.renderField}
-                  />
                   <label className="k-form-field">
-                    <span>Question: </span>
-                    <input className="k-textbox" placeholder="Start your question with What, How, Why, etc" />
+                    <span>Question:</span>
+                    <Field
+                    name="question"
+                    placeholder="Start your question with What, How, Why, etc"
+                    component={'input'}
+                    />                  
                   </label>
+                  
+                  {/* // <label className="k-form-field">
+                  //   <span>Question: </span>
+                  //   <input className="k-textbox" placeholder="Start your question with What, How, Why, etc" />
+                  // </label> */}
                   {/* <div className="k-form-field">
                     <span>Choose Categories: </span>
 
@@ -63,6 +66,7 @@ class SubmitQuestion extends Component {
                     <Button variant="outline-danger mr-2" size="sm">Cancel</Button>
                     <Link exact to="/"><Button variant="outline-secondary mr-2" size="sm">Submit</Button></Link>
                   </div> */}
+                   <button type="submit" className="btn btn-primary">Add Question</button>
               </form>
             </div>
           </div>
