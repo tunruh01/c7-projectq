@@ -5,7 +5,7 @@ export const FETCH_QUESTIONS = "fetch_questions";
 export const FETCH_QUESTION_DETAILS = 'fetch_question_details'
 export const FETCH_ANSWERS = 'fetch_answers';
 export const CREATE_QUESTION = 'create_question';
-// export const SUBMIT_ANSWER = 'submit_answer';
+export const SUBMIT_ANSWER = 'submit_answer';
 export const AUTH_USER = "auth_user";
 
 const ROOT_URL = '/api';
@@ -13,7 +13,7 @@ const ROOT_URL = '/api';
 export const fetchQuestions = (page = 1) => {
   const request = axios
     .get(`${ROOT_URL}/questions?page=${page}`, { withCredentials: true })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("error: ", error);
     });
   return {
@@ -25,7 +25,7 @@ export const fetchQuestions = (page = 1) => {
 export function fetchCategories() {
   const request = axios
     .get(`${ROOT_URL}/topics/`, { withCredentials: true })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("error: ", error);
     });
   return {
@@ -37,7 +37,7 @@ export function fetchCategories() {
 export const fetchQuestionDetails = (id) => {
   const request = axios
     .get(`${ROOT_URL}/question/${id}`, { withCredentials: true })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("error: ", error);
     });
   return {
@@ -49,7 +49,7 @@ export const fetchQuestionDetails = (id) => {
 export const fetchAnswers = (questionid, page = 1) => {
   const request = axios
     .get(`${ROOT_URL}/question/${questionid}/answers?page=${page}`, { withCredentials: true })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("error: ", error);
     });
   return {
@@ -77,6 +77,17 @@ export function fetchLoginStatus() {
     });
   return {
     type: AUTH_USER,
+    payload: request
+  };
+}
+
+export function submitAnswer(questionid, values, callback) {
+  const request = axios.post(`${ROOT_URL}/question/${questionid}/${values}`)
+
+  request.then(() => callback());
+
+  return {
+    type: SUBMIT_ANSWER,
     payload: request
   };
 }
