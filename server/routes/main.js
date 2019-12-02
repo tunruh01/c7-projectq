@@ -187,6 +187,52 @@ router.post("/question", UserAuthCheck, (req, res) => {
   });
 });
 
+
+router.post("/question/{questionId}/answer", UserAuthCheck, (req, res, next) => {
+    User.findOne({ googleId: req.user.googleId }).exec((err, user) => {
+      if (user) {
+        let newAnswer = new Answer();
+        const questionId = req.params.questionId;
+        // const answersObj = Answer.find({ questionId });
+        Question.findById(questionId)
+          .exec((err, question) => {
+            if (err) console.log("ERROR: ", err);
+              res.send({
+                user: {
+                  _id: question.userId._id,
+                  userName: question.userId.name,
+                  userAvatar: question.userId.avatar
+                },
+                _id: question._id,
+                topics: question.topics,
+                question: question.question,
+                answerCount: count
+              })
+          newAnswer.questionId = questionId;
+          newAnswer.userId = user._id;
+          newAnswer.answer = req.body.answer;
+          newAnswer.save((err, answer) => {
+            if (err) console.log(err);
+            response.user._id = user._id;
+            response.user.userName = user.name;
+            response.user.userAvatar = user.avatar;
+            response._id = answer._id;
+            response.answer = answer.answer;
+            res.send(response);
+            user.answers.push(answer._id);
+            user.save((err, user) => {
+            if (err) console.log(err);
+          });
+        });
+      })
+    }
+  
+  })
+  })
+  ;
+    
+
+
 router.get("/topics", UserAuthCheck, (req, res) => {
   const getTopic = Topic.find();
   console.log("this is correct" + getTopic);
