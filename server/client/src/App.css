@@ -81,6 +81,10 @@ body {
 
 }
 
+.card {
+  width: 18rem;
+}
+
 .card-columns {
    display: block;
    columns: auto;
@@ -88,13 +92,13 @@ body {
    margin: 20px;
    margin-left: 0px;
    padding-left: 0px;
-   padding-right: 75px;
    color: gray;
+   padding: 50px;
   
 }
 
 .card-title {
-  color: #BF7C63;
+  color: rgb(8, 4, 2);
   text-align: left;
 
 }
@@ -140,3 +144,11 @@ body {
   margin-right: 18px;
   margin-left: 15px;
 } 
+
+.main-question-body {
+  color: rgb(8, 4, 2);
+  text-align: left;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+
+}
