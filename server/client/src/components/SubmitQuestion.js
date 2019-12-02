@@ -63,7 +63,7 @@ class SubmitQuestion extends Component {
                     <input className="k-textbox" placeholder="Start your question with What, How, Why, etc" />
                   </label>
                   <div className="k-form-field">
-                    <span>Choose Categories: </span>
+                    <span> Choose Categories: </span>
 
                     <input type="radio" name="topics" id="latin" className="k-radio" />
                     <label component={this.renderField} className="k-radio-label mr-2" for="latin"> Latin </label>
