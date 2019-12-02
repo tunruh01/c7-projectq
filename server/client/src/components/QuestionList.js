@@ -6,7 +6,6 @@ import * as actions from "../actions/actions";
 // import _ from "lodash";
 import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroller";
-import "bootstrap/dist/css/bootstrap.min.css";
 import ShowMoreText from "react-show-more-text";
 
 class QuestionList extends Component {
@@ -112,10 +111,10 @@ class QuestionList extends Component {
           <>
             <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
               <div className="row flex-nowrap">
-                <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 justify-content-md-center">
+                <div className="col-md-3 justify-content-md-center">
                   <CategoryList />
                 </div>
-                <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div className="col-md-9">
                   {this.renderQuestions()}
                 </div>
               </div>
