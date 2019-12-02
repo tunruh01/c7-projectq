@@ -5,17 +5,39 @@ import * as actions from "../actions/actions";
 import { connect } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import moment from "moment";
+import InfiniteScroll from 'react-infinite-scroller';
 
 class AnswerList extends Component {
-  // Fetch questions once page assets are ready
-  componentDidMount() {
-    // loadItems from Infinite scroll seems to run on page load, fetching Questions on mount
-    // was creating duplicates
-    // this.props.fetchQuestions()
-    this.props.fetchLoginStatus();
-    const questionid = this.props.questionid;
-    this.props.fetchAnswers(questionid);
+  constructor() {
+    super();
+
+    this.loadItems = this.loadItems.bind(this);
+
+    this.state = {
+      hasMoreItems: true
+    };
   }
+
+  componentDidMount() {
+    // loadItems from Infinite scroll seems to run on page load, fetching Answers on mount
+    // was creating duplicates
+    // const questionid = this.props.questionid;
+    // this.props.fetchAnswers(questionid);
+
+    this.props.fetchLoginStatus();
+  }
+
+    //  Stops infinite scroll querying when there are no more questions to load
+    loadItems(page) {
+      const questionid = this.props.questionid;
+      console.log('infinite scroll page: ', page)
+      
+      if (page < this.props.total_pages || this.props.total_pages === 0) {
+        this.props.fetchAnswers(questionid, page);
+      } else {
+        this.setState({ hasMoreItems: false });
+      }
+    }
 
   renderAnswers() {
     // If questions in state; loop and return each one
@@ -57,7 +79,13 @@ class AnswerList extends Component {
   }
 
   render() {
-    return <div>{this.renderAnswers()}</div>;
+    return (
+    <>
+      <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
+        <div>{this.renderAnswers()}</div>
+      </InfiniteScroll>
+    </>
+    )
   }
 }
 
