@@ -59,7 +59,7 @@ export const fetchAnswers = (questionid, page = 1) => {
 };
 
 export function createQuestion(values, callback) {
-  const request = axios.post(`${ROOT_URL}/question`, values)
+  const request = axios.post(`${ROOT_URL}/question`, values, { withCredentials: true })
 
   request.then(() => callback());
 

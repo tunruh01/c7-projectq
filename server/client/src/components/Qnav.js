@@ -14,30 +14,33 @@ class Qnav extends Component {
     const { authenticated } = this.props.auth;
     const { user } = this.props.auth;
     return (
-      <Navbar bg="light" variant="light">
-        <Navbar.Brand>Project Q</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link href="/"><i class="material-icons">
-            home</i>Home
+      <Navbar collapseOnSelect expand="lg" variant="light">
+        <Navbar.Brand font="monospace">Project Q</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/"><i class="material-icons">
+              home</i>Home
                   </Nav.Link>
-          {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
-        </Nav>
-        <Form inline>
-          <FormControl size="sm" type="text" placeholder="Search Questions" className="col-xs-8 mr-2" />
-          <Button variant="outline-secondary mr-2" size="sm">Search</Button>
-        </Form>
-        <Form inline>
-          <Link exact to="/question"><Button variant="outline-danger mr-2" size="sm">Ask Question</Button></Link>
-          <Image src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png" roundedCircle />
-        </Form>
-        <Form inline>
-          {!authenticated ? (
-            <Button variant='outline-secondary mr-2' size="sm" onClick={this._handleSignInClick}>Login</Button>
-          ) : (
-              <Button variant='outline-secondary mr-2' size="sm" onClick={this._handleLogoutClick}>Logout</Button>
-            )}
-        </Form>
-      </Navbar>
+            {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
+          </Nav>
+          <Form inline>
+            <FormControl size="sm" type="text" placeholder="Search Questions" className="col-xs-8 mr-2" />
+            <Button variant="outline-secondary mr-2" size="sm">Search</Button>
+          </Form>
+          <Form inline>
+            <Link exact to="/question"><Button variant="outline-secondary mr-2" size="sm">Ask Question</Button></Link>
+            <Image src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png" roundedCircle />
+          </Form>
+          <Form inline>
+            {!authenticated ? (
+              <Button variant='outline-secondary mr-2' size="sm" onClick={this._handleSignInClick}>Login</Button>
+            ) : (
+                <Button variant='outline-secondary mr-2' size="sm" onClick={this._handleLogoutClick}>Logout</Button>
+              )}
+          </Form>
+        </Navbar.Collapse>
+      </Navbar >
     )
   }
 

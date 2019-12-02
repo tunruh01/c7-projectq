@@ -61,25 +61,6 @@ class QuestionList extends Component {
                   console.log(isExpanded);
                 };
 
-                // const text_truncate = function(str, length, ending) {
-                //   if (length == null) {
-                //     length = 150;
-                //   }
-                //   if (ending == null) {
-                //     ending = " ...";
-                //   }
-                //   if (str.length > length) {
-                //     return str.substring(0, length - ending.length) + ending;
-                //   } else {
-                //     return str;
-                //   }
-                // };
-
-                // const moreClickHandler = () => {
-                //   console.log('IN MORE CLICK HANDLER...')
-                //   return (<p>{q.topAnswer.answer}</p>);
-                // };
-
                 return (
                   <div className="card">
                     {this.renderQuestionCategories(q)}
@@ -129,16 +110,14 @@ class QuestionList extends Component {
       <React.Fragment>
         {authenticated ? (
           <>
-            <InfiniteScroll
-              loadMore={this.loadItems}
-              pageStart={0}
-              hasMore={this.state.hasMoreItems}
-            >
+            <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
               <div className="row flex-nowrap">
-                <div className="col-md-3 justify-content-md-center">
+                <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 justify-content-md-center">
                   <CategoryList />
                 </div>
-                <div className="col-md-9">{this.renderQuestions()}</div>
+                <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                  {this.renderQuestions()}
+                </div>
               </div>
             </InfiniteScroll>
           </>
