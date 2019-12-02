@@ -32,7 +32,7 @@ class Qnav extends Component {
           </Form>
           <Form inline>
             <Link exact to="/question"><Button variant="outline-secondary mr-2" size="sm">Ask Question</Button></Link>
-            <Image src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png" roundedCircle />
+            <Image src={user.avatar} className="thumbnail" roundedCircle/>
           </Form>
           <Form inline>
             {!authenticated ? (
