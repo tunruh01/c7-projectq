@@ -70,10 +70,6 @@ class AnswerList extends Component {
                           <h6>
                             Answered {moment(a.answerDate).format("MMM DD")}
                           </h6>
-                        </span>
-                        <h6>
-                          Answered {moment(a.answerDate).format("MMM DD")}
-                        </h6>
 
                         <ShowMoreText
                             lines={1}
@@ -92,11 +88,13 @@ class AnswerList extends Component {
                       <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
                     </small>
                   </div>
+                  </div>
                 );
               })}
             </div>
           </div>
         </div>
+
       );
     }
   }
