@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
-import CategoryList from './CategoryList'
-import * as actions from '../actions/actions';
+import CategoryList from "./CategoryList";
+import * as actions from "../actions/actions";
 // import _ from "lodash";
 import { connect } from "react-redux";
-import InfiniteScroll from 'react-infinite-scroller';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import InfiniteScroll from "react-infinite-scroller";
+import "bootstrap/dist/css/bootstrap.min.css";
+import ShowMoreText from "react-show-more-text";
 
 class QuestionList extends Component {
   constructor() {
@@ -25,7 +26,7 @@ class QuestionList extends Component {
     // was creating duplicates
     // this.props.fetchQuestions()
 
-    this.props.fetchLoginStatus()
+    this.props.fetchLoginStatus();
   }
 
   //  Stops infinite scroll querying when there are no more questions to load
@@ -44,78 +45,115 @@ class QuestionList extends Component {
           <span>{topic.name} </span>
         ))}
       </div>
-    )
-
+    );
   }
 
   renderQuestions() {
     // If questions in state; loop and return each one
     if (this.props.questions.questionsList) {
-      console.log('questionsList: ', this.props.questions.questionsList)
+      console.log("questionsList: ", this.props.questions.questionsList);
       return (
         <div>
           <div className="card-columns">
             <div className="col-md-12">
-              {this.props.questions.questionsList.map(q => (
-                <div className="card">
-                  {this.renderQuestionCategories(q)}
-                  <div className="card-body">
-                    <h6 className="card-title">
-                      <React.Fragment key={q._id}>
-                        <a href={`/question/${q._id}`}>{q.question}</a>
-                        {!q.topAnswer ? (
-                          <p className="card-text">This question hasn't been answered yet</p>
-                        ) : (
-                          <p className="card-text">{q.topAnswer.answer}</p>
-                        )}
-                      </React.Fragment>
-                    </h6>
-                    <small class="text">
-                      <i class="material-icons float-left">
-                        arrow_upward</i>
-                      <i class="material-icons float-right">
-                        chat_bubble_outline</i>
-                      <i class="material-icons float-left">
-                        loop</i>
-                    </small>
+              {this.props.questions.questionsList.map(q => {
+                const executeOnClick = isExpanded => {
+                  console.log(isExpanded);
+                };
+
+                // const text_truncate = function(str, length, ending) {
+                //   if (length == null) {
+                //     length = 150;
+                //   }
+                //   if (ending == null) {
+                //     ending = " ...";
+                //   }
+                //   if (str.length > length) {
+                //     return str.substring(0, length - ending.length) + ending;
+                //   } else {
+                //     return str;
+                //   }
+                // };
+
+                // const moreClickHandler = () => {
+                //   console.log('IN MORE CLICK HANDLER...')
+                //   return (<p>{q.topAnswer.answer}</p>);
+                // };
+
+                return (
+                  <div className="card">
+                    {this.renderQuestionCategories(q)}
+                    <div className="card-body">
+                      <h6 className="card-title">
+                        <React.Fragment key={q._id}>
+                          <a href={`/question/${q._id}`}>{q.question}</a>
+                          {!q.topAnswer ? (
+                            <p className="card-text">
+                              This question hasn't been answered yet
+                            </p>
+                          ) : (
+                            <ShowMoreText
+                              lines={1}
+                              more="more"
+                              less="less"
+                              anchorClass=""
+                              onClick={this.executeOnClick}
+                              expanded={false}
+                            >
+                              <p className="card-text">{q.topAnswer.answer}</p>
+                            </ShowMoreText>
+                          )}
+                        </React.Fragment>
+                      </h6>
+                      <small class="text">
+                        <i class="material-icons float-left">arrow_upward</i>
+                        <i class="material-icons float-right">
+                          chat_bubble_outline
+                        </i>
+                        <i class="material-icons float-left">loop</i>
+                      </small>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
-      )
+      );
     }
   }
 
   render() {
-    const { authenticated } = this.props.auth
+    const { authenticated } = this.props.auth;
     return (
       <React.Fragment>
         {authenticated ? (
           <>
-            <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
-                <div className="row flex-nowrap">
-                  <div className="col-md-3 justify-content-md-center">
-                    <CategoryList />
-                  </div>
-                    <div className="col-md-9">
-                      {this.renderQuestions()}
-                    </div>
+            <InfiniteScroll
+              loadMore={this.loadItems}
+              pageStart={0}
+              hasMore={this.state.hasMoreItems}
+            >
+              <div className="row flex-nowrap">
+                <div className="col-md-3 justify-content-md-center">
+                  <CategoryList />
                 </div>
+                <div className="col-md-9">{this.renderQuestions()}</div>
+              </div>
             </InfiniteScroll>
           </>
         ) : (
-            <div>Unauthorized - maybe have a 'please login' component/message here</div>
-          )}
+          <div>
+            Unauthorized - maybe have a 'please login' component/message here
+          </div>
+        )}
       </React.Fragment>
-
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => {
-  return state
-}
+const mapStateToProps = state => {
+  return state;
+};
 
-export default connect(mapStateToProps, actions)(QuestionList)
+export default connect(mapStateToProps, actions)(QuestionList);
