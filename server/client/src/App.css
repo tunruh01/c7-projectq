@@ -71,14 +71,20 @@ body {
 
 }
 
-.card-columns {
-  display: block;
-  columns: auto;
-  column-gap: 40px;
-  margin: 20px;
-  padding: 50px;
-  color: gray;
+.card {
+  width: 18rem;
+}
 
+.card-columns {
+   display: block;
+   columns: auto;
+   column-gap: 40px;
+   margin: 20px;
+   padding: 50px;
+   color: gray;
+   padding-left: 0;
+   margin-left: 0;
+  
 }
 
 .card-title {
