@@ -82,7 +82,7 @@ class QuestionList extends Component {
                 </div>
               ))}
             </div>
-          </div>
+          ))}
         </div>
       )
     }
@@ -95,16 +95,19 @@ class QuestionList extends Component {
         {authenticated ? (
           <>
             <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
-              <CategoryList />
-              <div>
-                {this.renderQuestions()}
-              </div>
+                <div className="row flex-nowrap">
+                  <div className="col-md-3 justify-content-md-center">
+                    <CategoryList />
+                  </div>
+                    <div className="col-md-9">
+                      {this.renderQuestions()}
+                    </div>
+                </div>
             </InfiniteScroll>
           </>
         ) : (
             <div>Unauthorized - maybe have a 'please login' component/message here</div>
           )}
-
       </React.Fragment>
 
     )
