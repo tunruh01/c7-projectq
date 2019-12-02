@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const passport = require("passport");
-const CLIENT_HOME_PAGE_URL = "http://localhost:3000";
 const { UserAuthCheck } = require("./user-check");
 const keys = require("../config/keys");
 
@@ -39,7 +38,7 @@ router.get("/login/failed", (req, res) => {
 router.get("/logout", (req, res) => {
   console.log("logout");
   req.logout();
-  res.redirect(CLIENT_HOME_PAGE_URL);
+  res.redirect(keys.HOME_PAGE_URL);
 });
 
 // auth with google

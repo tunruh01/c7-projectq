@@ -48,25 +48,20 @@ class SubmitQuestion extends Component {
                     component={'input'}
                     />                  
                   </label>
-                  
-                  {/* // <label className="k-form-field">
-                  //   <span>Question: </span>
-                  //   <input className="k-textbox" placeholder="Start your question with What, How, Why, etc" />
-                  // </label> */}
                   {/* <div className="k-form-field">
-                    <span>Choose Categories: </span>
+                    <span> Choose Categories: </span>
 
                     <input type="radio" name="topics" id="latin" className="k-radio" />
                     <label component={this.renderField} className="k-radio-label mr-2" for="latin"> Latin </label>
 
                     <input type="radio" name="topics" id="languages" className="k-radio" checked="checked" />
                     <label component={this.renderField} className="k-radio-label mr-2" for="languages"> Languages </label>
-                  </div>
+                  </div> */}
                   <div className="text-right">
                     <Button variant="outline-danger mr-2" size="sm">Cancel</Button>
-                    <Link exact to="/"><Button variant="outline-secondary mr-2" size="sm">Submit</Button></Link>
-                  </div> */}
-                   <button type="submit" className="btn btn-primary">Add Question</button>
+                    <a href='/'><button type="submit" className="btn btn-primary">Submit</button></a>
+                  </div>
+                   
               </form>
             </div>
           </div>
