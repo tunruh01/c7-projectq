@@ -22,22 +22,6 @@ class SubmitQuestion extends Component {
       </div>
     );
   }
-  // this.handleClick = this.handleClick.bind(this);
-
-
-
-
-  //change the address after deployment
-  // fetch('localhost:3000/question/', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-
-  //     })
-  //   })
 
   onSubmit(values) {
     this.props.createQuestion(values, () => {
@@ -55,14 +39,18 @@ class SubmitQuestion extends Component {
           <div className="card">
             <div className="card-block">
               <form className="k-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <fieldset>
                   <legend>Ask Question Below</legend>
-
+                  <Field
+                    name="question"
+                    label="Question:"
+                    placeholder="Start your question with What, How, Why, etc"
+                    component={this.renderField}
+                  />
                   <label className="k-form-field">
                     <span>Question: </span>
                     <input className="k-textbox" placeholder="Start your question with What, How, Why, etc" />
                   </label>
-                  <div className="k-form-field">
+                  {/* <div className="k-form-field">
                     <span>Choose Categories: </span>
 
                     <input type="radio" name="topics" id="latin" className="k-radio" />
@@ -71,12 +59,10 @@ class SubmitQuestion extends Component {
                     <input type="radio" name="topics" id="languages" className="k-radio" checked="checked" />
                     <label component={this.renderField} className="k-radio-label mr-2" for="languages"> Languages </label>
                   </div>
-
                   <div className="text-right">
                     <Button variant="outline-danger mr-2" size="sm">Cancel</Button>
                     <Link exact to="/"><Button variant="outline-secondary mr-2" size="sm">Submit</Button></Link>
-                  </div>
-                </fieldset>
+                  </div> */}
               </form>
             </div>
           </div>
