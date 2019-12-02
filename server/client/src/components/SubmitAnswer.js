@@ -14,6 +14,21 @@ class SubmitAnswer extends Component {
 
     }
 
+    renderField(field) {
+        const { meta: { touched, error } } = field;
+        const className = `form-group ${touched && error ? "has-danger" : ""}`;
+
+        return (
+            <div className={className}>
+                <label>{field.label}</label>
+                <input className="form-control" type="text" {...field.input} />
+                <div className="text-help">
+                    {touched ? error : ""}
+                </div>
+            </div>
+        );
+    }
+
     onSubmit(questionid, values) {
         this.props.submitAnswer(questionid, values, () => {
             this.props.history.push('/');
@@ -23,7 +38,6 @@ class SubmitAnswer extends Component {
     render() {
         const { handleSubmit } = this.props;
         return (
-
             <div className='padding'>
                 <h4 className="text-center" style={{ color: "grey" }}>Answer question</h4>
                 <div className="col-md-6 offset-md-3 shadow-sm">
@@ -35,14 +49,17 @@ class SubmitAnswer extends Component {
                             <Field
                                 className="form-control"
                                 placeholder="Name"
+                                component={this.renderField}
                             />
                             <Field
                                 className="form-control"
                                 placeholder="Credentials"
+                                component={this.renderField}
                             />
                             <Field
                                 className="form-control"
                                 placeholder="answer..."
+                                component={this.renderField}
                             />
 
                             <Link to="/">
@@ -68,7 +85,7 @@ const mapStateToProps = (state) => {
 }
 
 const newAnswer = reduxForm({
-    form: 'newAnswer',
+    form: 'addAnswer',
 })(SubmitAnswer);
 
 export default connect(mapStateToProps, actions)(newAnswer)
