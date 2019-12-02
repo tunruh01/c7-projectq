@@ -24,7 +24,7 @@
 body {
   font-family: apercu;
   font-size: 14px;
-  background-color:#618685;
+  background-color: #618685;
   background-image: linear-gradient(to right, white, #618685);
 
 }
@@ -36,7 +36,7 @@ body {
   font-variant: small-caps;
   font-size: 18px;
   text-align: center;
-  
+
 }
 
 .FormControl {
@@ -46,38 +46,39 @@ body {
 }
 
 @media (min-width: 768px) {
-     .sidebar {
-          max-width: 280px;
-          position: fixed;
-          height: 100%;
-     }
- }
-
- @media (max-width: 768px) {
   .sidebar {
-       /* max-width: 280px; */
-       display: none;
+    max-width: 280px;
+    position: fixed;
+    height: 100%;
   }
 }
 
- .card-columns {
+@media (max-width: 768px) {
+  .sidebar {
+    /* max-width: 280px; */
+    display: none;
+  }
+}
+
+.card-columns {
   @include media-breakpoint-only(md) {
     column-count: 3;
   }
+
   @include media-breakpoint-only(lg) {
     column-count: 4;
   }
- 
-} 
+
+}
 
 .card-columns {
-   display: block;
-   columns: auto;
-   column-gap: 40px;
-   margin: 20px;
-   padding: 50px;
-   color: gray;
-  
+  display: block;
+  columns: auto;
+  column-gap: 40px;
+  margin: 20px;
+  padding: 50px;
+  color: gray;
+
 }
 
 .card-title {
@@ -93,12 +94,18 @@ body {
   height: 3rem;
 
 }
+
 .clearfix {
   overflow: auto;
 }
 
 .Navbar-text {
   text-align: center;
+}
+
+.avatar {
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .container {
