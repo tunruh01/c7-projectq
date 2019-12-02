@@ -24,7 +24,7 @@
 body {
   font-family: apercu;
   font-size: 14px;
-  background-color:#618685;
+  background-color: #618685;
   background-image: linear-gradient(to right, white, #618685);
 
 }
@@ -36,7 +36,7 @@ body {
   font-variant: small-caps;
   font-size: 18px;
   text-align: center;
-  
+
 }
 
 .FormControl {
@@ -46,29 +46,30 @@ body {
 }
 
 @media (min-width: 768px) {
-     .sidebar {
-          max-width: 280px;
-          position: fixed;
-          height: 100%;
-     }
- }
-
- @media (max-width: 768px) {
   .sidebar {
-       /* max-width: 280px; */
-       display: none;
+    max-width: 280px;
+    position: fixed;
+    height: 100%;
   }
 }
 
- .card-columns {
+@media (max-width: 768px) {
+  .sidebar {
+    /* max-width: 280px; */
+    display: none;
+  }
+}
+
+.card-columns {
   @include media-breakpoint-only(md) {
     column-count: 3;
   }
+
   @include media-breakpoint-only(lg) {
     column-count: 4;
   }
- 
-} 
+
+}
 
 .card {
   width: 18rem;
@@ -87,7 +88,7 @@ body {
 }
 
 .card-title {
-  color: #BF7C63;
+  color: rgb(8, 4, 2);
   text-align: left;
 
 }
@@ -99,12 +100,18 @@ body {
   height: 3rem;
 
 }
+
 .clearfix {
   overflow: auto;
 }
 
 .Navbar-text {
   text-align: center;
+}
+
+.avatar {
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .container {
@@ -115,4 +122,19 @@ body {
 
 #welcome-text {
   margin-top: 20px;
+}
+
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  margin-right: 18px;
+  margin-left: 15px;
+} 
+
+.main-question-body {
+  color: rgb(8, 4, 2);
+  text-align: left;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+
 }
