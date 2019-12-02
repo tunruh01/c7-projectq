@@ -63,7 +63,7 @@ class SubmitQuestion extends Component {
         />
 
         <button type="submit" className="btn btn-primary">Add Question</button>
-        <Link to="/" className="btn btn-danger">Cancel</Link>
+        <a href="/" className="btn btn-danger">Cancel</a>
       </form>
 
     );
