@@ -15,16 +15,11 @@ class Qnav extends Component {
     const { user } = this.props.auth;
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-        <Navbar.Brand font="monospace">Project Q</Navbar.Brand>
+        <Navbar.Brand>Project Q</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/"><i class="material-icons">
-              home</i>
-            </Nav.Link>
-            <h6 className="text-center">
-              {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
-            </h6>
+            {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
           </Nav>
           <Form inline>
             <FormControl size="sm" type="text" placeholder="Search Questions" className="col-xs-8 mr-2" />

@@ -73,8 +73,8 @@ class SubmitQuestion extends Component {
                   </div>
 
                   <div className="text-right">
-                    <Button variant="outline-danger mr-2" size="sm">Cancel</Button>
-                    <Link exact to="/"><Button variant="outline-secondary mr-2" size="sm">Submit</Button></Link>
+                    <a href="/"><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
+                    <a href="/"><Button variant="outline-secondary mr-2" size="sm">Submit</Button></a>
                   </div>
                 </fieldset>
               </form>
