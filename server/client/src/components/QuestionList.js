@@ -72,25 +72,23 @@ class QuestionList extends Component {
                               This question hasn't been answered yet
                             </p>
                           ) : (
-                            <ShowMoreText
-                              lines={1}
-                              more="more"
-                              less="less"
-                              anchorClass=""
-                              onClick={this.executeOnClick}
-                              expanded={false}
-                            >
-                              <p className="card-text">{q.topAnswer.answer}</p>
-                            </ShowMoreText>
-                          )}
+                              <ShowMoreText
+                                lines={1}
+                                more="more"
+                                less="less"
+                                anchorClass=""
+                                onClick={this.executeOnClick}
+                                expanded={false}
+                              >
+                                <p className="card-text">{q.topAnswer.answer}</p>
+                              </ShowMoreText>
+                            )}
                         </React.Fragment>
                       </h6>
                       <small class="text">
-                        <i class="material-icons float-left">arrow_upward</i>
-                        <i class="material-icons float-right">
-                          chat_bubble_outline
-                        </i>
-                        <i class="material-icons float-left">loop</i>
+                        <a href=""> <i class="material-icons float-left mr-2">arrow_upward</i> </a>
+                        <a href=""> <i class="material-icons float-left">
+                          add_comment</i> </a>
                       </small>
                     </div>
                   </div>
@@ -121,10 +119,13 @@ class QuestionList extends Component {
             </InfiniteScroll>
           </>
         ) : (
-          <div>
-            Unauthorized - maybe have a 'please login' component/message here
-          </div>
-        )}
+            <div>
+              <div className="error">
+                Unauthorized - maybe have a 'please login' component/message here
+              </div>
+
+            </div>
+          )}
       </React.Fragment>
     );
   }

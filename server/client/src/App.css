@@ -22,20 +22,19 @@
 }
 
 body {
-  font-family: monospace;
+  font-family: apercu;
   font-size: 14px;
   background-color:#618685;
   background-image: linear-gradient(to right, white, #618685);
 
 }
 
-
-
 .navbar {
   margin-bottom: 20px;
   color: #deeaee;
-  font-family: monospace;
-  font-size: 14px;
+  font-family: Apercu;
+  font-variant: small-caps;
+  font-size: 18px;
   text-align: center;
   
 }
@@ -74,7 +73,7 @@ body {
 .card-columns {
    display: block;
    columns: auto;
-   column-gap: 20px;
+   column-gap: 40px;
    margin: 20px;
    padding: 50px;
    color: gray;
@@ -102,3 +101,12 @@ body {
   text-align: center;
 }
 
+.container {
+  font-size: 14px;
+  font-family: Apercu;
+
+}
+
+#welcome-text {
+  margin-top: 20px;
+}

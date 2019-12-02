@@ -31,41 +31,45 @@ class QuestionDetail extends Component {
     const { questionDetails } = this.props
     // temporary form until we implement redux so we can use redux-form 
     return (
-      <div>
+      <div className="container">
         {(authenticated) ? (
           <>
             <div>
               Categories: {this.renderCategories()}
-              <h3>
-                {questionDetails.question}
-              </h3>
+              {questionDetails.question}
             </div>
             <AnswerList questionid={this.props.match.params.questionid} />
-            <div className='padding'>
-              <h4 className="text-center" style={{ color: "grey" }}>Answer question</h4>
-              <div className="col-md-6 offset-md-3">
-                <div className="row">
-                  <form
-                    name="addContact"
-                    className="offset-md-4"
-                  >
-                    <input
-                      className="form-control"
-                      placeholder="Name"
-                    />
-                    <input
-                      className="form-control"
-                      placeholder="Credentials"
-                    />
-                    <input
-                      className="form-control"
-                      placeholder="answer..."
-                    />
-                    <Link to="/">
-                      <Button variant="outline-dark mr-2" size="sm">Back</Button>
-                    </Link>
-                    <Button variant="outline-dark mr-2" size="sm">Submit</Button>
-                  </form>
+            <div className="row example-wrapper">
+              <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 offset-sm-3 example-col">
+                <div className="card">
+                  <div className="card-block">
+                    <form className="k-form">
+                      <fieldset>
+                        <legend>Add Your Answer</legend>
+
+                        <label className="k-form-field">
+                          <span> Name </span>
+                          <input className="k-textbox" placeholder="Your Name" />
+                        </label>
+
+                      </fieldset>
+
+                      <fieldset>
+                        <legend>Credentials</legend>
+                        <label className="k-form-field">
+                          <span> Why can you answer this question? </span>
+                          <input className="k-textbox" placeholder="Your Credentials" />
+                        </label>
+                      </fieldset>
+
+                      <div className="text-right">
+                        <Link to="/">
+                          <Button variant="outline-danger mr-2" size="sm">Back</Button>
+                        </Link>
+                        <Button variant="outline-dark mr-2" size="sm">Submit</Button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
