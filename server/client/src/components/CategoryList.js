@@ -6,46 +6,46 @@ import { fetchCategories, fetchQuestions } from "../actions/actions"
 
 class CategoryList extends Component {
 
-    componentDidMount() {
-        this.props.fetchCategories()
-    }
+  componentDidMount() {
+    this.props.fetchCategories()
+  }
 
 
 
-    renderCategories() {
-        let categories = this.props.category.topics
-        return (
-            categories.map(c => (
-                <p key={c._id}>
-                    <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(c._id)); }}>{c.name}</a>
-                </p>
-            )))
-    }
+  renderCategories() {
+    let categories = this.props.category.topics
+    return (
+      categories.map(c => (
+        <p key={c._id}>
+          <a href='/' onClick={e => { e.preventDefault(this.fetchQuestions(c._id)); }}>{c.name}</a>
+        </p>
+      )))
+  }
 
-    render() {
-        return (
-          <div className="col-12 sidebar">
-            <div className="card card-body p-2">
-              <h4>Category</h4>
-              <ul className="nav nav-pills flex-column">
-                <li className="nav-item">
-                  <a className="nav-link" href="#">{this.renderCategories()}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        )
-    }
+  render() {
+    return (
+      <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 sidebar">
+        <div className="card card-body p-2">
+          <h4>Category</h4>
+          <ul className="nav nav-pills flex-column">
+            <li className="nav-item">
+              <a className="nav-link" href="#">{this.renderCategories()}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    )
+  }
 };
 
 //onClick= {e => { e.preventDefault(this.selectFilterCategory(c.id)); }}
 function mapStateToProps({ questions, category }) {
-    return { questions, category };
+  return { questions, category };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(
-        { fetchQuestions, fetchCategories }, dispatch);
+  return bindActionCreators(
+    { fetchQuestions, fetchCategories }, dispatch);
 }
 // export default CategoryList;
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);

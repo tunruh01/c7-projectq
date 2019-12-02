@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Switch } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css";
 import QuestionList from './components/QuestionList'
 import QuestionDetail from './components/QuestionDetail'
 import SubmitQuestion from './components/SubmitQuestion'
