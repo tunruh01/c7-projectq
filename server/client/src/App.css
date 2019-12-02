@@ -21,8 +21,16 @@
   color: #09d3ac;
 }
 
+body {
+  background-color:#A9C6D9;
+  background-image: linear-gradient(to right, white, #A9C6D9);
+
+}
+
 .navbar {
   margin-bottom: 20px;
+  color: #deeaee;
+
 }
 
 .FormControl {
@@ -53,14 +61,21 @@
    display: block;
    columns: auto;
    column-gap: 20px;
-   margin: 100px;
-   padding: 20px;
+   margin: 20px;
+   padding: 50px;
+   color: gray;
   
+}
+
+.card-title {
+  color: #BF7C63;
+  text-align: left;
+
 }
 
 .material-icons {
   padding-top: 10px;
-  color: #78EFFF;
+  color: #CFE6E4;
   font-size: 2em;
   height: 3rem;
 
@@ -68,3 +83,4 @@
 .clearfix {
   overflow: auto;
 }
+

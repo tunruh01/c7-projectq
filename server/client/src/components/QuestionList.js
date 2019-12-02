@@ -6,7 +6,6 @@ import * as actions from '../actions/actions';
 // import _ from "lodash";
 import { connect } from "react-redux";
 import InfiniteScroll from 'react-infinite-scroller';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 class QuestionList extends Component {
   constructor() {
@@ -66,8 +65,8 @@ class QuestionList extends Component {
                         {!q.topAnswer ? (
                           <p className="card-text">This question hasn't been answered yet</p>
                         ) : (
-                          <p className="card-text">{q.topAnswer.answer}</p>
-                        )}
+                            <p className="card-text">{q.topAnswer.answer}</p>
+                          )}
                       </React.Fragment>
                     </h6>
                     <small class="text">
@@ -95,14 +94,14 @@ class QuestionList extends Component {
         {authenticated ? (
           <>
             <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
-                <div className="row flex-nowrap">
-                  <div className="col-md-3 justify-content-md-center">
-                    <CategoryList />
-                  </div>
-                    <div className="col-md-9">
-                      {this.renderQuestions()}
-                    </div>
+              <div className="row flex-nowrap">
+                <div className="col-md-3 justify-content-md-center">
+                  <CategoryList />
                 </div>
+                <div className="col-md-9">
+                  {this.renderQuestions()}
+                </div>
+              </div>
             </InfiniteScroll>
           </>
         ) : (
