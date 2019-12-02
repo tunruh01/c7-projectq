@@ -92,6 +92,7 @@ router.get("/questions", UserAuthCheck, (req, res) => {
                   topics: question.topics,
                   question: question.question,
                   answerCount: question.answers.length,
+                  questionDate: question.dateAdded,
                   topAnswer: getTopAnswer(question)
                 };
               })
@@ -132,6 +133,7 @@ router.post("/question", UserAuthCheck, (req, res) => {
 
             newQuestion.userId = user._id;
             newQuestion.question = req.body.question;
+            newQuestion.dateAdded = Date.now();
             newQuestion.save((err, question) => {
               if (err) console.log(err);
               response.user._id = user._id;
@@ -140,6 +142,7 @@ router.post("/question", UserAuthCheck, (req, res) => {
               response._id = question._id;
               response.question = question.question;
               response.answerCount = question.answers.length;
+              response.questionDate = question.dateAdded;
               res.send(response);
               user.questions.push(question._id);
               user.save((err, user) => {
@@ -241,7 +244,8 @@ router.get("/question/:questionId", UserAuthCheck, (req, res) => {
           _id: question._id,
           topics: question.topics,
           question: question.question,
-          answerCount: count
+          answerCount: count,
+          questionDate: question.dateAdded
         });
       });
     });
@@ -376,32 +380,53 @@ router.post("/answer/:answerId/downvote", UserAuthCheck, (req, res) => {
   attemptUpdateScore(req, res, "downvote");
 });
 
-// router.get("/user", UserAuthCheck, (req, res) => {
-//   User.findOne({ googleId: req.user.googleId })
-//     .populate("topics", "_id name")
-//     .populate({
-//       path: "questions",
-//       select: "_id topics question answers",
-//       populate: { path: "topics" }
-//     })
-//     .populate({
-//       path: "answers",
-//       select: "_id questionId dateAdded score",
-//       populate: { path: "questionId" }
-//     })
-//     .lean()
-//     .exec((err, user) => {
-//       res.send({
-//         _id: user._id,
-//         userName: user.name,
-//         userCreds: user.credentials.map(cred => {
-//           return cred.credential;
-//         }),
-//         userAvatar: user.avatar,
-//         usersQuestions: user.questions,
-//         usersAnswers: user.answers
-//       });
-//     });
-// });
+router.get("/user", UserAuthCheck, (req, res) => {
+  User.findOne({ googleId: req.user.googleId })
+    .populate("topics", "_id name")
+    .populate({
+      path: "questions",
+      select: "_id topics question answers",
+      populate: { path: "topics" }
+    })
+    .populate({
+      path: "answers",
+      select: "_id questionId dateAdded score",
+      populate: { path: "questionId", select: "question" }
+    })
+    .lean()
+    .exec((err, user) => {
+      res.send({
+        _id: user._id,
+        userName: user.name,
+        userCreds: user.credentials.map(cred => {
+          return cred.credential;
+        }),
+        userAvatar: user.avatar,
+        usersAnswers: user.answers.map(answer => {
+          return {
+            _id: answer._id,
+            topics: question.topics.map(topic => {
+              return { _id: topic._id, name: topic.name };
+            }),
+            answerDate: answer.dateAdded,
+            answer: answer.answer,
+            answerScore: answer.score,
+            question: answer.questionId.question
+          };
+        }),
+        usersQuestions: user.questions.map(question => {
+          return {
+            _id: question._id,
+            topics: question.topics.map(topic => {
+              return { _id: topic._id, name: topic.name };
+            }),
+            questionDate: question.dateAdded,
+            question: question.question,
+            answerCount: question.answers.length
+          };
+        })
+      });
+    });
+});
 
 module.exports = router;
