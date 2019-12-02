@@ -187,6 +187,44 @@ router.post("/question", UserAuthCheck, (req, res) => {
   });
 });
 
+//
+router.post("/question/:questionId/answer", UserAuthCheck, (req, res, next) => {
+  User.findOne({ googleId: req.user.googleId }).exec((err, user) => {
+    if (user) {
+      let newAnswer = new Answer();
+      const questionId = req.params.questionId;
+      // const answersObj = Answer.find({ questionId });
+      Question.findById(questionId).exec((err, question) => {
+        if (err) console.log("ERROR: ", err);
+        newAnswer.questionId = questionId;
+        newAnswer.userId = user._id;
+        newAnswer.answer = req.body.answer;
+        newAnswer.dateAdded = Date.now();
+        newAnswer.save((err, answer) => {
+          if (err) console.log(err);
+          let response = { user: {} };
+          response.user._id = user._id;
+          response.user.userName = user.name;
+          response.user.userAvatar = user.avatar;
+          response._id = answer._id;
+          response.answer = answer.answer;
+          response.questionId = answer.questionId;
+          response.answerDate = answer.dateAdded;
+          response.answerScore = answer.score;
+          response.userUpvoted = false;
+          response.userDownvoted = false;
+          response.comments = [];
+          res.send(response);
+          user.answers.push(answer._id);
+          user.save((err, user) => {
+            if (err) console.log(err);
+          });
+        });
+      });
+    }
+  });
+});
+
 router.get("/topics", UserAuthCheck, (req, res) => {
   const getTopic = Topic.find();
   console.log("this is correct" + getTopic);
@@ -437,13 +475,10 @@ router.get("/user", UserAuthCheck, (req, res) => {
         usersAnswers: user.answers.map(answer => {
           return {
             _id: answer._id,
-            topics: question.topics.map(topic => {
-              return { _id: topic._id, name: topic.name };
-            }),
             answerDate: answer.dateAdded,
             answer: answer.answer,
             answerScore: answer.score,
-            question: answer.questionId.question
+            question: answer.questionId ? answer.questionId.question : null
           };
         }),
         usersQuestions: user.questions.map(question => {
