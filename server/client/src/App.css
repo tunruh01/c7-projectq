@@ -31,6 +31,8 @@ body {
 
 .navbar {
   margin-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
   color: #deeaee;
   font-family: Apercu;
   font-variant: small-caps;
@@ -40,7 +42,7 @@ body {
 }
 
 .FormControl {
-  justify-content: center;
+  justify-content: center; 
   margin-right: 100px;
   align-content: center
 }
@@ -50,6 +52,7 @@ body {
           max-width: 280px;
           position: fixed;
           height: 100%;
+          padding-left: 60px;
      }
  }
 
@@ -61,11 +64,11 @@ body {
 }
 
  .card-columns {
-  @include media-breakpoint-only(md) {
-    column-count: 3;
+  @include media-breakpoint-only(sm) {
+    column-count: 4;
   }
   @include media-breakpoint-only(lg) {
-    column-count: 4;
+    column-count: 5;
   }
  
 } 
@@ -75,7 +78,9 @@ body {
    columns: auto;
    column-gap: 40px;
    margin: 20px;
-   padding: 50px;
+   margin-left: 0px;
+   padding-left: 0px;
+   padding-right: 75px;
    color: gray;
   
 }
@@ -108,5 +113,9 @@ body {
 }
 
 #welcome-text {
-  margin-top: 20px;
+  margin-top: 23px;
+}
+
+.k-textbox{
+  width: 300px;
 }
