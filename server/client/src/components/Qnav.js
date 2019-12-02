@@ -46,8 +46,7 @@ class Qnav extends Component {
               </Button>
             </Link>
             <Image
-              src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png"
-              roundedCircle
+              src={user.avatar} className="thumbnail" roundedCircle/>
             />
           </Form>
           <Form inline>
