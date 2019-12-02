@@ -70,6 +70,10 @@ body {
  
 } 
 
+.card {
+  width: 18rem;
+}
+
 .card-columns {
    display: block;
    columns: auto;
@@ -77,6 +81,8 @@ body {
    margin: 20px;
    padding: 50px;
    color: gray;
+   padding-left: 0;
+   margin-left: 0;
   
 }
 
