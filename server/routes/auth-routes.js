@@ -2,6 +2,7 @@ const router = require("express").Router();
 const passport = require("passport");
 const CLIENT_HOME_PAGE_URL = "http://localhost:3000";
 const { UserAuthCheck } = require("./user-check");
+const keys = require("../config/keys");
 
 router.get("/current_user", UserAuthCheck, (req, res) => {
   res.send(req.user);
@@ -54,7 +55,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     scope: ["profile", "email"],
-    successRedirect: CLIENT_HOME_PAGE_URL,
+    successRedirect: keys.HOME_PAGE_URL,
     failureRedirect: "/auth/login/failed"
   })
 );
