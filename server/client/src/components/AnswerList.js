@@ -31,7 +31,8 @@ class AnswerList extends Component {
   //  Stops infinite scroll querying when there are no more questions to load
   loadItems(page) {
     const questionid = this.props.questionid;
-    console.log("infinite scroll page: ", page);
+    console.log('infinite scroll page: ', page)
+
 
     if (page < this.props.total_pages || this.props.total_pages === 0) {
       this.props.fetchAnswers(questionid, page);
@@ -69,6 +70,7 @@ class AnswerList extends Component {
                           <h6>
                             Answered {moment(a.answerDate).format("MMM DD")}
                           </h6>
+
                           <ShowMoreText
                             lines={1}
                             more="more"
@@ -82,9 +84,8 @@ class AnswerList extends Component {
                         </React.Fragment>
                       </h6>
                       <small className="text">
-                        <i className="material-icons">arrow_upward</i>
-                        <i className="material-icons">chat_bubble_outline</i>
-                        <i className="material-icons">loop</i>
+                        <a href=""> <i className="material-icons float-left mr-3">arrow_upward</i></a>
+                        <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
                       </small>
                     </div>
                   </div>
@@ -93,6 +94,7 @@ class AnswerList extends Component {
             </div>
           </div>
         </div>
+
       );
     }
   }
@@ -100,15 +102,12 @@ class AnswerList extends Component {
   render() {
     return (
       <>
-        <InfiniteScroll
-          loadMore={this.loadItems}
-          pageStart={0}
-          hasMore={this.state.hasMoreItems}
-        >
+        <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
           <div>{this.renderAnswers()}</div>
         </InfiniteScroll>
       </>
-    );
+    )
+
   }
 }
 
