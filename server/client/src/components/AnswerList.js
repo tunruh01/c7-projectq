@@ -8,10 +8,15 @@ import moment from "moment";
 import ShowMoreText from "react-show-more-text";
 import InfiniteScroll from "react-infinite-scroller";
 
+// Hacky CSS styling used in upvoted answers
+const upvotedStyle = {
+  'color':'teal', 
+  'font-size': '40px'
+}
+
 class AnswerList extends Component {
   constructor() {
     super();
-
     this.loadItems = this.loadItems.bind(this);
 
     this.state = {
@@ -31,13 +36,34 @@ class AnswerList extends Component {
   //  Stops infinite scroll querying when there are no more questions to load
   loadItems(page) {
     const questionid = this.props.questionid;
-    console.log('infinite scroll page: ', page)
 
 
     if (page < this.props.total_pages || this.props.total_pages === 0) {
       this.props.fetchAnswers(questionid, page);
     } else {
       this.setState({ hasMoreItems: false });
+    }
+  }
+
+  // upvote icon click handler - Back end will not allow multiple upvotes on the same post.
+  upvoteAnswerHandler(answerid) {
+    console.log('upvote clicked for id: ', answerid)
+    this.props.upvoteAnswer(answerid)
+  }
+
+  // Change styling of upvote icon based on whether or not the user has already upvoted
+  showCorrectUpvoteIcon(answerid) {
+    const upvotedAnswers = this.props.auth.user.upvotedAnswers
+    if (upvotedAnswers.includes(answerid)) {
+      return (
+        <>
+          <i className="material-icons float-left mr-3" style={upvotedStyle}>arrow_upward</i>
+        </>
+      )
+    } else {
+      return (
+        <i className="material-icons float-left mr-3">arrow_upward</i>
+      )
     }
   }
 
@@ -52,7 +78,6 @@ class AnswerList extends Component {
                 const executeOnClick = isExpanded => {
                   console.log(isExpanded);
                 };
-
                 return (
                   <div className="card" key={a._id}>
                     <div className="card-body">
@@ -84,7 +109,13 @@ class AnswerList extends Component {
                         </React.Fragment>
                       </h6>
                       <small className="text">
-                        <a href=""> <i className="material-icons float-left mr-3">arrow_upward</i></a>
+                        
+                        <a href="#" onClick={e => {e.preventDefault(this.upvoteAnswerHandler(a._id))}}>
+                          {this.showCorrectUpvoteIcon(a._id)}
+                        </a>
+                        {//Temporary code to demo upvote count
+                        }
+                        {a.answerScore} Upboats
                         <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
                       </small>
                     </div>
@@ -100,6 +131,7 @@ class AnswerList extends Component {
   }
 
   render() {
+    console.log('answerlist render props', this.props)
     return (
       <>
         <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
