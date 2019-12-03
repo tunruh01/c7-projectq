@@ -90,4 +90,4 @@ const mapStateToProps = state => {
 //   form: "addAnswer"
 // })(SubmitAnswer);
 
-export default reduxForm({form: "addAnswer"})(connect(mapStateToProps, actions)(SubmitAnswer));
+export default reduxForm({ form: "addAnswer" })(connect(mapStateToProps, actions)(SubmitAnswer));
