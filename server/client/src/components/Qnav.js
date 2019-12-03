@@ -23,7 +23,7 @@ class Qnav extends Component {
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Brand>Project Q</Navbar.Brand>
-        <a href="/"><i className="material-icons mr-3">
+        <a href="/"><i className="material-icons">
           home</i></a>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

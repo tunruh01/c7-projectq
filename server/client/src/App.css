@@ -31,8 +31,7 @@ body {
 
 .navbar {
   margin-bottom: 20px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 20px;
   color: #deeaee;
   font-family: Apercu;
   font-size: 18px;
@@ -86,14 +85,13 @@ body {
 }
 
 .card-columns {
-   display: block;
-   columns: auto;
-   column-gap: 40px;
-   margin: 20px;
-   margin-left: 0px;
-   padding-left: 0px;
-   color: gray;
-   padding: 50px;
+  display: block;
+  columns: auto;
+  column-gap: 30px;
+  margin-left: 0px;
+  padding-left: 0px;
+  color: gray;
+  padding: 50px;
   
 }
 
@@ -149,6 +147,6 @@ body {
   color: rgb(8, 4, 2);
   text-align: left;
   font-weight: bold;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: apercu, serif;
 
 }
