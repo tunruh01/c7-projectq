@@ -224,9 +224,13 @@ h4 {
   color: black;
 }
 
-a.card {
+a.question-card {
   color: #F5F5F5;
   text-decoration: none;
+}
+
+.upvotes {
+  color: #99D1CB;
 }
 
 .cat-item {
