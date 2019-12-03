@@ -24,16 +24,13 @@
 body {
   font-family: apercu;
   font-size: 14px;
-  background-color: #618685;
-  background-image: linear-gradient(to right, white, #618685);
-
+  background-image: linear-gradient(to right, white, #46857E)
 }
 
 .navbar {
   margin-bottom: 20px;
-  color: #deeaee;
+  padding: 20px;
   font-family: Apercu;
-  font-variant: small-caps;
   font-size: 18px;
   text-align: center;
 
@@ -46,6 +43,15 @@ body {
 }
 
 @media (min-width: 768px) {
+  .sidebar {
+    max-width: 280px;
+    position: fixed;
+    height: 100%;
+    padding-left: 60px;
+  }
+}
+
+@media (max-width: 768px) {
   .sidebar {
     max-width: 280px;
     position: fixed;
@@ -66,39 +72,51 @@ body {
   }
 
   @include media-breakpoint-only(lg) {
-    column-count: 4;
+    column-count: 5;
   }
 
 }
 
 .card {
   width: 18rem;
+  border: 0.3rem outset;
+}
+
+.card .text-center {
+  border: 0.1rem outset #FFE1D4;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  width: 25%
 }
 
 .card-columns {
-   display: block;
-   columns: auto;
-   column-gap: 40px;
-   margin: 20px;
-   padding: 50px;
-   color: gray;
-   padding-left: 0;
-   margin-left: 0;
-  
+  display: block;
+  columns: auto;
+  column-gap: 30px;
+  margin-left: 0px;
+  padding-left: 0px;
+  padding: 50px;
+
 }
 
 .card-title {
-  color: rgb(8, 4, 2);
+  color: #D1AB99;
   text-align: left;
 
 }
 
 .material-icons {
   padding-top: 10px;
-  color: #c94c4c;
+  color: #99D1CB;
   font-size: 2em;
   height: 3rem;
 
+}
+
+.error {
+  font-size: 20px;
+  font-family: apercu;
 }
 
 .clearfix {
@@ -121,7 +139,12 @@ body {
 }
 
 #welcome-text {
-  margin-top: 20px;
+  margin-top: 30px;
+
+}
+
+.k-textbox {
+  width: 300px;
 }
 
 
@@ -136,10 +159,10 @@ body {
   margin-top: 10px;
 
 
-} 
+}
 
 .main-question-body {
-  color: rgb(8, 4, 2);
+  color: #856354;
   text-align: left;
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
@@ -153,7 +176,7 @@ body {
   text-align: left;
   font: 10px;
   color: gray;
-} 
+}
 
 .question-detail {
   color: black;
@@ -161,15 +184,18 @@ body {
   font-weight: bold;
   text-align: left;
 
-} 
+}
+
 .user-answer-format {
   font-size: 17px;
   color: black;
-} 
+}
+
 .date-answer-format {
   font-size: 14px;
   color: grey;
-} 
+}
+
 .thumbnailAnswer {
   width: 70px;
   height: 70px;
@@ -180,4 +206,14 @@ body {
   margin-bottom: 10px;
 
 
-} 
+}
+
+
+h4 {
+  color: #46857E;
+  border: 0.1rem outset #FFE1D4;
+}
+
+#categoryList {
+  color: black;
+}

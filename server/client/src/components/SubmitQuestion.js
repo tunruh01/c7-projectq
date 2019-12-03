@@ -4,10 +4,15 @@ import "../App.css";
 import { Button } from "react-bootstrap";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { createQuestion } from '../actions/actions';
+import * as actions from '../actions/actions';
+import CheckboxGroup from './checkboxGroup'
 
 class SubmitQuestion extends Component {
+
+  componentDidMount() {
+    this.props.fetchCategories();
+  }
+
   renderField(field) {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
@@ -22,47 +27,68 @@ class SubmitQuestion extends Component {
       </div>
     );
   }
-  // this.handleClick = this.handleClick.bind(this);
-
-
-
-
-  //change the address after deployment
-  // fetch('localhost:3000/question/', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-
-  //     })
-  //   })
 
   onSubmit(values) {
     this.props.createQuestion(values, () => {
-      console.log('submitting question')
-      // this.props.history.push("/question/{questionId}");
+      this.props.history.replace('/');
+      window.location.reload();
     });
   }
+
+  // renderTopicChecklist(topicsArr) {
+  //   // const topicsArr = this.props.category.topics;
+
+  //   return topicsArr.map(t, index => (
+  //     // <div key={t._id}>{t.name}</div>
+  //     <div className="checkbox" key={t._id}>
+  //       <label>
+  //           <input type="checkbox"
+  //                   name={`${t.name}[${index}]`}
+  //                   value={t.name}
+  //                   checked={input.value.indexOf(t.name) !== -1}
+  //                   onChange={(event) => {
+  //                       const newValue = [...input.value];
+  //                       if (event.target.checked) {
+  //                           newValue.push(t.name);
+  //                       } else {
+  //                           newValue.splice(newValue.indexOf(option.name), 1);
+  //                       }
+
+  //                       return input.onChange(newValue);
+  //                   }}/>
+  //           {t.name}
+  //       </label>
+  //     </div>
+  //     ))
+    
+  // }
 
   render() {
     const { handleSubmit } = this.props;
     return (
-
       <div className="row example-wrapper">
         <div className="col-xs-12 col-sm-6 offset-sm-3 example-col">
           <div className="card">
             <div className="card-block">
               <form className="k-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <fieldset>
                   <legend>Ask Question Below</legend>
-
                   <label className="k-form-field">
-                    <span>Question: </span>
-                    <input className="k-textbox" placeholder="Start your question with What, How, Why, etc" />
+                    <span>Question:</span>
+                    <Field
+                    name="question"
+                    placeholder="Start your question with What, How, Why, etc"
+                    component={'input'}
+                    />                  
                   </label>
-                  <div className="k-form-field">
+                  {/* <div>
+                    {this.renderTopicChecklist(this.props.category.topics)}
+                  </div> */}
+                  <Field
+                  name='topics'
+                  component={CheckboxGroup}
+                  options={this.props.category.topics}
+                  />
+                  {/* <div className="k-form-field">
                     <span> Choose Categories: </span>
 
                     <input type="radio" name="topics" id="latin" className="k-radio" />
@@ -70,13 +96,12 @@ class SubmitQuestion extends Component {
 
                     <input type="radio" name="topics" id="languages" className="k-radio" checked="checked" />
                     <label component={this.renderField} className="k-radio-label mr-2" for="languages"> Languages </label>
-                  </div>
-
+                  </div> */}
                   <div className="text-right">
-                    <a href="/"><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
-                    <a href="/"><Button variant="outline-secondary mr-2" size="sm">Submit</Button></a>
+                    <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
+                    <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
                   </div>
-                </fieldset>
+                   
               </form>
             </div>
           </div>
@@ -88,12 +113,11 @@ class SubmitQuestion extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ createQuestion }, dispatch);
+  return bindActionCreators(actions, dispatch);
 }
 
-const postNewQuestion = reduxForm({
-  form: 'questionNew'
+const mapStateToProps = (state) => {
+  return state
+}
 
-})(SubmitQuestion);
-
-export default connect(null, mapDispatchToProps)(postNewQuestion);
+export default reduxForm({form: 'questionNew'})(connect(mapStateToProps, mapDispatchToProps)(SubmitQuestion));

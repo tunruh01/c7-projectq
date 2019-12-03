@@ -3,11 +3,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
 import CategoryList from "./CategoryList";
 import * as actions from "../actions/actions";
-// import _ from "lodash";
+import _ from "lodash";
 import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroller";
 import ShowMoreText from "react-show-more-text";
-import { Form, Container, FormControl, Button, Nav, Image } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import {
+  Form,
+  Container,
+  FormControl,
+  Button,
+  Nav,
+  Image
+} from "react-bootstrap";
 
 class QuestionList extends Component {
   constructor() {
@@ -31,8 +39,13 @@ class QuestionList extends Component {
 
   //  Stops infinite scroll querying when there are no more questions to load
   loadItems(page) {
-    if (page < this.props.total_pages || this.props.total_pages === 0) {
-      this.props.fetchQuestions(page);
+    console.log(this.props);
+    console.log(this.props.category.selectedTopic);
+    let selectedTopic = this.props.category.selectedTopic;
+    console.log('curent page: ', page)
+    if (page <= this.props.total_pages || this.props.total_pages === 0) {
+      console.log(selectedTopic);
+      this.props.fetchQuestions(page, selectedTopic);
     } else {
       this.setState({ hasMoreItems: false });
     }
@@ -49,26 +62,28 @@ class QuestionList extends Component {
   }
   // { q.topAnswer.user.cred }
   renderQuestions() {
-
     // If questions in state; loop and return each one
-    if (this.props.questions.questionsList) {
-      console.log("questionsList: ", this.props.questions.questionsList);
+    if (this.props.questions) {
+      console.log("questionsList: ", this.props.questions);
       return (
         <div>
           <div className="card-columns">
             <div className="col-md-12">
-              {this.props.questions.questionsList.map(q => {
+              {_.map(this.props.order, q_key => {
+                let q = this.props.questions[q_key];
                 const executeOnClick = isExpanded => {
                   console.log(isExpanded);
                 };
 
                 return (
-                  <div className="card">
+                  <Link to={`/question/${q._id}`} style={{ textDecoration: 'none' }} className="card">
                     {this.renderQuestionCategories(q)}
                     <div className="card-body">
                       <h6 className="card-title">
                         <React.Fragment key={q._id}>
-                          <a className="main-question-body" href={`/question/${q._id}`}>{q.question}</a>
+                          <div className="main-question-body">
+                            {q.question}
+                          </div>
                           {!q.topAnswer ? (
                             <p className="card-text">
                               This question hasn't been answered yet
@@ -76,9 +91,17 @@ class QuestionList extends Component {
                           ) : (
                               <>
                                 <hr></hr>
+                                <hr></hr>
                                 <div className="userCred" align="left">
-                                  <Image className="avatar" src={q.topAnswer.user.userAvatar} height="42" width="42" roundedCircle>
-                                  </Image>{q.topAnswer.user.userName} <b>{q.topAnswer.user.cred}</b>
+                                  <Image
+                                    className="avatar"
+                                    src={q.topAnswer.user.userAvatar}
+                                    height="42"
+                                    width="42"
+                                    roundedCircle
+                                  ></Image>
+                                  {q.topAnswer.user.userName}{" "}
+                                  <b>{q.topAnswer.user.cred}</b>
                                 </div>
                                 <ShowMoreText
                                   lines={1}
@@ -88,20 +111,30 @@ class QuestionList extends Component {
                                   onClick={this.executeOnClick}
                                   expanded={false}
                                 >
-
-                                  <p className="card-text">{q.topAnswer.answer}</p>
+                                  <p className="card-text">
+                                    {q.topAnswer.answer}
+                                  </p>
                                 </ShowMoreText>
                               </>
                             )}
                         </React.Fragment>
                       </h6>
-                      <small class="text">
-                        <a href=""> <i class="material-icons float-left mr-2">arrow_upward</i> </a>
-                        <a href=""> <i class="material-icons float-left">
-                          add_comment</i> </a>
+                      <small className="text">
+                        <a href="">
+                          {" "}
+                          <i className="material-icons float-left mr-2">
+                            arrow_upward
+                          </i>{" "}
+                        </a>
+                        <a href="">
+                          {" "}
+                          <i className="material-icons float-left">
+                            add_comment
+                          </i>{" "}
+                        </a>
                       </small>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
@@ -117,23 +150,26 @@ class QuestionList extends Component {
       <React.Fragment>
         {authenticated ? (
           <>
-            <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
-              <div className="row flex-nowrap">
-                <div className="col-md-3 justify-content-md-center">
-                  <CategoryList />
-                </div>
-                <div className="col-md-9">
-                  {this.renderQuestions()}
-                </div>
+            <div className="row flex-nowrap">
+              <div className="col-md-3 justify-content-md-center">
+                <CategoryList />
               </div>
-            </InfiniteScroll>
+              <div className="col-md-9">
+                <InfiniteScroll
+                  loadMore={this.loadItems}
+                  pageStart={0}
+                  hasMore={this.state.hasMoreItems}
+                >
+                  {this.renderQuestions()}
+                </InfiniteScroll>
+              </div>
+            </div>
           </>
         ) : (
             <div>
               <div className="error">
-                Unauthorized - maybe have a 'please login' component/message here
-              </div>
-
+                Unauthorized! Please Login to continue.
+            </div>
             </div>
           )}
       </React.Fragment>
@@ -142,7 +178,13 @@ class QuestionList extends Component {
 }
 
 const mapStateToProps = state => {
-  return state;
+  return {
+    questions: state.questions,
+    category: state.category,
+    total_pages: state.total_pages,
+    auth: state.auth,
+    order: state.questionOrder
+  };
 };
 
 export default connect(mapStateToProps, actions)(QuestionList);

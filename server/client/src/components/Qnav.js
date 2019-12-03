@@ -17,16 +17,30 @@ import { Link } from "react-router-dom";
 const keys = require("../config/keys");
 
 class Qnav extends Component {
+  constructor() {
+    super();
+
+    this.resetToHome = this.resetToHome.bind(this);
+  }
+
+  resetToHome() {
+    this.props.selectCategory("");
+  }
+
   render() {
     const { authenticated } = this.props.auth;
     const { user } = this.props.auth;
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Brand>Project Q</Navbar.Brand>
+        <a href="/"><i className="material-icons">
+          home</i></a>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
+            {authenticated ? (
+              <Navbar.Text>Welcome {user.name}</Navbar.Text>
+            ) : null}
           </Nav>
           <Form inline>
             <FormControl
@@ -46,8 +60,9 @@ class Qnav extends Component {
               </Button>
             </Link>
             <Image
-              src={user.avatar} className="thumbnail" roundedCircle/>
+              src={user.avatar} className="thumbnail" roundedCircle
             />
+
           </Form>
           <Form inline>
             {!authenticated ? (
@@ -59,17 +74,17 @@ class Qnav extends Component {
                 Login
               </Button>
             ) : (
-              <Button
-                variant="outline-dark mr-2"
-                size="sm"
-                onClick={this._handleLogoutClick}
-              >
-                Logout
+                <Button
+                  variant="outline-dark mr-2"
+                  size="sm"
+                  onClick={this._handleLogoutClick}
+                >
+                  Logout
               </Button>
-            )}
+              )}
           </Form>
         </Navbar.Collapse>
-      </Navbar>
+      </Navbar >
     );
   }
 
