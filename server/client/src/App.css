@@ -31,21 +31,31 @@ body {
 
 .navbar {
   margin-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
   color: #deeaee;
   font-family: Apercu;
-  font-variant: small-caps;
   font-size: 18px;
   text-align: center;
 
 }
 
 .FormControl {
-  justify-content: center;
+  justify-content: center; 
   margin-right: 100px;
   align-content: center
 }
 
 @media (min-width: 768px) {
+     .sidebar {
+          max-width: 280px;
+          position: fixed;
+          height: 100%;
+          padding-left: 60px;
+     }
+ }
+
+ @media (max-width: 768px) {
   .sidebar {
     max-width: 280px;
     position: fixed;
@@ -66,13 +76,9 @@ body {
   }
 
   @include media-breakpoint-only(lg) {
-    column-count: 4;
+    column-count: 5;
   }
 
-}
-
-.card {
-  width: 18rem;
 }
 
 .card-columns {
@@ -80,10 +86,11 @@ body {
    columns: auto;
    column-gap: 40px;
    margin: 20px;
-   padding: 50px;
+   margin-left: 0px;
+   padding-left: 0px;
+   padding-right: 75px;
    color: gray;
-   padding-left: 0;
-   margin-left: 0;
+
   
 }
 
@@ -121,7 +128,11 @@ body {
 }
 
 #welcome-text {
-  margin-top: 20px;
+  margin-top: 23px;
+}
+
+.k-textbox{
+  width: 300px;
 }
 
 .thumbnail {

@@ -71,7 +71,7 @@ class AnswerList extends Component {
                             Answered {moment(a.answerDate).format("MMM DD")}
                           </h6>
 
-                        <ShowMoreText
+                          <ShowMoreText
                             lines={1}
                             more="more"
                             less="less"
@@ -81,13 +81,13 @@ class AnswerList extends Component {
                           >
                             <span>{a.answer}</span>
                           </ShowMoreText>
-                      </React.Fragment>
-                    </h6>
-                    <small className="text">
-                      <a href=""> <i className="material-icons float-left mr-3">arrow_upward</i></a>
-                      <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
-                    </small>
-                  </div>
+                        </React.Fragment>
+                      </h6>
+                      <small className="text">
+                        <a href=""> <i className="material-icons float-left mr-3">arrow_upward</i></a>
+                        <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
+                      </small>
+                    </div>
                   </div>
                 );
               })}
