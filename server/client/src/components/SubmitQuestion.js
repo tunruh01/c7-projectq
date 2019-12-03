@@ -33,7 +33,7 @@ class SubmitQuestion extends Component {
       </div>
     );
   }
-  
+
   questionInput() {
 
   }
@@ -44,29 +44,29 @@ class SubmitQuestion extends Component {
       <div className="row example-wrapper">
         <div className="col-xs-12 col-sm-6 offset-sm-3 example-col">
           <div className="card submit-form-card mx-auto">
-              <form className="k-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <div className='form-group'>
-                  <legend>Ask Question Below</legend>
-                  <label className="k-form-field">
-                    <Field
+            <form className="k-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+              <div className='form-group'>
+                <legend>Ask Question Below</legend>
+                <label className="k-form-field">
+                  <Field
                     name="question"
                     placeholder="Start your question with What, How, Why, etc"
                     component={'textarea'}
-                    />                  
-                  </label>
-                  <Field
+                  />
+                </label>
+                <Field
                   name='topics'
                   component={CheckboxGroup}
                   options={this.props.category.topics}
-                  />
-                  <div className="text-right">
-                    <div className="form-actions">
-                      <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
-                      <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
-                    </div>
+                />
+                <div className="text-right">
+                  <div className="form-actions">
+                    <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
+                    <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
                   </div>
                 </div>
-              </form>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -83,4 +83,4 @@ const mapStateToProps = (state) => {
   return state
 }
 
-export default reduxForm({form: 'questionNew'})(connect(mapStateToProps, mapDispatchToProps)(SubmitQuestion));
+export default reduxForm({ form: 'questionNew' })(connect(mapStateToProps, mapDispatchToProps)(SubmitQuestion));

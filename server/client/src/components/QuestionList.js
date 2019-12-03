@@ -138,7 +138,7 @@ class QuestionList extends Component {
 
                       <footer>
                         <div className="cat-align">
-                        {this.renderQuestionCategories(q)}</div>
+                          {this.renderQuestionCategories(q)}</div>
                         <small className="text">
                           <a href="">{""}<i className="material-icons float-left mr-2">arrow_upward</i>{''}</a>
                           <span className="float-left mr-4 upvotes" style={{ 'font-size': '20px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)}</span>
