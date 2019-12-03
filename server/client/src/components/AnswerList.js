@@ -107,8 +107,8 @@ class AnswerList extends Component {
 
                           <ShowMoreText
                             lines={1}
-                            more="more"
-                            less="less"
+                            more="More"
+                            less="Less"
                             anchorClass=""
                             onClick={this.executeOnClick}
                             expanded={false}
