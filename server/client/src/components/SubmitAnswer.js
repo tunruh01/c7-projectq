@@ -27,7 +27,7 @@ class SubmitAnswer extends Component {
     onSubmit(values) {
       const questionid = this.props.questionid
       this.props.createAnswer(questionid, values, () => {
-          this.props.history.push('/');
+          // this.props.history.push('/');
         })
     }
 
