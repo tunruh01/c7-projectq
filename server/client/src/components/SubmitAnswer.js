@@ -38,6 +38,32 @@ class SubmitAnswer extends Component {
     render() {
         const { handleSubmit } = this.props;
         return (
+          // <form className="k-form">
+          //             <fieldset>
+          //               <legend>Add Your Answer</legend>
+
+          //               <label className="k-form-field">
+          //                 <span> Name </span>
+          //                 <input className="k-textbox" placeholder="Your Name" />
+          //               </label>
+
+          //             </fieldset>
+
+          //             <fieldset>
+          //               <legend>Credentials</legend>
+          //               <label className="k-form-field">
+          //                 <span> Why can you answer this question? </span>
+          //                 <input className="k-textbox" placeholder="Your Credentials" />
+          //               </label>
+          //             </fieldset>
+
+          //             <div className="text-right">
+          //               <Link to="/">
+          //                 <Button variant="outline-danger mr-2" size="sm">Back</Button>
+          //               </Link>
+          //               <Button variant="outline-dark mr-2" size="sm">Submit</Button>
+          //             </div>
+          //           </form>
             <div className='padding'>
                 <h4 className="text-center" style={{ color: "grey" }}>Answer question</h4>
                 <div className="col-md-6 offset-md-3 shadow-sm">
