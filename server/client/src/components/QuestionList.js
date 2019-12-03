@@ -53,9 +53,9 @@ class QuestionList extends Component {
 
   renderQuestionCategories(q) {
     return (
-      <div className="card text-center">
-        {q.topics.map(topic => (
-          <span>{topic.name}</span>
+      <div className="cat-color">
+        Categories: {q.topics.map(topic => (
+          <div className="cat-home">{topic.name}</div>
         ))}
       </div>
     );
@@ -137,7 +137,8 @@ class QuestionList extends Component {
                       </h6>
 
                       <footer>
-                        {this.renderQuestionCategories(q)}
+                        <div className="cat-align">
+                          {this.renderQuestionCategories(q)}</div>
                         <small className="text">
                           <a href="">{""}<i className="material-icons float-left mr-2">arrow_upward</i>{''}</a>
                           <span className="float-left mr-4 upvotes" style={{ 'font-size': '20px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)}</span>

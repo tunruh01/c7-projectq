@@ -239,5 +239,25 @@ a.question-card {
 
 .navbar-text {
   margin-left: 50px;
-  font-size: 18px;
+}
+.cat-home {
+  color: #99D1CB;
+  font-size: 16px;
+  font-style: italic;
+  border: 0.1rem;
+  display: inline-block;
+  text-align: right;
+}
+.cat-home+.cat-home::before {
+  display: inline-block;
+  white-space: pre;
+  content: ", ";
+}
+.cat-align {
+  text-align: right;
+}
+.cat-color {
+  color: #99D1CB;
+  font-size: 16px;
+  font-style: italic;
 }
