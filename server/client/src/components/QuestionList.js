@@ -52,7 +52,6 @@ class QuestionList extends Component {
   renderQuestionCategories(q) {
     return (
       <div className="card text-center">
-        {q.questionDate}
         {q.topics.map(topic => (
           <span>{topic.name}</span>
         ))}
