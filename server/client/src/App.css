@@ -49,7 +49,7 @@ body {
     max-width: 280px;
     position: fixed;
     height: 100%;
-    padding-left: 60px;
+    padding-left: 40px;
   }
 }
 
@@ -57,16 +57,10 @@ body {
   .sidebar {
     max-width: 280px;
     position: fixed;
+    display: none;
     height: 100%;
   }
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    /* max-width: 280px; */
-    display: none;
-  }
-}
+} 
 
 .card-columns {
   @include media-breakpoint-only(md) {
@@ -208,14 +202,9 @@ body {
 
 }
 
-
 h4 {
   color: #46857E;
   border: 0.1rem outset #FFE1D4;
-}
-
-#categoryList {
-  color: black;
 }
 
 a.question-card {

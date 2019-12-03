@@ -7,22 +7,6 @@ import { Redirect } from 'react-router-dom';
 
 class SubmitAnswer extends Component {
 
-  // state = {
-  //   redirect: false
-  // }
-
-  // setRedirect = () => {
-  //   this.setState({
-  //     redirect: true
-  //   })
-  // }
-
-  // renderRedirect = () => {
-  //   if (this.state.redirect) {
-  //     return <Redirect to='/target' />
-  //   }
-  // }
-
   renderField(field) {
     const {
       meta: { touched, error }
