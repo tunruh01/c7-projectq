@@ -44,7 +44,7 @@ class SubmitQuestion extends Component {
                     <Field
                     name="question"
                     placeholder="Start your question with What, How, Why, etc"
-                    component={'input'}
+                    component={this.renderField}
                     />                  
                   </label>
                   {/* <div className="k-form-field">
