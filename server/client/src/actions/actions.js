@@ -87,7 +87,6 @@ export function upvoteAnswer(answerid) {
   };
 }
 export function createQuestion(values, callback) {
-  debugger;
   const request = axios.post(`${ROOT_URL}/question`, values, {
     withCredentials: true
   });
