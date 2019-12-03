@@ -12,6 +12,12 @@ class SubmitQuestion extends Component {
   componentDidMount() {
     this.props.fetchCategories();
   }
+  onSubmit(values) {
+    this.props.createQuestion(values, () => {
+      this.props.history.replace('/');
+      window.location.reload();
+    });
+  }
 
   renderField(field) {
     const { meta: { touched, error } } = field;
@@ -27,12 +33,9 @@ class SubmitQuestion extends Component {
       </div>
     );
   }
+  
+  questionInput() {
 
-  onSubmit(values) {
-    this.props.createQuestion(values, () => {
-      this.props.history.replace('/');
-      window.location.reload();
-    });
   }
 
   render() {
