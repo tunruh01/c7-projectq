@@ -25,7 +25,6 @@ body {
   font-family: apercu;
   font-size: 14px;
   background-image: linear-gradient(to right, white, #46857E)
-
 }
 
 .navbar {
@@ -38,21 +37,21 @@ body {
 }
 
 .FormControl {
-  justify-content: center; 
+  justify-content: center;
   margin-right: 100px;
   align-content: center
 }
 
 @media (min-width: 768px) {
-     .sidebar {
-          max-width: 280px;
-          position: fixed;
-          height: 100%;
-          padding-left: 60px;
-     }
- }
+  .sidebar {
+    max-width: 280px;
+    position: fixed;
+    height: 100%;
+    padding-left: 60px;
+  }
+}
 
- @media (max-width: 768px) {
+@media (max-width: 768px) {
   .sidebar {
     max-width: 280px;
     position: fixed;
@@ -98,7 +97,7 @@ body {
   margin-left: 0px;
   padding-left: 0px;
   padding: 50px;
-  
+
 }
 
 .card-title {
@@ -140,27 +139,74 @@ body {
 
 #welcome-text {
   margin-top: 30px;
-  
+
 }
 
-.k-textbox{
+.k-textbox {
   width: 300px;
 }
+
+
 
 .thumbnail {
   width: 60px;
   height: 60px;
-  margin-right: 18px;
-  margin-left: 15px;
-} 
+  margin-right: 13px;
+  margin-left: 18px;
+  float: left;
+  border-radius: 50%;
+  margin-top: 10px;
+
+
+}
 
 .main-question-body {
   color: #856354;
   text-align: left;
   font-weight: bold;
-  font-family: apercu, serif;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.category-detail {
+  border: 0.1rem outset #FFE1D4;
+  margin-right: 20px;
+  margin-top: 10px;
+  width: 30%;
+  text-align: left;
+  font: 10px;
+  color: gray;
+}
+
+.question-detail {
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: left;
 
 }
+
+.user-answer-format {
+  font-size: 17px;
+  color: black;
+}
+
+.date-answer-format {
+  font-size: 14px;
+  color: grey;
+}
+
+.thumbnailAnswer {
+  width: 70px;
+  height: 70px;
+  margin-right: 18px;
+  float: left;
+  border-radius: 50%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+
+}
+
 
 h4 {
   color: #46857E;
