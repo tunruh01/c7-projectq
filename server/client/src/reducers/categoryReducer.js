@@ -10,6 +10,7 @@ export default function(state = DEFAULT_STATE, action) {
     case FETCH_CATEGORIES:
       if (action.payload) {
         let newState = Object.assign({}, state);
+        newState.topics = [];
         // Add each question object to arr and push to state/store
         action.payload.data.forEach(topic => {
           newState.topics.push(topic);
