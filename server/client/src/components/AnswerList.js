@@ -17,7 +17,6 @@ const upvotedStyle = {
 class AnswerList extends Component {
   constructor() {
     super();
-
     this.loadItems = this.loadItems.bind(this);
 
     this.state = {
@@ -79,7 +78,6 @@ class AnswerList extends Component {
                 const executeOnClick = isExpanded => {
                   console.log(isExpanded);
                 };
-
                 return (
                   <div className="card" key={a._id}>
                     <div className="card-body">
@@ -114,7 +112,9 @@ class AnswerList extends Component {
                         
                         <a href="#" onClick={e => {e.preventDefault(this.upvoteAnswerHandler(a._id))}}>
                           {this.showCorrectUpvoteIcon(a._id)}
-                          </a>
+                        </a>
+                        {//Temporary code to demo upvote count
+                        }
                         {a.answerScore} Upboats
                         <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
                       </small>
