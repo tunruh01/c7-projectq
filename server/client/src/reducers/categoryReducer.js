@@ -23,7 +23,7 @@ export default function(state = DEFAULT_STATE, action) {
         Object.assign(newState, { selectedTopic: action.payload });
         return newState;
       }
-
+      return state;
     default:
       return state;
   }
