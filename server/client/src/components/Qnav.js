@@ -17,6 +17,16 @@ import { Link } from "react-router-dom";
 const keys = require("../config/keys");
 
 class Qnav extends Component {
+  constructor() {
+    super();
+
+    this.resetToHome = this.resetToHome.bind(this);
+  }
+
+  resetToHome() {
+    this.props.selectCategory("");
+  }
+
   render() {
     const { authenticated } = this.props.auth;
     const { user } = this.props.auth;
@@ -28,7 +38,9 @@ class Qnav extends Component {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
+            {authenticated ? (
+              <Navbar.Text>Welcome {user.name}</Navbar.Text>
+            ) : null}
           </Nav>
           <Form inline>
             <FormControl
@@ -50,6 +62,7 @@ class Qnav extends Component {
             <Image
               src={user.avatar} className="thumbnail" roundedCircle
             />
+
           </Form>
           <Form inline>
             {!authenticated ? (
