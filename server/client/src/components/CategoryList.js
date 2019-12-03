@@ -52,7 +52,7 @@ class CategoryList extends Component {
                 {this.renderCategories()}
               </a>
             </li>
-          </ul>git
+          </ul>
         </div>
       </div>
     );

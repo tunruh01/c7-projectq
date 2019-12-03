@@ -169,7 +169,7 @@ class QuestionList extends Component {
         ) : (
             <div>
               <div className="error">
-                Unauthorized - maybe have a 'please login' component/message here
+                Unauthorized! Please Login to continue.
             </div>
             </div>
           )}

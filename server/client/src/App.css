@@ -115,6 +115,11 @@ body {
 
 }
 
+.error {
+  font-size: 20px;
+  font-family: apercu;
+}
+
 .clearfix {
   overflow: auto;
 }
@@ -135,7 +140,8 @@ body {
 }
 
 #welcome-text {
-  margin-top: 23px;
+  margin-top: 30px;
+  
 }
 
 .k-textbox{
