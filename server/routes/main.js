@@ -284,10 +284,21 @@ router.get("/question/:questionId/answers", UserAuthCheck, (req, res) => {
       { upvotedAnswers: 1, downvotedAnswers: 1, lean: true }
     ).exec((err, user) => {
       if (err) console.log("ERROR: ", err);
-      let userUpvotedAnswers = user ? user.upvotedAnswers : [];
-      let userDownvotedAnswers = user ? user.downvotedAnswers : [];
+      let userUpvotedAnswers =
+        user && user.upvotedAnswers ? user.upvotedAnswers : [];
+      let userDownvotedAnswers =
+        user && user.downvotedAnswers ? user.downvotedAnswers : [];
+      let userUpvotedComments =
+        user && user.upvotedComments ? user.upvotedComments : [];
+      let userDownvotedComments =
+        user && user.downvotedComments ? user.downvotedComments : [];
       answersObj
         .populate("userId", "name credentials avatar")
+        .populate({
+          path: "comments",
+          select: "_id comment userId score dateAdded",
+          populate: { path: "userId" }
+        })
         .sort({ score: "desc", dateAdded: "desc" })
         .skip(perPage * (page - 1))
         .limit(perPage)
@@ -317,7 +328,25 @@ router.get("/question/:questionId/answers", UserAuthCheck, (req, res) => {
                   userUpvotedAnswers.indexOf(answer._id.toString()) >= 0,
                 userDownvoted:
                   userDownvotedAnswers.indexOf(answer._id.toString()) >= 0,
-                comments: []
+                comments: answer.comments.map(comment => {
+                  return {
+                    _id: comment._id,
+                    comment: comment.comment,
+                    commentDate: comment.dateAdded,
+                    commentScore: comment.score,
+                    user: comment.userId
+                      ? {
+                          _id: comment.userId._id,
+                          userName: comment.userId.name,
+                          userAvatar: comment.userId.avatar
+                        }
+                      : null,
+                    userUpvoted:
+                      userUpvotedComments.indexOf(comment._id.toString()) >= 0,
+                    userDownvoted:
+                      userDownvotedComments.indexOf(comment._id.toString()) >= 0
+                  };
+                })
               };
             })
           });
@@ -350,7 +379,7 @@ router.get("/question/:questionId", UserAuthCheck, (req, res) => {
     });
 });
 
-attemptUpdateScore = (req, res, voteType) => {
+attemptUpdateAnswerScore = (req, res, voteType) => {
   User.findOne(
     { googleId: req.user.googleId },
     { upvotedAnswers: 1, downvotedAnswers: 1 }
@@ -469,14 +498,143 @@ attemptUpdateScore = (req, res, voteType) => {
   });
 };
 
+attemptUpdateCommentScore = (req, res, voteType) => {
+  User.findOne(
+    { googleId: req.user.googleId },
+    { upvotedComments: 1, downvotedComments: 1 }
+  ).exec((err, user) => {
+    if (err) {
+      console.log(err);
+    }
+    if (!user) {
+      sendGenericError(res, "User Not Found");
+    } else {
+      const commentId = req.params.commentId;
+      const newUpvoteState = req.body.upvoted;
+      const newDownvoteState = req.body.downvoted;
+
+      let upScoreModifier = 0;
+      let downScoreModifier = 0;
+      let userPrevUpvotedComment = user.upvotedComments.includes(commentId);
+      let userPrevDownvotedComment = user.downvotedComments.includes(commentId);
+
+      switch (voteType) {
+        case "upvote":
+          //figure out if we should upvote/downvote/leave same
+          if (newUpvoteState && !userPrevUpvotedComment) {
+            upScoreModifier++;
+            if (userPrevDownvotedComment) {
+              downScoreModifier++;
+            }
+          } else if (!newUpvoteState && userPrevUpvotedComment) {
+            upScoreModifier--;
+          }
+          break;
+        case "downvote":
+          //figure out if we should upvote/downvote/leave same
+          if (newDownvoteState && !userPrevDownvotedComment) {
+            downScoreModifier--;
+            if (userPrevUpvotedComment) {
+              upScoreModifier--;
+            }
+          } else if (!newDownvoteState && userPrevDownvotedComment) {
+            downScoreModifier++;
+          }
+          break;
+      }
+
+      let newScore = upScoreModifier + downScoreModifier;
+
+      //if an actual change should occur, do it
+      if (newScore !== 0) {
+        Comment.findByIdAndUpdate(
+          commentId,
+          { $inc: { score: newScore } },
+          { new: true }
+        ).exec((err, comment) => {
+          if (err) console.log("ERROR: ", err);
+
+          //add/remove from upvoted if needed
+          if (
+            upScoreModifier > 0 &&
+            !user.upvotedComments.includes(comment._id)
+          ) {
+            user.upvotedComments.push(comment._id);
+          } else if (
+            upScoreModifier < 0 &&
+            user.upvotedComments.includes(comment._id)
+          ) {
+            user.upvotedComments.splice(
+              user.upvotedComments.indexOf(comment._id),
+              1
+            );
+          }
+
+          //add/remove from downvoted if needed
+          if (
+            downScoreModifier < 0 &&
+            !user.downvotedComments.includes(comment._id)
+          ) {
+            user.downvotedComments.push(comment._id);
+          } else if (
+            downScoreModifier > 0 &&
+            user.downvotedComments.includes(comment._id)
+          ) {
+            user.downvotedComments.splice(
+              user.downvotedComments.indexOf(comment._id),
+              1
+            );
+          }
+
+          user.save(
+            {
+              upvotedComments: 1,
+              downvotedComments: 1,
+              new: true
+            },
+            (err, updatedUser) => {
+              res.send({
+                _id: comment._id,
+                upvoted: updatedUser.upvotedComments.includes(comment._id),
+                downvoted: updatedUser.downvotedComments.includes(comment._id),
+                commentScore: comment.score
+              });
+            }
+          );
+        });
+      } else {
+        //client sent a no-op so just return the comment
+        Comment.findById(commentId, (err, comment) => {
+          res.send({
+            _id: comment._id,
+            upvoted: user.upvotedComments.includes(comment._id),
+            downvoted: user.downvotedComments.includes(comment._id),
+            commentScore: comment.score
+          });
+        });
+      }
+    }
+  });
+};
+
+// post an upvote change to an answer
+router.post("/comment/:commentId/upvote", UserAuthCheck, (req, res) => {
+  attemptUpdateCommentScore(req, res, "upvote");
+});
+
+// post a downvote change to an answer
+router.post("/comment/:commentId/downvote", UserAuthCheck, (req, res) => {
+  attemptUpdateCommentScore(req, res, "downvote");
+});
+
 // post an upvote change to an answer
 router.post("/answer/:answerId/upvote", UserAuthCheck, (req, res) => {
-  attemptUpdateScore(req, res, "upvote");
+  attemptUpdateAnswerScore(req, res, "upvote");
 });
 
 // post a downvote change to an answer
 router.post("/answer/:answerId/downvote", UserAuthCheck, (req, res) => {
-  attemptUpdateScore(req, res, "downvote");
+  attemptUpdateAnswerScore(req, res, "downvote");
 });
 
 router.get("/user", UserAuthCheck, (req, res) => {
@@ -491,6 +649,11 @@ router.get("/user", UserAuthCheck, (req, res) => {
       path: "answers",
       select: "_id questionId dateAdded score",
       populate: { path: "questionId", select: "question" }
+    })
+    .populate({
+      path: "comments",
+      select: "_id answer dateAdded score",
+      populate: { path: "answer", select: "answer" }
     })
     .lean()
     .exec((err, user) => {
@@ -520,9 +683,65 @@ router.get("/user", UserAuthCheck, (req, res) => {
             question: question.question,
             answerCount: question.answers.length
           };
+        }),
+        usersComments: user.comments.map(comment => {
+          return {
+            _id: comment._id,
+            commentDate: comment.dateAdded,
+            comment: comment.comment,
+            answer: comment.answer ? comment.answer.answer : null
+          };
         })
       });
     });
+});
+
+router.post("/answer/:answerId/comment", UserAuthCheck, (req, res, next) => {
+  User.findOne({ googleId: req.user.googleId }).exec((err, user) => {
+    if (err) {
+      console.log(err);
+    }
+    if (!user) {
+      sendGenericError(res, "User Not Found");
+    } else {
+      let newComment = new Comment();
+      const answerId = req.params.answerId;
+      // const answersObj = Answer.find({ questionId });
+      Answer.findById(answerId).exec((err, answer) => {
+        if (err) console.log("ERROR: ", err);
+        newComment.userId = user._id;
+        newComment.comment = req.body.comment;
+        newComment.dateAdded = Date.now();
+        newComment.answer = answerId;
+        newComment.save((err, comment) => {
+          if (err) console.log(err);
+          let response = { user: {} };
+
+          response.user._id = user._id;
+          response.user.userName = user.name;
+          response.user.userAvatar = user.avatar;
+
+          response._id = comment._id;
+          response.answerId = comment.answer;
+          response.comment = comment.comment;
+          response.commentDate = comment.dateAdded;
+          response.commentScore = comment.score;
+          response.userUpvoted = false;
+          response.userDownvoted = false;
+
+          answer.comments.push(comment._id);
+          answer.save((err, answer) => {
+            if (err) console.log(err);
+            user.comments.push(comment._id);
+            user.save((err, user) => {
+              if (err) console.log(err);
+              res.send(response);
+            });
+          });
+        });
+      });
+    }
+  });
 });
 
 module.exports = router;
