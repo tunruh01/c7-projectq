@@ -25,7 +25,8 @@ class SubmitQuestion extends Component {
 
   onSubmit(values) {
     this.props.createQuestion(values, () => {
-      this.props.history.push('/')
+      this.props.history.replace('/');
+      window.location.reload();
     });
   }
 
@@ -44,7 +45,7 @@ class SubmitQuestion extends Component {
                     <Field
                     name="question"
                     placeholder="Start your question with What, How, Why, etc"
-                    component={'input'}
+                    component={this.renderField}
                     />                  
                   </label>
                   {/* <div className="k-form-field">

@@ -41,7 +41,8 @@ class QuestionList extends Component {
     console.log(this.props);
     console.log(this.props.category.selectedTopic);
     let selectedTopic = this.props.category.selectedTopic;
-    if (page < this.props.total_pages || this.props.total_pages === 0) {
+    console.log('curent page: ', page)
+    if (page <= this.props.total_pages || this.props.total_pages === 0) {
       console.log(selectedTopic);
       this.props.fetchQuestions(page, selectedTopic);
     } else {
@@ -119,16 +120,16 @@ class QuestionList extends Component {
                           )}
                         </React.Fragment>
                       </h6>
-                      <small class="text">
+                      <small className="text">
                         <a href="">
                           {" "}
-                          <i class="material-icons float-left mr-2">
+                          <i className="material-icons float-left mr-2">
                             arrow_upward
                           </i>{" "}
                         </a>
                         <a href="">
                           {" "}
-                          <i class="material-icons float-left">
+                          <i className="material-icons float-left">
                             add_comment
                           </i>{" "}
                         </a>

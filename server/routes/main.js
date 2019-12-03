@@ -223,23 +223,30 @@ router.post("/question/:questionId/answer", UserAuthCheck, (req, res, next) => {
           response.userUpvoted = false;
           response.userDownvoted = false;
           response.comments = [];
-          res.send(response);
-          user.answers.push(answer._id);
-          let lookCred = user.credentials.find(
-            cred => cred === req.body.credential
-          );
-          if (!lookCred) {
-            lookCred = {
-              credential: req.body.credential,
-              answers: []
-            };
-            lookCred.answers.push(answer._id);
-            user.credentials.push(lookCred);
-          } else {
-            lookCred.answers.push(answer._id);
-          }
-          user.save((err, user) => {
+          question.answers.push(answer._id);
+          question.save((err, user) => {
             if (err) console.log(err);
+            user.answers.push(answer._id);
+            if (!user.credentials) {
+              user.credentials = [];
+            }
+            let lookCred = user.credentials.find(
+              cred => cred === req.body.credential
+            );
+            if (!lookCred) {
+              lookCred = {
+                credential: req.body.credential,
+                answers: []
+              };
+              lookCred.answers.push(answer._id);
+              user.credentials.push(lookCred);
+            } else {
+              lookCred.answers.push(answer._id);
+            }
+            user.save((err, user) => {
+              if (err) console.log(err);
+              res.send(response);
+            });
           });
         });
       });
