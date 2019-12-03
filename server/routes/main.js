@@ -21,8 +21,7 @@ router.get("/questions", UserAuthCheck, (req, res) => {
   const page = req.query.page || 1;
   let perPage = 7;
 
-  const keyword = req.query.query;
-  const { topicId } = req.query;
+  let { topicId, keyword, answered } = req.query;
 
   if (keyword) {
     const searchVal = keyword + ".*";
@@ -31,6 +30,13 @@ router.get("/questions", UserAuthCheck, (req, res) => {
 
   if (topicId) {
     filterOptions.topics = topicId;
+  }
+
+  if (answered) {
+    answered = answered.toLowerCase();
+    if (answered === "true" || answered === "false") {
+      filterOptions["answers.0"] = { $exists: answered === "true" };
+    }
   }
 
   User.findOne(
