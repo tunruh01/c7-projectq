@@ -59,6 +59,16 @@ class Qnav extends Component {
                 Ask Question
               </Button>
             </Link>
+            <Link exact to={{
+              pathname: '/',
+              state: {
+                showUnanswered: true
+              }
+            }}>
+              <Button variant="outline-secondary mr-2" size="sm">
+                Answer Question
+              </Button>
+            </Link>
             <Image
               src={user.avatar} className="thumbnail" roundedCircle
             />
