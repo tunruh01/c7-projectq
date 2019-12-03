@@ -124,11 +124,17 @@ body {
   margin-top: 20px;
 }
 
+
+
 .thumbnail {
   width: 60px;
   height: 60px;
-  margin-right: 18px;
-  margin-left: 15px;
+  margin-right: 13px;
+  margin-left: 18px;
+  float: left;
+  border-radius: 50%;
+  margin-top: 10px;
+
 
 } 
 
@@ -139,15 +145,14 @@ body {
   font-family: 'Times New Roman', Times, serif;
 }
 
-.date-format-answer {
-  font-size: 13.5px;
-  color: grey;
-} 
-
 .category-detail {
-  color: grey;
-  font-size: 13px;
+  border: 0.1rem outset #FFE1D4;
+  margin-right: 20px;
+  margin-top: 10px;
+  width: 30%;
   text-align: left;
+  font: 10px;
+  color: gray;
 } 
 
 .question-detail {
@@ -155,4 +160,24 @@ body {
   font-size: 18px;
   font-weight: bold;
   text-align: left;
+
+} 
+.user-answer-format {
+  font-size: 17px;
+  color: black;
+} 
+.date-answer-format {
+  font-size: 14px;
+  color: grey;
+} 
+.thumbnailAnswer {
+  width: 70px;
+  height: 70px;
+  margin-right: 18px;
+  float: left;
+  border-radius: 50%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+
 } 
