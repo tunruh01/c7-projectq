@@ -41,7 +41,8 @@ class QuestionList extends Component {
     console.log(this.props);
     console.log(this.props.category.selectedTopic);
     let selectedTopic = this.props.category.selectedTopic;
-    if (page < this.props.total_pages || this.props.total_pages === 0) {
+    console.log('curent page: ', page)
+    if (page <= this.props.total_pages || this.props.total_pages === 0) {
       console.log(selectedTopic);
       this.props.fetchQuestions(page, selectedTopic);
     } else {

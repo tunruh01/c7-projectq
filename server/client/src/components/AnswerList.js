@@ -39,7 +39,7 @@ class AnswerList extends Component {
     const questionid = this.props.questionid;
 
 
-    if (page < this.props.total_pages || this.props.total_pages === 0) {
+    if (page <= this.props.total_pages || this.props.total_pages === 0) {
       this.props.fetchAnswers(questionid, page);
     } else {
       this.setState({ hasMoreItems: false });
