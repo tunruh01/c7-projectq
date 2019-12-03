@@ -3,7 +3,7 @@ import "../App.css";
 import * as actions from "../actions/actions";
 // import _ from "lodash";
 import { connect } from "react-redux";
-import {Image} from "react-bootstrap"
+import { Image } from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css";
 import moment from "moment";
 import ShowMoreText from "react-show-more-text";
@@ -11,8 +11,10 @@ import InfiniteScroll from "react-infinite-scroller";
 
 // Hacky CSS styling used in upvoted answers
 const upvotedStyle = {
-  'color':'teal', 
-  'font-size': '40px'
+  'color': 'teal',
+  'font-size': '28px',
+  'margin-bottom': '10px',
+  'padding-bottom': '10px'
 }
 
 class AnswerList extends Component {
@@ -39,7 +41,7 @@ class AnswerList extends Component {
     const questionid = this.props.questionid;
 
 
-    if (page < this.props.total_pages || this.props.total_pages === 0) {
+    if (page <= this.props.total_pages || this.props.total_pages === 0) {
       this.props.fetchAnswers(questionid, page);
     } else {
       this.setState({ hasMoreItems: false });
@@ -58,12 +60,12 @@ class AnswerList extends Component {
     if (upvotedAnswers.includes(answerid)) {
       return (
         <>
-          <i className="material-icons float-left mr-3" style={upvotedStyle}>arrow_upward</i>
+          <i className="material-icons float-left mr-2" style={upvotedStyle}>arrow_upward</i>
         </>
       )
     } else {
       return (
-        <i className="material-icons float-left mr-3">arrow_upward</i>
+        <i className="material-icons float-left mr-3" style={{ 'font-size': '30px' }}>arrow_upward</i>
       )
     }
   }
@@ -86,12 +88,12 @@ class AnswerList extends Component {
                         <React.Fragment>
                           <span>
                             <Image
-                                  className="avatar"
-                                  src={a.user.userAvatar}
-                                  height="42"
-                                  width="42"
-                                  roundedCircle
-                                ></Image>
+                              className="avatar"
+                              src={a.user.userAvatar}
+                              height="42"
+                              width="42"
+                              roundedCircle
+                            ></Image>
                             <h6>
                               {a.user.userName},{" "}
                               {a.user.userCred
@@ -116,14 +118,14 @@ class AnswerList extends Component {
                         </React.Fragment>
                       </h6>
                       <small className="text">
-                        
-                        <a href="#" onClick={e => {e.preventDefault(this.upvoteAnswerHandler(a._id))}}>
+
+                        <a href="#" onClick={e => { e.preventDefault(this.upvoteAnswerHandler(a._id)) }}>
                           {this.showCorrectUpvoteIcon(a._id)}
                         </a>
                         {//Temporary code to demo upvote count
                         }
-                        {a.answerScore} Upboats
-                        <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
+                        <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{a.answerScore} upvotes </a>
+                        <a href=""> <i className="material-icons float-left" style={{ 'margin-top': '3px' }}>chat_bubble_outline</i> </a>
                       </small>
                     </div>
                   </div>
@@ -131,7 +133,7 @@ class AnswerList extends Component {
               })}
             </div>
           </div>
-        </div>
+        </div >
 
       );
     }

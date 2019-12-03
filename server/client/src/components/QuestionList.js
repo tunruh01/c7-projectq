@@ -7,6 +7,7 @@ import _ from "lodash";
 import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroller";
 import ShowMoreText from "react-show-more-text";
+import { Link } from "react-router-dom";
 import {
   Form,
   Container,
@@ -41,7 +42,8 @@ class QuestionList extends Component {
     console.log(this.props);
     console.log(this.props.category.selectedTopic);
     let selectedTopic = this.props.category.selectedTopic;
-    if (page < this.props.total_pages || this.props.total_pages === 0) {
+    console.log('curent page: ', page)
+    if (page <= this.props.total_pages || this.props.total_pages === 0) {
       console.log(selectedTopic);
       this.props.fetchQuestions(page, selectedTopic);
     } else {
@@ -74,17 +76,14 @@ class QuestionList extends Component {
                 };
 
                 return (
-                  <div className="card">
+                  <Link to={`/question/${q._id}`} style={{ textDecoration: 'none' }} className="card">
                     {this.renderQuestionCategories(q)}
                     <div className="card-body">
                       <h6 className="card-title">
                         <React.Fragment key={q._id}>
-                          <a
-                            className="main-question-body"
-                            href={`/question/${q._id}`}
-                          >
+                          <div className="main-question-body">
                             {q.question}
-                          </a>
+                          </div>
                           {!q.topAnswer ? (
                             <p className="card-text">
                               This question hasn't been answered yet
@@ -120,22 +119,22 @@ class QuestionList extends Component {
                             )}
                         </React.Fragment>
                       </h6>
-                      <small class="text">
+                      <small className="text">
                         <a href="">
                           {" "}
-                          <i class="material-icons float-left mr-2">
+                          <i className="material-icons float-left mr-2">
                             arrow_upward
                           </i>{" "}
                         </a>
                         <a href="">
                           {" "}
-                          <i class="material-icons float-left">
+                          <i className="material-icons float-left">
                             add_comment
                           </i>{" "}
                         </a>
                       </small>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
