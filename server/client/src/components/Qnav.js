@@ -1,15 +1,30 @@
 import React, { Component } from "react";
-import * as actions from '../actions/actions'
-import { connect } from 'react-redux'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import * as actions from "../actions/actions";
+import { connect } from "react-redux";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
-import Navbar from 'react-bootstrap/Navbar'
-import { Form, Container, FormControl, Button, Nav, Image } from "react-bootstrap";
+import Navbar from "react-bootstrap/Navbar";
+import {
+  Form,
+  Container,
+  FormControl,
+  Button,
+  Nav,
+  Image
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-
-
 class Qnav extends Component {
+  constructor() {
+    super();
+
+    this.resetToHome = this.resetToHome.bind(this);
+  }
+
+  resetToHome() {
+    this.props.selectCategory("");
+  }
+
   render() {
     const { authenticated } = this.props.auth;
     const { user } = this.props.auth;
@@ -19,31 +34,59 @@ class Qnav extends Component {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/"><i class="material-icons">
-              home</i>
+            <Nav.Link onClick={this.resetToHome} href="/">
+              <i class="material-icons">home</i>
             </Nav.Link>
             <h6 className="text-center">
-              {authenticated ? (<Navbar.Text>Welcome {user.name}</Navbar.Text>) : null}
+              {authenticated ? (
+                <Navbar.Text>Welcome {user.name}</Navbar.Text>
+              ) : null}
             </h6>
           </Nav>
           <Form inline>
-            <FormControl size="sm" type="text" placeholder="Search Questions" className="col-xs-8 mr-2" />
-            <Button variant="outline-secondary mr-2" size="sm">Search</Button>
+            <FormControl
+              size="sm"
+              type="text"
+              placeholder="Search Questions"
+              className="col-xs-8 mr-2"
+            />
+            <Button variant="outline-secondary mr-2" size="sm">
+              Search
+            </Button>
           </Form>
           <Form inline>
-            <Link exact to="/question"><Button variant="outline-secondary mr-2" size="sm">Ask Question</Button></Link>
-            <Image src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png" roundedCircle />
+            <Link exact to="/question">
+              <Button variant="outline-secondary mr-2" size="sm">
+                Ask Question
+              </Button>
+            </Link>
+            <Image
+              src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png"
+              roundedCircle
+            />
           </Form>
           <Form inline>
             {!authenticated ? (
-              <Button variant='outline-dark mr-2' size="sm" onClick={this._handleSignInClick}>Login</Button>
+              <Button
+                variant="outline-dark mr-2"
+                size="sm"
+                onClick={this._handleSignInClick}
+              >
+                Login
+              </Button>
             ) : (
-                <Button variant='outline-dark mr-2' size="sm" onClick={this._handleLogoutClick}>Logout</Button>
-              )}
+              <Button
+                variant="outline-dark mr-2"
+                size="sm"
+                onClick={this._handleLogoutClick}
+              >
+                Logout
+              </Button>
+            )}
           </Form>
         </Navbar.Collapse>
       </Navbar>
-    )
+    );
   }
 
   _handleSignInClick = () => {
@@ -60,8 +103,8 @@ class Qnav extends Component {
   };
 }
 
-const mapStateToProps = (state) => {
-  return state
-}
+const mapStateToProps = state => {
+  return state;
+};
 
-export default connect(mapStateToProps, actions)(Qnav)
+export default connect(mapStateToProps, actions)(Qnav);
