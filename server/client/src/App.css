@@ -277,3 +277,9 @@ a.question-card {
   width: 400px;
   background: none;
 }
+
+.form-actions {
+  margin: 0;
+  background-color: transparent;
+  text-align: center;
+}

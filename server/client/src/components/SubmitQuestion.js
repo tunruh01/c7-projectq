@@ -60,8 +60,10 @@ class SubmitQuestion extends Component {
                   options={this.props.category.topics}
                   />
                   <div className="text-right">
-                    <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
-                    <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
+                    <div className="form-actions">
+                      <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
+                      <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
+                    </div>
                   </div>
                 </div>
               </form>
