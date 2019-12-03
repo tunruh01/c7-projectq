@@ -40,6 +40,10 @@ class AnswerList extends Component {
     }
   }
 
+  upvoteAnswer(answerid) {
+    console.log('upvote clicked for id: ', answerid)
+  }
+
   renderAnswers() {
     // If questions in state; loop and return each one
     if (this.props.answers.answersList) {
@@ -83,7 +87,9 @@ class AnswerList extends Component {
                         </React.Fragment>
                       </h6>
                       <small className="text">
-                        <a href=""> <i className="material-icons float-left mr-3">arrow_upward</i></a>
+                        
+                        <a href="#" onClick={e => {e.preventDefault(this.upvoteAnswer(a._id))}}>
+                          <i className="material-icons float-left mr-3">arrow_upward</i></a>
                         {a.answerScore} Upboats
                         <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
                       </small>
