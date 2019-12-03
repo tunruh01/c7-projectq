@@ -24,7 +24,9 @@
 body {
   font-family: apercu;
   font-size: 14px;
-  background-image: linear-gradient(to right, white, #46857E)
+  background-image: linear-gradient(to right, white, #46857E);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navbar {
@@ -93,15 +95,12 @@ body {
 .card-columns {
   display: block;
   columns: auto;
-  column-gap: 30px;
-  margin-left: 0px;
-  padding-left: 0px;
-  padding: 50px;
+  padding: 25px;
 
 }
 
 .card-title {
-  color: #D1AB99;
+  color: #856354;
   text-align: left;
 }
 
@@ -151,7 +150,7 @@ body {
 .thumbnail {
   width: 60px;
   height: 60px;
-  margin-right: 13px;
+  margin-right: 20px;
   margin-left: 18px;
   float: left;
   border-radius: 50%;
@@ -164,25 +163,30 @@ body {
   color: #856354;
   text-align: left;
   font-weight: bold;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: apercu, serif;
 }
 
 .category-detail {
   border: 0.1rem outset #FFE1D4;
   margin-right: 20px;
   margin-top: 10px;
-  width: 30%;
   text-align: left;
   font: 10px;
   color: gray;
+  width: fit-content;
+  padding-left: 5px;
+  padding-right: 5px
 }
 
+
 .question-detail {
-  color: black;
+  color: #856354;
   font-size: 18px;
   font-weight: bold;
   text-align: left;
-
+  border: 0.1rem outset #FFE1D4;
+  background-color: white;
+  padding: 10px
 }
 
 .user-answer-format {
@@ -204,7 +208,6 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
 
-
 }
 
 
@@ -220,4 +223,14 @@ h4 {
 a:any-link {
   color: #856354;
   text-decoration: none;
+}
+
+.cat-item {
+  display: inline-block;
+}
+
+.cat-item+.cat-item::before {
+  display: inline-block;
+  white-space: pre;
+  content: ", ";
 }

@@ -93,7 +93,7 @@ class QuestionList extends Component {
                 };
 
                 return (
-                  <Link to={`/question/${q._id}`} style={{ textDecoration: 'none' }} className="card">
+                  <a href={`/question/${q._id}`} className="card">
                     <div className="card-body">
                       <h6 className="card-title">
                         <React.Fragment key={q._id}>
@@ -150,7 +150,7 @@ class QuestionList extends Component {
                         </small>
                       </footer>
                     </div>
-                  </Link>
+                  </a>
                 );
               })}
             </div>
