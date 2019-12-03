@@ -50,8 +50,10 @@ class AnswerList extends Component {
 
   // upvote icon click handler - Back end will not allow multiple upvotes on the same post.
   upvoteAnswerHandler(answerid) {
-    console.log('upvote clicked for id: ', answerid)
-    this.props.upvoteAnswer(answerid)
+    debugger;
+    console.log('upvote clicked for id: ', answerid);
+    this.props.upvoteAnswer(answerid);
+    window.location.reload();
   }
 
   // Change styling of upvote icon based on whether or not the user has already upvoted
