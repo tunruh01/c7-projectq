@@ -5,6 +5,7 @@ export const FETCH_QUESTIONS = "fetch_questions";
 export const FETCH_QUESTIONS_NEW = "fetch_questions_new";
 export const FETCH_QUESTION_DETAILS = "fetch_question_details";
 export const FETCH_ANSWERS = "fetch_answers";
+export const UPVOTE_ANSWER = "upvote_answer";
 export const CREATE_QUESTION = "create_question";
 export const SELECT_CATEGORY = "select_category";
 // export const SUBMIT_ANSWER = 'submit_answer';
@@ -72,6 +73,18 @@ export const fetchAnswers = (questionid, page = 1) => {
   };
 };
 
+export function upvoteAnswer(answerid) {
+  const request = axios.post(`${ROOT_URL}/answer/${answerid}/upvote`, {upvoted: true}, {
+    withCredentials: true
+  });
+
+  // request.then(() => callback());
+
+  return {
+    type: UPVOTE_ANSWER,
+    payload: request
+  };
+}
 export function createQuestion(values, callback) {
   const request = axios.post(`${ROOT_URL}/question`, values, {
     withCredentials: true

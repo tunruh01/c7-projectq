@@ -40,8 +40,9 @@ class AnswerList extends Component {
     }
   }
 
-  upvoteAnswer(answerid) {
+  upvoteAnswerHandler(answerid) {
     console.log('upvote clicked for id: ', answerid)
+    this.props.upvoteAnswer(answerid)
   }
 
   renderAnswers() {
@@ -88,7 +89,7 @@ class AnswerList extends Component {
                       </h6>
                       <small className="text">
                         
-                        <a href="#" onClick={e => {e.preventDefault(this.upvoteAnswer(a._id))}}>
+                        <a href="#" onClick={e => {e.preventDefault(this.upvoteAnswerHandler(a._id))}}>
                           <i className="material-icons float-left mr-3">arrow_upward</i></a>
                         {a.answerScore} Upboats
                         <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
