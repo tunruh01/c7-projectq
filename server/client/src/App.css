@@ -246,6 +246,7 @@ a.question-card {
 .navbar-text {
   margin-left: 50px;
 }
+
 .cat-home {
   color: #99D1CB;
   font-size: 16px;
@@ -254,16 +255,31 @@ a.question-card {
   display: inline-block;
   text-align: right;
 }
+
 .cat-home+.cat-home::before {
   display: inline-block;
   white-space: pre;
   content: ", ";
 }
+
 .cat-align {
   text-align: right;
 }
+
 .cat-color {
   color: #99D1CB;
   font-size: 16px;
   font-style: italic;
+}
+
+.submit-form-card {
+  border: none;
+  width: 400px;
+  background: none;
+}
+
+.form-actions {
+  margin: 0;
+  background-color: transparent;
+  text-align: center;
 }
