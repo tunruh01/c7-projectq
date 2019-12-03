@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from '../actions/actions';
 import AnswerList from './AnswerList'
-import { Button } from "react-bootstrap";
 import SubmitAnswer from "./SubmitAnswer";
 
 class QuestionDetail extends Component {
