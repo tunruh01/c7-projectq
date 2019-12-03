@@ -84,11 +84,11 @@ body {
 }
 
 .card .text-center {
-  border: 0.1rem outset #FFE1D4;
+  border: 0.1rem;
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 10px;
-  width: 25%
+  width: 25%;
 }
 
 .card-columns {
@@ -104,7 +104,6 @@ body {
 .card-title {
   color: #D1AB99;
   text-align: left;
-
 }
 
 .material-icons {
@@ -176,3 +175,4 @@ a:any-link {
   color: #856354;
   text-decoration: none;
 }
+
