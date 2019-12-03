@@ -80,10 +80,11 @@ body {
 
 .card {
   width: 18rem;
-  border: 0.5rem outset;
+  border: 0.3rem outset;
 }
 
 .card .text-center {
+  border: 0.1rem outset #FFE1D4;
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 10px;
@@ -158,5 +159,6 @@ body {
 
 h4 {
   color: #46857E;
+  border: 0.1rem outset #FFE1D4;
 }
 

@@ -92,6 +92,7 @@ class QuestionList extends Component {
                           ) : (
                               <>
                                 <hr></hr>
+                                <hr></hr>
                                 <div className="userCred" align="left">
                                   <Image
                                     className="avatar"
