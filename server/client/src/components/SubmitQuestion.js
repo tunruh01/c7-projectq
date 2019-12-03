@@ -4,10 +4,10 @@ import "../App.css";
 import { Button } from "react-bootstrap";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { createQuestion } from '../actions/actions';
 
 class SubmitQuestion extends Component {
+
   renderField(field) {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
@@ -25,15 +25,14 @@ class SubmitQuestion extends Component {
 
   onSubmit(values) {
     this.props.createQuestion(values, () => {
-      console.log('submitting question')
-      // this.props.history.push("/question/{questionId}");
+      this.props.history.push('/')
     });
   }
 
   render() {
     const { handleSubmit } = this.props;
-    return (
 
+    return (
       <div className="row example-wrapper">
         <div className="col-xs-12 col-sm-6 offset-sm-3 example-col">
           <div className="card">
@@ -58,8 +57,8 @@ class SubmitQuestion extends Component {
                     <label component={this.renderField} className="k-radio-label mr-2" for="languages"> Languages </label>
                   </div> */}
                   <div className="text-right">
-                    <Button variant="outline-danger mr-2" size="sm">Cancel</Button>
-                    <a href='/'><button type="submit" className="btn btn-primary">Submit</button></a>
+                    <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
+                    <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
                   </div>
                    
               </form>
