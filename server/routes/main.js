@@ -282,7 +282,7 @@ router.get("/question/:questionId/answers", UserAuthCheck, (req, res) => {
       let userDownvotedAnswers = user ? user.downvotedAnswers : [];
       answersObj
         .populate("userId", "name credentials avatar")
-        .sort({ score: "desc" })
+        .sort({ score: "desc", dateAdded: 'desc' })
         .skip(perPage * (page - 1))
         .limit(perPage)
         .exec((err, answers) => {
