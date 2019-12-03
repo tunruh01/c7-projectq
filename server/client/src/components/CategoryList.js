@@ -21,7 +21,7 @@ class CategoryList extends Component {
     if (categoryId !== selectedTopic) {
       this.props.fetchQuestions(1, categoryId, true);
     } else {
-      console.log("fuck me");
+      console.log("Oopsie");
     }
   }
 

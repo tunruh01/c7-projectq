@@ -31,7 +31,6 @@ class AnswerList extends Component {
   //  Stops infinite scroll querying when there are no more questions to load
   loadItems(page) {
     const questionid = this.props.questionid;
-    console.log('infinite scroll page: ', page)
 
 
     if (page < this.props.total_pages || this.props.total_pages === 0) {
@@ -85,6 +84,7 @@ class AnswerList extends Component {
                       </h6>
                       <small className="text">
                         <a href=""> <i className="material-icons float-left mr-3">arrow_upward</i></a>
+                        {a.answerScore} Upboats
                         <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
                       </small>
                     </div>
@@ -100,6 +100,7 @@ class AnswerList extends Component {
   }
 
   render() {
+    console.log('answerlist render props', this.props)
     return (
       <>
         <InfiniteScroll loadMore={this.loadItems} pageStart={0} hasMore={this.state.hasMoreItems}>
