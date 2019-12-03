@@ -122,7 +122,7 @@ class AnswerList extends Component {
                         </a>
                         {//Temporary code to demo upvote count
                         }
-                        {a.answerScore} Upboats
+                        {a.answerScore} Upvotes
                         <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
                       </small>
                     </div>
