@@ -24,14 +24,13 @@
 body {
   font-family: apercu;
   font-size: 14px;
-  background-color: rgb(123, 186, 184);
+  background-image: linear-gradient(to right, white, #46857E)
 
 }
 
 .navbar {
   margin-bottom: 20px;
   padding: 20px;
-  color: #deeaee;
   font-family: Apercu;
   font-size: 18px;
   text-align: center;
@@ -81,6 +80,14 @@ body {
 
 .card {
   width: 18rem;
+  border: 0.5rem outset;
+}
+
+.card .text-center {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  width: 25%
 }
 
 .card-columns {
@@ -89,20 +96,19 @@ body {
   column-gap: 30px;
   margin-left: 0px;
   padding-left: 0px;
-  color: gray;
   padding: 50px;
   
 }
 
 .card-title {
-  color: rgb(8, 4, 2);
+  color: #D1AB99;
   text-align: left;
 
 }
 
 .material-icons {
   padding-top: 10px;
-  color: #c94c4c;
+  color: #99D1CB;
   font-size: 2em;
   height: 3rem;
 
@@ -143,9 +149,14 @@ body {
 } 
 
 .main-question-body {
-  color: rgb(8, 4, 2);
+  color: #856354;
   text-align: left;
   font-weight: bold;
   font-family: apercu, serif;
 
 }
+
+h4 {
+  color: #46857E;
+}
+
