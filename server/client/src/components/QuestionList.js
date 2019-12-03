@@ -7,6 +7,7 @@ import _ from "lodash";
 import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroller";
 import ShowMoreText from "react-show-more-text";
+import { Link } from "react-router-dom";
 import {
   Form,
   Container,
@@ -75,49 +76,47 @@ class QuestionList extends Component {
                 };
 
                 return (
-                  <div className="card">
+                  <Link to={`/question/${q._id}`} style={{ textDecoration: 'none' }} className="card">
                     {this.renderQuestionCategories(q)}
                     <div className="card-body">
                       <h6 className="card-title">
                         <React.Fragment key={q._id}>
-                          <a
-                            className="main-question-body"
-                            href={`/question/${q._id}`}
-                          >
+                          <div className="main-question-body">
                             {q.question}
-                          </a>
+                          </div>
                           {!q.topAnswer ? (
                             <p className="card-text">
                               This question hasn't been answered yet
                             </p>
                           ) : (
-                            <>
-                              <hr></hr>
-                              <div className="userCred" align="left">
-                                <Image
-                                  className="avatar"
-                                  src={q.topAnswer.user.userAvatar}
-                                  height="42"
-                                  width="42"
-                                  roundedCircle
-                                ></Image>
-                                {q.topAnswer.user.userName}{" "}
-                                <b>{q.topAnswer.user.cred}</b>
-                              </div>
-                              <ShowMoreText
-                                lines={1}
-                                more="more"
-                                less="less"
-                                anchorClass=""
-                                onClick={this.executeOnClick}
-                                expanded={false}
-                              >
-                                <p className="card-text">
-                                  {q.topAnswer.answer}
-                                </p>
-                              </ShowMoreText>
-                            </>
-                          )}
+                              <>
+                                <hr></hr>
+                                <hr></hr>
+                                <div className="userCred" align="left">
+                                  <Image
+                                    className="avatar"
+                                    src={q.topAnswer.user.userAvatar}
+                                    height="42"
+                                    width="42"
+                                    roundedCircle
+                                  ></Image>
+                                  {q.topAnswer.user.userName}{" "}
+                                  <b>{q.topAnswer.user.cred}</b>
+                                </div>
+                                <ShowMoreText
+                                  lines={1}
+                                  more="more"
+                                  less="less"
+                                  anchorClass=""
+                                  onClick={this.executeOnClick}
+                                  expanded={false}
+                                >
+                                  <p className="card-text">
+                                    {q.topAnswer.answer}
+                                  </p>
+                                </ShowMoreText>
+                              </>
+                            )}
                         </React.Fragment>
                       </h6>
                       <small className="text">
@@ -135,7 +134,7 @@ class QuestionList extends Component {
                         </a>
                       </small>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
@@ -167,12 +166,12 @@ class QuestionList extends Component {
             </div>
           </>
         ) : (
-          <div>
-            <div className="error">
-              Unauthorized - maybe have a 'please login' component/message here
+            <div>
+              <div className="error">
+                Unauthorized - maybe have a 'please login' component/message here
             </div>
-          </div>
-        )}
+            </div>
+          )}
       </React.Fragment>
     );
   }
