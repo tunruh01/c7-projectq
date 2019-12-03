@@ -234,3 +234,7 @@ a:any-link {
   white-space: pre;
   content: ", ";
 }
+
+.navbar-text {
+  margin-left: 50px;
+}
