@@ -21,13 +21,13 @@ export default function(state = [], action) {
           questionListSchema
         ).result;
 
-        let returnObj = {};
+        let returnObj = [];
         if (action.type === FETCH_QUESTIONS_NEW) {
           console.log("questions order added NEW");
           returnObj = [...normalizedOrder];
         } else {
           console.log("questions order added");
-          returnObj = [...normalizedOrder, ...state];
+          returnObj = [...state, ...normalizedOrder];
         }
 
         return returnObj;
