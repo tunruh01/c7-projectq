@@ -25,7 +25,8 @@ class SubmitQuestion extends Component {
 
   onSubmit(values) {
     this.props.createQuestion(values, () => {
-      this.props.history.push('/')
+      this.props.history.replace('/');
+      window.location.reload();
     });
   }
 

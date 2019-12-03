@@ -119,16 +119,16 @@ class QuestionList extends Component {
                           )}
                         </React.Fragment>
                       </h6>
-                      <small class="text">
+                      <small className="text">
                         <a href="">
                           {" "}
-                          <i class="material-icons float-left mr-2">
+                          <i className="material-icons float-left mr-2">
                             arrow_upward
                           </i>{" "}
                         </a>
                         <a href="">
                           {" "}
-                          <i class="material-icons float-left">
+                          <i className="material-icons float-left">
                             add_comment
                           </i>{" "}
                         </a>
