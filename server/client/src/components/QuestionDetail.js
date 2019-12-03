@@ -42,8 +42,8 @@ class QuestionDetail extends Component {
             <AnswerList questionid={this.props.match.params.questionid} />
             <div className="row example-wrapper">
               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 offset-sm-3 example-col">
-                <div className="card">
-                  <div className="card-block">
+                <div className="">
+                  <div className="container">
                     <SubmitAnswer questionid={this.props.match.params.questionid} />
                   </div>
                 </div>

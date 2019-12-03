@@ -221,3 +221,7 @@ a:any-link {
   color: #856354;
   text-decoration: none;
 }
+
+form.k-form {
+  width: 100%
+}
