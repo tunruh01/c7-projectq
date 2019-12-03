@@ -50,11 +50,6 @@ paths:
           description: Filter questions results by keyword.
           required: false
           type: string
-        - name: answered
-          in: query
-          description: Filter questions based on if they have answers or not.
-          required: false
-          type: string
         - name: page
           in: query
           description: Specifies page of data to return
@@ -435,7 +430,7 @@ definitions:
       downvoted:
         type: boolean
         description: Whether or not the comment is upvoted.
-      answerScore:
+      commentScore:
         type: integer
         format: int32
         description: Score for the comment (can be negative).
@@ -567,6 +562,10 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/UserAnswerDetail"
+      usersComments:
+        type: array
+        items:
+          $ref: "#/definitions/UserCommentDetail"
   AnswerDetail:
     type: object
     properties:
@@ -647,6 +646,28 @@ definitions:
         type: integer
         format: int32
         description: Score for the answer (can be negative).
+  UserCommentDetail:
+    type: object
+    properties:
+      _id:
+        type: string
+        description: Unique identifier representing an answer
+      answerId:
+        type: string
+        description: Unique identifier representing the question this answer is related to.
+      comment:
+        type: string
+        description: The comment.
+      answer:
+        type: string
+        description: The answer this comment pertains to.
+      commentDate:
+        type: string
+        description: Date comment was created.
+      commentScore:
+        type: integer
+        format: int32
+        description: Score for the comment (can be negative).
   Error:
     type: object
     properties:
