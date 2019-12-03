@@ -7,6 +7,7 @@ export const FETCH_QUESTION_DETAILS = "fetch_question_details";
 export const FETCH_ANSWERS = "fetch_answers";
 export const UPVOTE_ANSWER = "upvote_answer";
 export const CREATE_QUESTION = "create_question";
+export const CREATE_ANSWER = "create_answer";
 export const SELECT_CATEGORY = "select_category";
 // export const SUBMIT_ANSWER = 'submit_answer';
 export const AUTH_USER = "auth_user";
@@ -94,6 +95,18 @@ export function createQuestion(values, callback) {
 
   return {
     type: CREATE_QUESTION,
+    payload: request
+  };
+}
+export function createAnswer(questionid, values, callback) {
+  const request = axios.post(`${ROOT_URL}/question/${questionid}/answer`, values, {
+    withCredentials: true
+  });
+
+  request.then(() => callback());
+
+  return {
+    type: CREATE_ANSWER,
     payload: request
   };
 }

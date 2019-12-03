@@ -3,6 +3,7 @@ import "../App.css";
 import * as actions from "../actions/actions";
 // import _ from "lodash";
 import { connect } from "react-redux";
+import {Image} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css";
 import moment from "moment";
 import ShowMoreText from "react-show-more-text";
@@ -84,7 +85,13 @@ class AnswerList extends Component {
                       <h6 className="card-title">
                         <React.Fragment>
                           <span>
-                            <img src={a.user.userAvatar} />
+                            <Image
+                                  className="avatar"
+                                  src={a.user.userAvatar}
+                                  height="42"
+                                  width="42"
+                                  roundedCircle
+                                ></Image>
                             <h6>
                               {a.user.userName},{" "}
                               {a.user.userCred
