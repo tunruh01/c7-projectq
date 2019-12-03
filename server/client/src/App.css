@@ -171,11 +171,14 @@ body {
   border: 0.1rem outset #FFE1D4;
   margin-right: 20px;
   margin-top: 10px;
-  width: 30%;
   text-align: left;
   font: 10px;
   color: gray;
+  width: fit-content;
+  padding-left: 5px;
+  padding-right: 5px
 }
+
 
 .question-detail {
   color: black;
@@ -222,3 +225,12 @@ a:any-link {
   text-decoration: none;
 }
 
+.cat-item {
+  display: inline-block;
+}
+
+.cat-item + .cat-item::before {
+  display: inline-block;
+  white-space: pre;
+  content: ", ";
+}
