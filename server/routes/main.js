@@ -224,7 +224,7 @@ router.post("/question/:questionId/answer", UserAuthCheck, (req, res, next) => {
           response.userDownvoted = false;
           response.comments = [];
           question.answers.push(answer._id);
-          question.save((err, user) => {
+          question.save((err, question) => {
             if (err) console.log(err);
             user.answers.push(answer._id);
             if (!user.credentials) {
@@ -282,7 +282,7 @@ router.get("/question/:questionId/answers", UserAuthCheck, (req, res) => {
       let userDownvotedAnswers = user ? user.downvotedAnswers : [];
       answersObj
         .populate("userId", "name credentials avatar")
-        .sort({ score: "desc", dateAdded: 'desc' })
+        .sort({ score: "desc", dateAdded: "desc" })
         .skip(perPage * (page - 1))
         .limit(perPage)
         .exec((err, answers) => {
