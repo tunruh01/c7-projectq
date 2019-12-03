@@ -87,28 +87,26 @@ class AnswerList extends Component {
                       <h6 className="card-title">
                         <React.Fragment>
                           <span>
-                            <Image
-                              className="avatar"
-                              src={a.user.userAvatar}
-                              height="42"
-                              width="42"
-                              roundedCircle
-                            ></Image>
-                            <h6>
-                              {a.user.userName},{" "}
+                            
+                            <div>
+                            <img className="thumbnailAnswer" roundedCircle src={a.user.userAvatar} roundedCircle /><br></br>
+                              <div className="user-answer-format">{a.user.userName},{" "}
+
                               {a.user.userCred
                                 ? a.user.userCred.credential
-                                : "my credential"}
-                            </h6>
+                                : "my credential" } </div><br></br> 
+                                <div className="date-answer-format">Answered {moment(a.answerDate).format("MMM DD")}</div>
+                              </div>
+                            
+                              <br></br>
+                      
                           </span>
-                          <h6>
-                            Answered {moment(a.answerDate).format("MMM DD")}
-                          </h6>
+
 
                           <ShowMoreText
                             lines={1}
-                            more="more"
-                            less="less"
+                            more="More"
+                            less="Less"
                             anchorClass=""
                             onClick={this.executeOnClick}
                             expanded={false}

@@ -55,7 +55,7 @@ class QuestionList extends Component {
     return (
       <div className="card text-center">
         {q.topics.map(topic => (
-          <span>{topic.name} </span>
+          <span>{topic.name}</span>
         ))}
       </div>
     );
@@ -77,7 +77,6 @@ class QuestionList extends Component {
 
                 return (
                   <Link to={`/question/${q._id}`} style={{ textDecoration: 'none' }} className="card">
-                    {this.renderQuestionCategories(q)}
                     <div className="card-body">
                       <h6 className="card-title">
                         <React.Fragment key={q._id}>
@@ -105,8 +104,8 @@ class QuestionList extends Component {
                                 </div>
                                 <ShowMoreText
                                   lines={1}
-                                  more="more"
-                                  less="less"
+                                  more="More"
+                                  less="Less"
                                   anchorClass=""
                                   onClick={this.executeOnClick}
                                   expanded={false}
@@ -119,20 +118,23 @@ class QuestionList extends Component {
                             )}
                         </React.Fragment>
                       </h6>
-                      <small className="text">
-                        <a href="">
-                          {" "}
-                          <i className="material-icons float-left mr-2">
-                            arrow_upward
+                      <footer>
+                        {this.renderQuestionCategories(q)}
+                        <small className="text">
+                          <a href="">
+                            {" "}
+                            <i className="material-icons float-left mr-2">
+                              arrow_upward
                           </i>{" "}
-                        </a>
-                        <a href="">
-                          {" "}
-                          <i className="material-icons float-left">
-                            add_comment
+                          </a>
+                          <a href="">
+                            {" "}
+                            <i className="material-icons float-left">
+                              add_comment
                           </i>{" "}
-                        </a>
-                      </small>
+                          </a>
+                        </small>
+                      </footer>
                     </div>
                   </Link>
                 );
