@@ -224,8 +224,8 @@ h4 {
   color: black;
 }
 
-a:any-link {
-  color: #856354;
+a.card {
+  color: #F5F5F5;
   text-decoration: none;
 }
 

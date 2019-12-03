@@ -61,17 +61,25 @@ class QuestionList extends Component {
     );
   }
 
+
+
   renderUpVoteCount(q) {
     if (q.topAnswer === undefined || !q.topAnswer || q.topAnswer === null || !q.topAnswer.answerScore) {
       return <span>{''}</span>
     } else {
-      return <span>{q.topAnswer.answerScore}</span >
+      let upvotes = q.topAnswer.answerScore;
+      let upvote;
+      if (upvotes > 1) {
+        upvote = "upvotes"
+      } else {
+        upvote = "upvote"
+      }
+      return <span>{upvotes} {upvote}</span >
     }
   }
 
   renderQuestions() {
     // If questions in state; loop and return each one
-
     if (this.props.questions) {
       console.log("questionsList: ", this.props.questions);
       return (
