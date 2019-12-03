@@ -138,7 +138,7 @@ class AnswerList extends Component {
                         </a>
                         {//Temporary code to demo upvote count
                         }
-                        <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{this.renderUpVoteCount(a)} </a>
+                        <a className="float-left mr-4" style={{ 'font-size': '20px', 'margin-top': '5px', 'color': '#99D1CB'}}>{this.renderUpVoteCount(a)} </a>
                         <a href=""> <i className="material-icons float-left" style={{ 'margin-top': '3px' }}>chat_bubble_outline</i> </a>
                       </small>
                     </div>
