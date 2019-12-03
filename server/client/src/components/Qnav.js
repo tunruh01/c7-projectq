@@ -33,8 +33,9 @@ class Qnav extends Component {
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Brand>Project Q</Navbar.Brand>
-        <a href="/"><i className="material-icons">
-          home</i></a>
+        <a href="/">
+          <i className="material-icons">home</i>
+        </a>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
@@ -59,10 +60,7 @@ class Qnav extends Component {
                 Ask Question
               </Button>
             </Link>
-            <Image
-              src={user.avatar} className="thumbnail" roundedCircle
-            />
-
+            <Image src={user.avatar} className="thumbnail" roundedCircle />
           </Form>
           <Form inline>
             {!authenticated ? (
@@ -74,17 +72,17 @@ class Qnav extends Component {
                 Login
               </Button>
             ) : (
-                <Button
-                  variant="outline-dark mr-2"
-                  size="sm"
-                  onClick={this._handleLogoutClick}
-                >
-                  Logout
+              <Button
+                variant="outline-dark mr-2"
+                size="sm"
+                onClick={this._handleLogoutClick}
+              >
+                Logout
               </Button>
-              )}
+            )}
           </Form>
         </Navbar.Collapse>
-      </Navbar >
+      </Navbar>
     );
   }
 

@@ -3,10 +3,9 @@ import { Field, reduxForm } from "redux-form";
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import * as actions from "../actions/actions";
-import { Redirect } from 'react-router-dom';  
+import { Redirect } from "react-router-dom";
 
 class SubmitAnswer extends Component {
-
   // state = {
   //   redirect: false
   // }
@@ -40,10 +39,11 @@ class SubmitAnswer extends Component {
 
   onSubmit(values) {
     const questionid = this.props.questionid;
-    this.props.createAnswer(questionid, values, () => {
-      //this.setRedirect();
-      window.location.reload();
-    });
+    this.props.createAnswer(questionid, values);
+    // this.props.createAnswer(questionid, values, () => {
+    //   //this.setRedirect();
+    //   window.location.reload();
+    // });
   }
 
   render() {

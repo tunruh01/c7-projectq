@@ -33,8 +33,7 @@ class QuestionList extends Component {
     // loadItems from Infinite scroll seems to run on page load, fetching Questions on mount
     // was creating duplicates
     // this.props.fetchQuestions()
-
-    this.props.fetchLoginStatus();
+    //this.props.fetchLoginStatus();
   }
 
   //  Stops infinite scroll querying when there are no more questions to load
@@ -42,7 +41,7 @@ class QuestionList extends Component {
     console.log(this.props);
     console.log(this.props.category.selectedTopic);
     let selectedTopic = this.props.category.selectedTopic;
-    console.log('curent page: ', page)
+    console.log("curent page: ", page);
     if (page <= this.props.total_pages || this.props.total_pages === 0) {
       console.log(selectedTopic);
       this.props.fetchQuestions(page, selectedTopic);
@@ -62,10 +61,15 @@ class QuestionList extends Component {
   }
 
   renderUpVoteCount(q) {
-    if (q.topAnswer === undefined || !q.topAnswer || q.topAnswer === null || !q.topAnswer.answerScore) {
-      return <span>{''}</span>
+    if (
+      q.topAnswer === undefined ||
+      !q.topAnswer ||
+      q.topAnswer === null ||
+      !q.topAnswer.answerScore
+    ) {
+      return <span>{""}</span>;
     } else {
-      return <span>{q.topAnswer.answerScore}</span >
+      return <span>{q.topAnswer.answerScore}</span>;
     }
   }
 
@@ -85,64 +89,73 @@ class QuestionList extends Component {
                 };
 
                 return (
-                  <a href={`/question/${q._id}`} className="card">
+                  <Link to={`/question/${q._id}`} className="card">
                     <div className="card-body">
                       <h6 className="card-title">
                         <React.Fragment key={q._id}>
-                          <div className="main-question-body">
-                            {q.question}
-                          </div>
+                          <div className="main-question-body">{q.question}</div>
                           {!q.topAnswer ? (
                             <p className="card-text">
                               This question hasn't been answered yet
                             </p>
                           ) : (
-                              <>
-                                <hr></hr>
-                                <hr></hr>
-                                <div className="userCred" align="left">
-                                  <Image
-                                    className="avatar"
-                                    src={q.topAnswer.user.userAvatar}
-                                    height="42"
-                                    width="42"
-                                    roundedCircle
-                                  ></Image>
-                                  {q.topAnswer.user.userName}{" "}
-                                  <b>{q.topAnswer.user.cred}</b>
-                                </div>
-                                <ShowMoreText
-                                  lines={1}
-                                  more="More"
-                                  less="Less"
-                                  anchorClass=""
-                                  onClick={this.executeOnClick}
-                                  expanded={false}
-                                >
-                                  <p className="card-text">
-                                    {q.topAnswer.answer}
-                                  </p>
-                                </ShowMoreText>
-                              </>
-                            )}
+                            <>
+                              <hr></hr>
+                              <hr></hr>
+                              <div className="userCred" align="left">
+                                <Image
+                                  className="avatar"
+                                  src={q.topAnswer.user.userAvatar}
+                                  height="42"
+                                  width="42"
+                                  roundedCircle
+                                ></Image>
+                                {q.topAnswer.user.userName}{" "}
+                                <b>{q.topAnswer.user.cred}</b>
+                              </div>
+                              <ShowMoreText
+                                lines={1}
+                                more="More"
+                                less="Less"
+                                anchorClass=""
+                                onClick={this.executeOnClick}
+                                expanded={false}
+                              >
+                                <p className="card-text">
+                                  {q.topAnswer.answer}
+                                </p>
+                              </ShowMoreText>
+                            </>
+                          )}
                         </React.Fragment>
                       </h6>
 
                       <footer>
                         {this.renderQuestionCategories(q)}
                         <small className="text">
-                        <a href="">{""}<i className="material-icons float-left mr-2">arrow_upward</i>{''}</a>
-                        <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)} upvotes </a>
-                        <a href="">
-                          {" "}
-                          <i className="material-icons float-left">
-                            add_comment
-                          </i>{" "}
+                          <a href="">
+                            {""}
+                            <i className="material-icons float-left mr-2">
+                              arrow_upward
+                            </i>
+                            {""}
+                          </a>
+                          <a
+                            className="float-left mr-4"
+                            style={{ "font-size": "23px", "margin-top": "5px" }}
+                          >
+                            {this.renderUpVoteCount(q)} upvotes{" "}
+                          </a>
+                          <a href="">
+                            {" "}
+                            <i className="material-icons float-left">
+                              add_comment
+                            </i>{" "}
                           </a>
                         </small>
                       </footer>
                     </div>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -174,12 +187,10 @@ class QuestionList extends Component {
             </div>
           </>
         ) : (
-            <div>
-              <div className="error">
-                Unauthorized! Please Login to continue.
-            </div>
-            </div>
-          )}
+          <div>
+            <div className="error">Unauthorized! Please Login to continue.</div>
+          </div>
+        )}
       </React.Fragment>
     );
   }
