@@ -50,7 +50,6 @@ class AnswerList extends Component {
 
   // upvote icon click handler - Back end will not allow multiple upvotes on the same post.
   upvoteAnswerHandler(answerid) {
-    debugger;
     console.log('upvote clicked for id: ', answerid);
     this.props.upvoteAnswer(answerid);
     window.location.reload();
@@ -89,19 +88,19 @@ class AnswerList extends Component {
                       <h6 className="card-title">
                         <React.Fragment>
                           <span>
-                            
+
                             <div>
-                            <img className="thumbnailAnswer" roundedCircle src={a.user.userAvatar} roundedCircle /><br></br>
+                              <img className="thumbnailAnswer" roundedCircle src={a.user.userAvatar} roundedCircle /><br></br>
                               <div className="user-answer-format">{a.user.userName},{" "}
 
-                              {a.user.userCred
-                                ? a.user.userCred.credential
-                                : "my credential" } </div><br></br> 
-                                <div className="date-answer-format">Answered {moment(a.answerDate).format("MMM DD")}</div>
-                              </div>
-                            
-                              <br></br>
-                      
+                                {a.user.userCred
+                                  ? a.user.userCred.credential
+                                  : "my credential"} </div><br></br>
+                              <div className="date-answer-format">Answered {moment(a.answerDate).format("MMM DD")}</div>
+                            </div>
+
+                            <br></br>
+
                           </span>
 
 

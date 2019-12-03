@@ -131,12 +131,12 @@ class QuestionList extends Component {
                       <footer>
                         {this.renderQuestionCategories(q)}
                         <small className="text">
-                        <a href="">{""}<i className="material-icons float-left mr-2">arrow_upward</i>{''}</a>
-                        <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)} upvotes </a>
-                        <a href="">
-                          {" "}
-                          <i className="material-icons float-left">
-                            add_comment
+                          <a href="">{""}<i className="material-icons float-left mr-2">arrow_upward</i>{''}</a>
+                          <a className="float-left mr-4" style={{ 'font-size': '20px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)} upvotes </a>
+                          <a href="">
+                            {" "}
+                            <i className="material-icons float-left">
+                              add_comment
                           </i>{" "}
                           </a>
                         </small>
