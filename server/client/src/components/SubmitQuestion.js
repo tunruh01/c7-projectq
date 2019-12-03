@@ -12,6 +12,12 @@ class SubmitQuestion extends Component {
   componentDidMount() {
     this.props.fetchCategories();
   }
+  onSubmit(values) {
+    this.props.createQuestion(values, () => {
+      this.props.history.replace('/');
+      window.location.reload();
+    });
+  }
 
   renderField(field) {
     const { meta: { touched, error } } = field;
@@ -27,83 +33,40 @@ class SubmitQuestion extends Component {
       </div>
     );
   }
+  
+  questionInput() {
 
-  onSubmit(values) {
-    this.props.createQuestion(values, () => {
-      this.props.history.replace('/');
-      window.location.reload();
-    });
   }
-
-  // renderTopicChecklist(topicsArr) {
-  //   // const topicsArr = this.props.category.topics;
-
-  //   return topicsArr.map(t, index => (
-  //     // <div key={t._id}>{t.name}</div>
-  //     <div className="checkbox" key={t._id}>
-  //       <label>
-  //           <input type="checkbox"
-  //                   name={`${t.name}[${index}]`}
-  //                   value={t.name}
-  //                   checked={input.value.indexOf(t.name) !== -1}
-  //                   onChange={(event) => {
-  //                       const newValue = [...input.value];
-  //                       if (event.target.checked) {
-  //                           newValue.push(t.name);
-  //                       } else {
-  //                           newValue.splice(newValue.indexOf(option.name), 1);
-  //                       }
-
-  //                       return input.onChange(newValue);
-  //                   }}/>
-  //           {t.name}
-  //       </label>
-  //     </div>
-  //     ))
-    
-  // }
 
   render() {
     const { handleSubmit } = this.props;
     return (
       <div className="row example-wrapper">
         <div className="col-xs-12 col-sm-6 offset-sm-3 example-col">
-          <div className="card">
-            <div className="card-block">
+          <div className="card submit-form-card mx-auto">
               <form className="k-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                <div className='form-group'>
                   <legend>Ask Question Below</legend>
                   <label className="k-form-field">
-                    <span>Question:</span>
                     <Field
                     name="question"
                     placeholder="Start your question with What, How, Why, etc"
-                    component={'input'}
+                    component={'textarea'}
                     />                  
                   </label>
-                  {/* <div>
-                    {this.renderTopicChecklist(this.props.category.topics)}
-                  </div> */}
                   <Field
                   name='topics'
                   component={CheckboxGroup}
                   options={this.props.category.topics}
                   />
-                  {/* <div className="k-form-field">
-                    <span> Choose Categories: </span>
-
-                    <input type="radio" name="topics" id="latin" className="k-radio" />
-                    <label component={this.renderField} className="k-radio-label mr-2" for="latin"> Latin </label>
-
-                    <input type="radio" name="topics" id="languages" className="k-radio" checked="checked" />
-                    <label component={this.renderField} className="k-radio-label mr-2" for="languages"> Languages </label>
-                  </div> */}
                   <div className="text-right">
-                    <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
-                    <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
+                    <div className="form-actions">
+                      <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
+                      <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
+                    </div>
                   </div>
-                   
+                </div>
               </form>
-            </div>
           </div>
         </div>
       </div>

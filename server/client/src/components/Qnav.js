@@ -39,7 +39,7 @@ class Qnav extends Component {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             {authenticated ? (
-              <Navbar.Text>Welcome {user.name}</Navbar.Text>
+              <Navbar.Text>Welcome, {user.name}</Navbar.Text>
             ) : null}
           </Nav>
           <Form inline>

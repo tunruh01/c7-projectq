@@ -50,7 +50,6 @@ class AnswerList extends Component {
 
   // upvote icon click handler - Back end will not allow multiple upvotes on the same post.
   upvoteAnswerHandler(answerid) {
-    debugger;
     console.log('upvote clicked for id: ', answerid);
     this.props.upvoteAnswer(answerid);
     window.location.reload();
@@ -139,7 +138,7 @@ class AnswerList extends Component {
                         </a>
                         {//Temporary code to demo upvote count
                         }
-                        <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{this.renderUpVoteCount(a)} </a>
+                        <a className="float-left mr-4" style={{ 'font-size': '20px', 'margin-top': '5px', 'color': '#99D1CB'}}>{this.renderUpVoteCount(a)} </a>
                         <a href=""> <i className="material-icons float-left" style={{ 'margin-top': '3px' }}>chat_bubble_outline</i> </a>
                       </small>
                     </div>
