@@ -46,9 +46,9 @@ class CategoryList extends Component {
       <div className="sidebar col-lg-3 col-md-3">
         <div className="card card-body p-2">
           <h4>Category</h4>
-          <ul className="nav nav-pills flex-column">
-            <li className="nav-item">
-              <a className="nav-link" href="#">
+          <ul className="nav nav-pills flex-column" >
+            <li className="nav-item" >
+              <a className="nav-link category" id="categoryList" href="#">
                 {this.renderCategories()}
               </a>
             </li>
