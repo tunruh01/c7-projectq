@@ -24,8 +24,7 @@
 body {
   font-family: apercu;
   font-size: 14px;
-  background-color: #618685;
-  background-image: linear-gradient(to right, white, #618685);
+  background-color: rgb(123, 186, 184);
 
 }
 
