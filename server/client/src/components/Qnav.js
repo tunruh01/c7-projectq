@@ -14,6 +14,8 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+const keys = require("../config/keys");
+
 class Qnav extends Component {
   constructor() {
     super();
@@ -30,18 +32,13 @@ class Qnav extends Component {
     const { user } = this.props.auth;
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-        <Navbar.Brand font="monospace">Project Q</Navbar.Brand>
+        <Navbar.Brand>Project Q</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link onClick={this.resetToHome} href="/">
-              <i class="material-icons">home</i>
-            </Nav.Link>
-            <h6 className="text-center">
-              {authenticated ? (
-                <Navbar.Text>Welcome {user.name}</Navbar.Text>
-              ) : null}
-            </h6>
+            {authenticated ? (
+              <Navbar.Text>Welcome {user.name}</Navbar.Text>
+            ) : null}
           </Nav>
           <Form inline>
             <FormControl
@@ -60,9 +57,7 @@ class Qnav extends Component {
                 Ask Question
               </Button>
             </Link>
-            <Image
-              src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png"
-              roundedCircle
+            <Image src={user.avatar} className="thumbnail" roundedCircle />
             />
           </Form>
           <Form inline>
@@ -93,13 +88,13 @@ class Qnav extends Component {
     // Authenticate using via passport api in the backend
     // Open Google login page
     // Upon successful login, a cookie session will be stored in the client
-    window.open("http://localhost:5000/auth/google", "_self");
+    window.open(keys.BASE_API_URL + "/auth/google", "_self");
   };
 
   _handleLogoutClick = () => {
     // Logout using Google passport api
     // Set authenticated state to false in the HomePage
-    window.open("http://localhost:5000/auth/logout", "_self");
+    window.open(keys.BASE_API_URL + "/auth/logout", "_self");
   };
 }
 

@@ -22,22 +22,21 @@
 }
 
 body {
-  font-family: monospace;
+  font-family: apercu;
   font-size: 14px;
-  background-color:#618685;
+  background-color: #618685;
   background-image: linear-gradient(to right, white, #618685);
 
 }
 
-
-
 .navbar {
   margin-bottom: 20px;
   color: #deeaee;
-  font-family: monospace;
-  font-size: 14px;
+  font-family: Apercu;
+  font-variant: small-caps;
+  font-size: 18px;
   text-align: center;
-  
+
 }
 
 .FormControl {
@@ -46,36 +45,50 @@ body {
   align-content: center
 }
 
-@media (min-width: 576px) {
-     .sidebar {
-          max-width: 280px;
-          position: fixed;
-          height: 100%;
-     }
- }
+@media (min-width: 768px) {
+  .sidebar {
+    max-width: 280px;
+    position: fixed;
+    height: 100%;
+  }
+}
 
- .card-columns {
+@media (max-width: 768px) {
+  .sidebar {
+    /* max-width: 280px; */
+    display: none;
+  }
+}
+
+.card-columns {
   @include media-breakpoint-only(md) {
     column-count: 3;
   }
+
   @include media-breakpoint-only(lg) {
     column-count: 4;
   }
- 
-} 
+
+}
+
+.card {
+  width: 18rem;
+}
 
 .card-columns {
    display: block;
    columns: auto;
-   column-gap: 20px;
+   column-gap: 40px;
    margin: 20px;
    padding: 50px;
    color: gray;
+   padding-left: 0;
+   margin-left: 0;
   
 }
 
 .card-title {
-  color: #BF7C63;
+  color: rgb(8, 4, 2);
   text-align: left;
 
 }
@@ -87,6 +100,7 @@ body {
   height: 3rem;
 
 }
+
 .clearfix {
   overflow: auto;
 }
@@ -95,3 +109,32 @@ body {
   text-align: center;
 }
 
+.avatar {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.container {
+  font-size: 14px;
+  font-family: Apercu;
+
+}
+
+#welcome-text {
+  margin-top: 20px;
+}
+
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  margin-right: 18px;
+  margin-left: 15px;
+} 
+
+.main-question-body {
+  color: rgb(8, 4, 2);
+  text-align: left;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+
+}
