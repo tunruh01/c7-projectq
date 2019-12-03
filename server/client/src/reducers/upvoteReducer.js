@@ -1,14 +1,10 @@
 import { UPVOTE_ANSWER } from '../actions/actions';
 
 
-export default function(state = {}, action) {
+export default function(state = 0, action) {
   switch (action.type) {
     case UPVOTE_ANSWER:
-      if (action.payload) {
-        let newState = Object.assign({}, state)
-        console.log('upvote answer reducer payload: ', action.payload)
-        return newState;
-      }
+      // No reducer necessary - Upvote data stored on back end
       return state;
     default:
       return state;

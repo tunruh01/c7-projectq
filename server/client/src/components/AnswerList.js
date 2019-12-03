@@ -8,6 +8,12 @@ import moment from "moment";
 import ShowMoreText from "react-show-more-text";
 import InfiniteScroll from "react-infinite-scroller";
 
+// Hacky CSS styling used in upvoted answers
+const upvotedStyle = {
+  'color':'teal', 
+  'font-size': '40px'
+}
+
 class AnswerList extends Component {
   constructor() {
     super();
@@ -40,9 +46,26 @@ class AnswerList extends Component {
     }
   }
 
+  // upvote icon click handler - Back end will not allow multiple upvotes on the same post.
   upvoteAnswerHandler(answerid) {
     console.log('upvote clicked for id: ', answerid)
     this.props.upvoteAnswer(answerid)
+  }
+
+  // Change styling of upvote icon based on whether or not the user has already upvoted
+  showCorrectUpvoteIcon(answerid) {
+    const upvotedAnswers = this.props.auth.user.upvotedAnswers
+    if (upvotedAnswers.includes(answerid)) {
+      return (
+        <>
+          <i className="material-icons float-left mr-3" style={upvotedStyle}>arrow_upward</i>
+        </>
+      )
+    } else {
+      return (
+        <i className="material-icons float-left mr-3">arrow_upward</i>
+      )
+    }
   }
 
   renderAnswers() {
@@ -90,7 +113,8 @@ class AnswerList extends Component {
                       <small className="text">
                         
                         <a href="#" onClick={e => {e.preventDefault(this.upvoteAnswerHandler(a._id))}}>
-                          <i className="material-icons float-left mr-3">arrow_upward</i></a>
+                          {this.showCorrectUpvoteIcon(a._id)}
+                          </a>
                         {a.answerScore} Upboats
                         <a href=""> <i className="material-icons float-left">chat_bubble_outline</i> </a>
                       </small>
