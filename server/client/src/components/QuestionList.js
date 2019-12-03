@@ -54,7 +54,7 @@ class QuestionList extends Component {
     return (
       <div className="card text-center">
         {q.topics.map(topic => (
-          <span>{topic.name}</span>
+          <span>{topic.name} </span>
         ))}
       </div>
     );
