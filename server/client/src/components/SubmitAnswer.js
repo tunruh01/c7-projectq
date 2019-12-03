@@ -36,30 +36,34 @@ class SubmitAnswer extends Component {
       <form
         className="k-form"
         onSubmit={handleSubmit(this.onSubmit.bind(this))}
+
       >
         <legend>Credentials</legend>
-        <label className="k-form-field">
+        <label className="k-form-field" >
           <span> Why can you answer this question? </span>
           <Field
             name="credential"
             placeholder="Your Credentials"
             component={"input"}
+            style={{ width: '100%' }}
+
           />
         </label>
         <legend>Answer</legend>
-        <label className="k-form-field">
+        <label className="k-form-field" >
           <span>Type in your answer:</span>
-          <Field name="answer" placeholder="Your Answer" component={"input"} />
+          <Field name="answer" placeholder="Your Answer" component={"input"} style={{ width: '100%' }} />
         </label>
         <div className="text-right">
           <a href="/">
-            <Button variant="outline-danger mr-2" size="sm">
+            <Button variant="outline-danger mb-2 float-left" size="md">
               Back
             </Button>
           </a>
-          <Button type="submit" variant="outline-secondary mr-2" size="sm">
+          <Button type="submit" variant="outline-secondary mb-2" size="md">
             Submit
           </Button>
+          <br></br>
         </div>
       </form>
     );
