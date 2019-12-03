@@ -93,7 +93,7 @@ class QuestionList extends Component {
                 };
 
                 return (
-                  <a href={`/question/${q._id}`} className="card">
+                  <a href={`/question/${q._id}`} className="card question-card">
                     <div className="card-body">
                       <h6 className="card-title">
                         <React.Fragment key={q._id}>
@@ -140,7 +140,7 @@ class QuestionList extends Component {
                         {this.renderQuestionCategories(q)}
                         <small className="text">
                           <a href="">{""}<i className="material-icons float-left mr-2">arrow_upward</i>{''}</a>
-                          <a className="float-left mr-4" style={{ 'font-size': '20px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)} upvotes </a>
+                          <span className="float-left mr-4 upvotes" style={{ 'font-size': '20px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)}</span>
                           <a href="">
                             {" "}
                             <i className="material-icons float-left">
