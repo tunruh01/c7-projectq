@@ -58,7 +58,6 @@ class Qnav extends Component {
               </Button>
             </Link>
             <Image src={user.avatar} className="thumbnail" roundedCircle />
-            />
           </Form>
           <Form inline>
             {!authenticated ? (
