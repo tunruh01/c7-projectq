@@ -60,35 +60,35 @@ class SubmitQuestion extends Component {
   //       </label>
   //     </div>
   //     ))
-    
+
   // }
 
   render() {
     const { handleSubmit } = this.props;
     return (
       <div className="row example-wrapper">
-        <div className="col-xs-12 col-sm-6 offset-sm-3 example-col">
+        <div className="col-md-5 offset-5 col-sm-12">
           <div className="card">
             <div className="card-block">
               <form className="k-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                  <legend>Ask Question Below</legend>
-                  <label className="k-form-field">
-                    <span>Question:</span>
-                    <Field
+                <legend>Ask Question Below</legend>
+                <label className="k-form-field">
+                  <span>Question:</span>
+                  <Field
                     name="question"
                     placeholder="Start your question with What, How, Why, etc"
                     component={'input'}
-                    />                  
-                  </label>
-                  {/* <div>
+                  />
+                </label>
+                {/* <div>
                     {this.renderTopicChecklist(this.props.category.topics)}
                   </div> */}
-                  <Field
+                <Field
                   name='topics'
                   component={CheckboxGroup}
                   options={this.props.category.topics}
-                  />
-                  {/* <div className="k-form-field">
+                />
+                {/* <div className="k-form-field">
                     <span> Choose Categories: </span>
 
                     <input type="radio" name="topics" id="latin" className="k-radio" />
@@ -97,11 +97,11 @@ class SubmitQuestion extends Component {
                     <input type="radio" name="topics" id="languages" className="k-radio" checked="checked" />
                     <label component={this.renderField} className="k-radio-label mr-2" for="languages"> Languages </label>
                   </div> */}
-                  <div className="text-right">
-                    <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
-                    <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
-                  </div>
-                   
+                <div className="text-right">
+                  <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
+                  <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
+                </div>
+
               </form>
             </div>
           </div>
@@ -120,4 +120,4 @@ const mapStateToProps = (state) => {
   return state
 }
 
-export default reduxForm({form: 'questionNew'})(connect(mapStateToProps, mapDispatchToProps)(SubmitQuestion));
+export default reduxForm({ form: 'questionNew' })(connect(mapStateToProps, mapDispatchToProps)(SubmitQuestion));

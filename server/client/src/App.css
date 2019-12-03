@@ -24,7 +24,9 @@
 body {
   font-family: apercu;
   font-size: 14px;
-  background-image: linear-gradient(to right, white, #46857E)
+  background-image: linear-gradient(to right, white, #46857E);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navbar {
@@ -93,15 +95,12 @@ body {
 .card-columns {
   display: block;
   columns: auto;
-  column-gap: 30px;
-  margin-left: 0px;
-  padding-left: 0px;
-  padding: 50px;
+  padding: 25px;
 
 }
 
 .card-title {
-  color: #D1AB99;
+  color:  #856354;
   text-align: left;
 }
 
@@ -164,7 +163,7 @@ body {
   color: #856354;
   text-align: left;
   font-weight: bold;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: apercu, serif;
 }
 
 .category-detail {
@@ -178,7 +177,7 @@ body {
 }
 
 .question-detail {
-  color: black;
+  color:  #856354;
   font-size: 18px;
   font-weight: bold;
   text-align: left;
@@ -204,7 +203,6 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
 
-
 }
 
 
@@ -221,4 +219,3 @@ a:any-link {
   color: #856354;
   text-decoration: none;
 }
-
