@@ -20,13 +20,9 @@ class SubmitQuestion extends Component {
     return (
       <div className={className}>
         <label>{field.label}</label>
-        <input className="form-group input-lg" placeholder="Start your question with What, How, Why, etc" type="text" {...field.input} />
+        <input className="form-control" type="text" {...field.input} />
         <div className="text-help">
           {touched ? error : ""}
-        </div>
-        <div className="text-right">
-          <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
-          <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
         </div>
       </div>
     );
@@ -42,23 +38,48 @@ class SubmitQuestion extends Component {
   render() {
     const { handleSubmit } = this.props;
     return (
-      <div className="form">
-        <div className="form-group" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-          <legend>Ask Question Below</legend>
-          <label className="k-form-field">
-            <span>Question:</span>
-            <Field
-              name="question"
-              component={this.renderField}
-            />
-          </label>
-          <Field
-            name='topics'
-            component={CheckboxGroup}
-            options={this.props.category.topics}
-          />
+      <div className="row example-wrapper">
+        <div className="col-xs-12 col-sm-6 offset-sm-3 example-col">
+          <div className="card">
+            <div className="card-block">
+              <form className="k-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                  <legend>Ask Question Below</legend>
+                  <label className="k-form-field">
+                    <span>Question:</span>
+                    <Field
+                    name="question"
+                    placeholder="Start your question with What, How, Why, etc"
+                    component={'input'}
+                    />                  
+                  </label>
+                  {/* <div>
+                    {this.renderTopicChecklist(this.props.category.topics)}
+                  </div> */}
+                  <Field
+                  name='topics'
+                  component={CheckboxGroup}
+                  options={this.props.category.topics}
+                  />
+                  {/* <div className="k-form-field">
+                    <span> Choose Categories: </span>
+
+                    <input type="radio" name="topics" id="latin" className="k-radio" />
+                    <label component={this.renderField} className="k-radio-label mr-2" for="latin"> Latin </label>
+
+                    <input type="radio" name="topics" id="languages" className="k-radio" checked="checked" />
+                    <label component={this.renderField} className="k-radio-label mr-2" for="languages"> Languages </label>
+                  </div> */}
+                  <div className="text-right">
+                    <a href='/'><Button variant="outline-danger mr-2" size="sm">Cancel</Button></a>
+                    <Button type="submit" variant="outline-secondary mr-2" size="sm">Submit</Button>
+                  </div>
+                   
+              </form>
+            </div>
+          </div>
         </div>
       </div>
+
     );
   };
 }
@@ -71,4 +92,4 @@ const mapStateToProps = (state) => {
   return state
 }
 
-export default reduxForm({ form: 'questionNew' })(connect(mapStateToProps, mapDispatchToProps)(SubmitQuestion));
+export default reduxForm({form: 'questionNew'})(connect(mapStateToProps, mapDispatchToProps)(SubmitQuestion));
