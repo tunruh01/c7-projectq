@@ -50,6 +50,11 @@ paths:
           description: Filter questions results by keyword.
           required: false
           type: string
+        - name: answered
+          in: query
+          description: Filter questions based on if they have answers or not.
+          required: false
+          type: string
         - name: page
           in: query
           description: Specifies page of data to return
