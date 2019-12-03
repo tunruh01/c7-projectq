@@ -71,6 +71,21 @@ class AnswerList extends Component {
     }
   }
 
+  renderUpVoteCount(a) {
+    if (a.answerScore === undefined || !a.answerScore || a.answerScore === null || !a.answerScore) {
+      return <span>{''}</span>
+    } else {
+      let upvotes = a.answerScore;
+      let upvote;
+      if (upvotes > 1) {
+        upvote = "upvotes"
+      } else {
+        upvote = "upvote"
+      }
+      return <span>{upvotes} {upvote}</span >
+    }
+  }
+
   renderAnswers() {
     // If questions in state; loop and return each one
     if (this.props.answers.answersList) {
@@ -123,7 +138,7 @@ class AnswerList extends Component {
                         </a>
                         {//Temporary code to demo upvote count
                         }
-                        <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{a.answerScore} upvotes </a>
+                        <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{this.renderUpVoteCount(a)} </a>
                         <a href=""> <i className="material-icons float-left" style={{ 'margin-top': '3px' }}>chat_bubble_outline</i> </a>
                       </small>
                     </div>
