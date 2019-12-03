@@ -22,20 +22,20 @@
 }
 
 body {
-  font-family: monospace;
+  font-family: apercu;
   font-size: 14px;
-  background-color:#A9C6D9;
-  background-image: linear-gradient(to right, white, #A9C6D9);
-
+  background-image: linear-gradient(to right, white, #46857E);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navbar {
   margin-bottom: 20px;
-  color: #deeaee;
-  font-family: monospace;
-  font-size: 14px;
+  padding: 20px;
+  font-family: Apercu;
+  font-size: 18px;
   text-align: center;
-  
+
 }
 
 .FormControl {
@@ -44,48 +44,178 @@ body {
   align-content: center
 }
 
-@media (min-width: 576px) {
-     .sidebar {
-          max-width: 280px;
-          position: fixed;
-          height: 100%;
-     }
- }
+@media (min-width: 768px) {
+  .sidebar {
+    max-width: 280px;
+    position: fixed;
+    height: 100%;
+    padding-left: 60px;
+  }
+}
 
- .card-columns {
+@media (max-width: 768px) {
+  .sidebar {
+    max-width: 280px;
+    position: fixed;
+    height: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    /* max-width: 280px; */
+    display: none;
+  }
+}
+
+.card-columns {
   @include media-breakpoint-only(md) {
     column-count: 3;
   }
+
   @include media-breakpoint-only(lg) {
-    column-count: 4;
+    column-count: 5;
   }
- 
-} 
+
+}
+
+.card {
+  width: 18rem;
+  border: 0.3rem outset;
+}
+
+.card .text-center {
+  border: 0.1rem;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  width: 25%;
+}
 
 .card-columns {
-   display: block;
-   columns: auto;
-   column-gap: 20px;
-   margin: 20px;
-   padding: 50px;
-   color: gray;
-  
+  display: block;
+  columns: auto;
+  padding: 25px;
+
 }
 
 .card-title {
-  color: #BF7C63;
+  color:  #856354;
   text-align: left;
-
 }
 
 .material-icons {
   padding-top: 10px;
-  color: #c94c4c;
+  color: #99D1CB;
   font-size: 2em;
   height: 3rem;
 
 }
+
+.error {
+  font-size: 20px;
+  font-family: apercu;
+}
+
 .clearfix {
   overflow: auto;
 }
 
+.Navbar-text {
+  text-align: center;
+}
+
+.avatar {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.container {
+  font-size: 14px;
+  font-family: Apercu;
+
+}
+
+#welcome-text {
+  margin-top: 30px;
+
+}
+
+.k-textbox {
+  width: 300px;
+}
+
+
+
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  margin-right: 13px;
+  margin-left: 18px;
+  float: left;
+  border-radius: 50%;
+  margin-top: 10px;
+
+
+}
+
+.main-question-body {
+  color: #856354;
+  text-align: left;
+  font-weight: bold;
+  font-family: apercu, serif;
+}
+
+.category-detail {
+  border: 0.1rem outset #FFE1D4;
+  margin-right: 20px;
+  margin-top: 10px;
+  width: 30%;
+  text-align: left;
+  font: 10px;
+  color: gray;
+}
+
+.question-detail {
+  color:  #856354;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: left;
+
+}
+
+.user-answer-format {
+  font-size: 17px;
+  color: black;
+}
+
+.date-answer-format {
+  font-size: 14px;
+  color: grey;
+}
+
+.thumbnailAnswer {
+  width: 70px;
+  height: 70px;
+  margin-right: 18px;
+  float: left;
+  border-radius: 50%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+
+h4 {
+  color: #46857E;
+  border: 0.1rem outset #FFE1D4;
+}
+
+#categoryList {
+  color: black;
+}
+
+a:any-link {
+  color: #856354;
+  text-decoration: none;
+}
