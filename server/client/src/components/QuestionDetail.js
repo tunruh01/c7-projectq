@@ -35,13 +35,15 @@ class QuestionDetail extends Component {
           <>
             <div className="question-detail">
              
-              <br></br>
+            
               {questionDetails.question}
             </div>
-              <hr></hr>
+            <br></br>
+        
               <div className="category-detail" >
              {this.renderCategories()}
             </div>
+            <hr></hr>
             <AnswerList questionid={this.props.match.params.questionid} />
             <div className="row example-wrapper">
               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 offset-sm-3 example-col">

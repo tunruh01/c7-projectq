@@ -151,7 +151,7 @@ body {
 .thumbnail {
   width: 60px;
   height: 60px;
-  margin-right: 13px;
+  margin-right: 20px;
   margin-left: 18px;
   float: left;
   border-radius: 50%;
@@ -185,7 +185,9 @@ body {
   font-size: 18px;
   font-weight: bold;
   text-align: left;
-
+  border: 0.1rem outset #FFE1D4;
+  background-color: white;
+  padding: 10px
 }
 
 .user-answer-format {
