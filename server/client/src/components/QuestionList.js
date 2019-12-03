@@ -61,17 +61,25 @@ class QuestionList extends Component {
     );
   }
 
+
+
   renderUpVoteCount(q) {
     if (q.topAnswer === undefined || !q.topAnswer || q.topAnswer === null || !q.topAnswer.answerScore) {
       return <span>{''}</span>
     } else {
-      return <span>{q.topAnswer.answerScore}</span >
+      let upvotes = q.topAnswer.answerScore;
+      let upvote;
+      if (upvotes > 1) {
+        upvote = "upvotes"
+      } else {
+        upvote = "upvote"
+      }
+      return <span>{upvotes} {upvote}</span >
     }
   }
 
   renderQuestions() {
     // If questions in state; loop and return each one
-
     if (this.props.questions) {
       console.log("questionsList: ", this.props.questions);
       return (
@@ -131,12 +139,12 @@ class QuestionList extends Component {
                       <footer>
                         {this.renderQuestionCategories(q)}
                         <small className="text">
-                        <a href="">{""}<i className="material-icons float-left mr-2">arrow_upward</i>{''}</a>
-                        <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)} upvotes </a>
-                        <a href="">
-                          {" "}
-                          <i className="material-icons float-left">
-                            add_comment
+                          <a href="">{""}<i className="material-icons float-left mr-2">arrow_upward</i>{''}</a>
+                          <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)}</a>
+                          <a href="">
+                            {" "}
+                            <i className="material-icons float-left">
+                              add_comment
                           </i>{" "}
                           </a>
                         </small>
