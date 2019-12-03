@@ -21,8 +21,7 @@ router.get("/questions", UserAuthCheck, (req, res) => {
   const page = req.query.page || 1;
   let perPage = 7;
 
-  const keyword = req.query.query;
-  const { topicId } = req.query;
+  let { topicId, keyword, answered } = req.query;
 
   if (keyword) {
     const searchVal = keyword + ".*";
@@ -31,6 +30,13 @@ router.get("/questions", UserAuthCheck, (req, res) => {
 
   if (topicId) {
     filterOptions.topics = topicId;
+  }
+
+  if (answered) {
+    answered = answered.toLowerCase();
+    if (answered === "true" || answered === "false") {
+      filterOptions["answers.0"] = { $exists: answered === "true" };
+    }
   }
 
   User.findOne(
@@ -224,7 +230,7 @@ router.post("/question/:questionId/answer", UserAuthCheck, (req, res, next) => {
           response.userDownvoted = false;
           response.comments = [];
           question.answers.push(answer._id);
-          question.save((err, user) => {
+          question.save((err, question) => {
             if (err) console.log(err);
             user.answers.push(answer._id);
             if (!user.credentials) {
@@ -282,7 +288,7 @@ router.get("/question/:questionId/answers", UserAuthCheck, (req, res) => {
       let userDownvotedAnswers = user ? user.downvotedAnswers : [];
       answersObj
         .populate("userId", "name credentials avatar")
-        .sort({ score: "desc" })
+        .sort({ score: "desc", dateAdded: "desc" })
         .skip(perPage * (page - 1))
         .limit(perPage)
         .exec((err, answers) => {
