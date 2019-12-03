@@ -17,9 +17,9 @@ class QuestionDetail extends Component {
   renderCategories() {
     const { questionDetails } = this.props
     return (
-      <div>
+      <div className="category-detail">
         {questionDetails.topics.map(topic => (
-          <div key={topic._id}>{topic.name}</div>
+          <div className="category-detail" key={topic._id}>{topic.name}</div>
         ))}
       </div>
     )
@@ -34,8 +34,8 @@ class QuestionDetail extends Component {
       <div className="container">
         {(authenticated) ? (
           <>
-            <div>
-              Categories: {this.renderCategories()}
+            <div className="question-detail">
+              {this.renderCategories()}
               {questionDetails.question}
             </div>
             <AnswerList questionid={this.props.match.params.questionid} />

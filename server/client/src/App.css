@@ -129,6 +129,7 @@ body {
   height: 60px;
   margin-right: 18px;
   margin-left: 15px;
+
 } 
 
 .main-question-body {
@@ -136,5 +137,22 @@ body {
   text-align: left;
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
-
 }
+
+.date-format-answer {
+  font-size: 13.5px;
+  color: grey;
+} 
+
+.category-detail {
+  color: grey;
+  font-size: 13px;
+  text-align: left;
+} 
+
+.question-detail {
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: left;
+} 

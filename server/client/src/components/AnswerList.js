@@ -59,7 +59,7 @@ class AnswerList extends Component {
                       <h6 className="card-title">
                         <React.Fragment>
                           <span>
-                            <img src={a.user.userAvatar} />
+                            <img className="thumbnail" roundedCircle src={a.user.userAvatar} roundedCircle  />
                             <h6>
                               {a.user.userName},{" "}
                               {a.user.userCred
@@ -67,7 +67,7 @@ class AnswerList extends Component {
                                 : "my credential"}
                             </h6>
                           </span>
-                          <h6>
+                          <h6 className="date-format-answer">
                             Answered {moment(a.answerDate).format("MMM DD")}
                           </h6>
 
