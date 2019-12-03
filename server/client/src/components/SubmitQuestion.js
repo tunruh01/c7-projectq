@@ -4,9 +4,14 @@ import "../App.css";
 import { Button } from "react-bootstrap";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { createQuestion } from '../actions/actions';
+import * as actions from '../actions/actions';
+import CheckboxGroup from './checkboxGroup'
 
 class SubmitQuestion extends Component {
+
+  componentDidMount() {
+    this.props.fetchCategories();
+  }
 
   renderField(field) {
     const { meta: { touched, error } } = field;
@@ -30,9 +35,36 @@ class SubmitQuestion extends Component {
     });
   }
 
+  // renderTopicChecklist(topicsArr) {
+  //   // const topicsArr = this.props.category.topics;
+
+  //   return topicsArr.map(t, index => (
+  //     // <div key={t._id}>{t.name}</div>
+  //     <div className="checkbox" key={t._id}>
+  //       <label>
+  //           <input type="checkbox"
+  //                   name={`${t.name}[${index}]`}
+  //                   value={t.name}
+  //                   checked={input.value.indexOf(t.name) !== -1}
+  //                   onChange={(event) => {
+  //                       const newValue = [...input.value];
+  //                       if (event.target.checked) {
+  //                           newValue.push(t.name);
+  //                       } else {
+  //                           newValue.splice(newValue.indexOf(option.name), 1);
+  //                       }
+
+  //                       return input.onChange(newValue);
+  //                   }}/>
+  //           {t.name}
+  //       </label>
+  //     </div>
+  //     ))
+    
+  // }
+
   render() {
     const { handleSubmit } = this.props;
-
     return (
       <div className="row example-wrapper">
         <div className="col-xs-12 col-sm-6 offset-sm-3 example-col">
@@ -45,9 +77,17 @@ class SubmitQuestion extends Component {
                     <Field
                     name="question"
                     placeholder="Start your question with What, How, Why, etc"
-                    component={this.renderField}
+                    component={'input'}
                     />                  
                   </label>
+                  {/* <div>
+                    {this.renderTopicChecklist(this.props.category.topics)}
+                  </div> */}
+                  <Field
+                  name='topics'
+                  component={CheckboxGroup}
+                  options={this.props.category.topics}
+                  />
                   {/* <div className="k-form-field">
                     <span> Choose Categories: </span>
 
@@ -73,12 +113,11 @@ class SubmitQuestion extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ createQuestion }, dispatch);
+  return bindActionCreators(actions, dispatch);
 }
 
-const postNewQuestion = reduxForm({
-  form: 'questionNew'
+const mapStateToProps = (state) => {
+  return state
+}
 
-})(SubmitQuestion);
-
-export default connect(null, mapDispatchToProps)(postNewQuestion);
+export default reduxForm({form: 'questionNew'})(connect(mapStateToProps, mapDispatchToProps)(SubmitQuestion));
