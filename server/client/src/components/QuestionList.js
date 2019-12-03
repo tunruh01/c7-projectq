@@ -55,7 +55,7 @@ class QuestionList extends Component {
     return (
       <div className="card text-center">
         {q.topics.map(topic => (
-          <span>{topic.name}</span>
+          <span>Categories: {topic.name}</span>
         ))}
       </div>
     );
@@ -140,7 +140,7 @@ class QuestionList extends Component {
                         {this.renderQuestionCategories(q)}
                         <small className="text">
                           <a href="">{""}<i className="material-icons float-left mr-2">arrow_upward</i>{''}</a>
-                          <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)}</a>
+                          <a className="float-left mr-4" style={{ 'font-size': '20px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)} upvotes </a>
                           <a href="">
                             {" "}
                             <i className="material-icons float-left">

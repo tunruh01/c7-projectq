@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import * as actions from "../actions/actions";
-import { Redirect } from 'react-router-dom';  
+import { Redirect } from 'react-router-dom';
 
 class SubmitAnswer extends Component {
 
