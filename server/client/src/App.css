@@ -231,7 +231,7 @@ a:any-link {
   display: inline-block;
 }
 
-.cat-item + .cat-item::before {
+.cat-item+.cat-item::before {
   display: inline-block;
   white-space: pre;
   content: ", ";
