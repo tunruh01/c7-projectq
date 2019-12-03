@@ -59,9 +59,18 @@ class QuestionList extends Component {
       </div>
     );
   }
-  // { q.topAnswer.user.cred }
+
+  renderUpVoteCount(q) {
+    if (q.topAnswer === undefined || !q.topAnswer || q.topAnswer === null || !q.topAnswer.answerScore) {
+      return <span>{''}</span>
+    } else {
+      return <span>{q.topAnswer.answerScore}</span >
+    }
+  }
+
   renderQuestions() {
     // If questions in state; loop and return each one
+
     if (this.props.questions) {
       console.log("questionsList: ", this.props.questions);
       return (
@@ -75,6 +84,7 @@ class QuestionList extends Component {
                 };
 
                 return (
+
                   <div className="card">
                     {this.renderQuestionCategories(q)}
                     <div className="card-body">
@@ -91,42 +101,38 @@ class QuestionList extends Component {
                               This question hasn't been answered yet
                             </p>
                           ) : (
-                            <>
-                              <hr></hr>
-                              <div className="userCred" align="left">
-                                <Image
-                                  className="avatar"
-                                  src={q.topAnswer.user.userAvatar}
-                                  height="42"
-                                  width="42"
-                                  roundedCircle
-                                ></Image>
-                                {q.topAnswer.user.userName}{" "}
-                                <b>{q.topAnswer.user.cred}</b>
-                              </div>
-                              <ShowMoreText
-                                lines={1}
-                                more="more"
-                                less="less"
-                                anchorClass=""
-                                onClick={this.executeOnClick}
-                                expanded={false}
-                              >
-                                <p className="card-text">
-                                  {q.topAnswer.answer}
-                                </p>
-                              </ShowMoreText>
-                            </>
-                          )}
+                              <>
+                                <hr></hr>
+                                <div className="userCred" align="left">
+                                  <Image
+                                    className="avatar"
+                                    src={q.topAnswer.user.userAvatar}
+                                    height="42"
+                                    width="42"
+                                    roundedCircle
+                                  ></Image>
+                                  {q.topAnswer.user.userName}{" "}
+                                  <b>{q.topAnswer.user.cred}</b>
+                                </div>
+                                <ShowMoreText
+                                  lines={1}
+                                  more="more"
+                                  less="less"
+                                  anchorClass=""
+                                  onClick={this.executeOnClick}
+                                  expanded={false}
+                                >
+                                  <p className="card-text">
+                                    {q.topAnswer.answer}
+                                  </p>
+                                </ShowMoreText>
+                              </>
+                            )}
                         </React.Fragment>
                       </h6>
                       <small className="text">
-                        <a href="">
-                          {" "}
-                          <i className="material-icons float-left mr-2">
-                            arrow_upward
-                          </i>{" "}
-                        </a>
+                        <a href="">{""}<i className="material-icons float-left mr-2">arrow_upward</i>{''}</a>
+                        <a className="float-left mr-4" style={{ 'font-size': '23px', 'margin-top': '5px' }}>{this.renderUpVoteCount(q)} upvotes </a>
                         <a href="">
                           {" "}
                           <i className="material-icons float-left">
@@ -167,12 +173,12 @@ class QuestionList extends Component {
             </div>
           </>
         ) : (
-          <div>
-            <div className="error">
-              Unauthorized - maybe have a 'please login' component/message here
+            <div>
+              <div className="error">
+                Unauthorized - maybe have a 'please login' component/message here
             </div>
-          </div>
-        )}
+            </div>
+          )}
       </React.Fragment>
     );
   }
