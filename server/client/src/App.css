@@ -85,6 +85,10 @@ body {
 }
 
 .card .text-center {
+  color: #99D1CB;
+  font-size: 16px;
+  font-style: italic;
+  float: right;
   border: 0.1rem;
   margin-left: 20px;
   margin-right: 20px;
